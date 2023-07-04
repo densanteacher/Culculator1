@@ -1,4 +1,9 @@
-﻿namespace Culculator1
+﻿using System.ComponentModel;
+using System;
+using System.Security.Permissions;
+using System.Windows.Forms;
+
+namespace Calclator1
 {
     partial class Form1
     {
@@ -18,6 +23,99 @@
                 components.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// 数字とバックスペース以外の入力を無効にしたTextBox
+        /// </summary>
+        public class NumericTextBox : TextBox
+        {
+            private const int WM_PASTE = 0x302;
+
+            [SecurityPermission(SecurityAction.Demand,
+                Flags = SecurityPermissionFlag.UnmanagedCode)]
+            protected override void WndProc(ref Message m)
+            {
+                if (m.Msg == WM_PASTE)
+                {
+                    IDataObject iData = Clipboard.GetDataObject();
+                    //文字列がクリップボードにあるか
+                    if (iData != null && iData.GetDataPresent(DataFormats.Text))
+                    {
+                        string clipStr = (string)iData.GetData(DataFormats.Text);
+                        //クリップボードの文字列が数字のみか調べる
+                        if (!System.Text.RegularExpressions.Regex.IsMatch(
+                            clipStr,
+                            @"^[0-9]+$"))
+                        {
+                            return;
+                        }
+                    }
+                }
+
+                base.WndProc(ref m);
+            }
+
+            public NumericTextBox()
+                : base()
+            {
+                //IMEを無効にする
+                base.ImeMode = ImeMode.Disable;
+                //数字以外で入力が可能な文字
+                this.SetAllowKeyChars(new char[] { '\b' });
+            }
+
+            [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+            public new ImeMode ImeMode
+            {
+                get { return base.ImeMode; }
+                set { }
+            }
+
+            private char[] _allowKeyChars;
+            /// <summary>
+            /// 数字以外で入力が可能な文字を設定する
+            /// </summary>
+            public void SetAllowKeyChars(char[] keyChars)
+            {
+                this._allowKeyChars = keyChars;
+            }
+            /// <summary>
+            /// 数字以外で入力が可能な文字を取得する
+            /// </summary>
+            public char[] GetAllowKeyChars()
+            {
+                return this._allowKeyChars;
+            }
+
+            protected override void OnKeyPress(KeyPressEventArgs e)
+            {
+                base.OnKeyPress(e);
+                //数字以外が入力された時はキャンセルする
+                if ((e.KeyChar < '0' || '9' < e.KeyChar) &&
+                    Array.IndexOf(this._allowKeyChars, e.KeyChar) < 0)
+                {
+                    e.Handled = true;
+                }
+            }
+
+            [SecurityPermission(SecurityAction.Demand,
+                Flags = SecurityPermissionFlag.UnmanagedCode)]
+            protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+            {
+                //Ctrl+VとShift+Insertを無効にする
+                if (((keyData & Keys.Control) == Keys.Control &&
+                    (keyData & Keys.KeyCode) == Keys.V) ||
+                    ((keyData & Keys.Shift) == Keys.Shift &&
+                    (keyData & Keys.KeyCode) == Keys.Insert))
+                {
+                    return true;
+                }
+                else
+                {
+                    return base.ProcessCmdKey(ref msg, keyData);
+                }
+            }
         }
 
         #region Windows フォーム デザイナーで生成されたコード
@@ -44,12 +142,12 @@
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
+            this.Percent = new System.Windows.Forms.Button();
             this.CE = new System.Windows.Forms.Button();
             this.C = new System.Windows.Forms.Button();
             this.Back = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new Calclator1.Form1.NumericTextBox();
+            this.textBox2 = new Calclator1.Form1.NumericTextBox();
             this.Div = new System.Windows.Forms.Button();
             this.Sq = new System.Windows.Forms.Button();
             this.Sqrt = new System.Windows.Forms.Button();
@@ -231,15 +329,15 @@
             this.button16.UseVisualStyleBackColor = true;
             this.button16.Click += new System.EventHandler(this.btnOpe_Click);
             // 
-            // button17
+            // Percent
             // 
-            this.button17.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button17.Location = new System.Drawing.Point(74, 113);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(80, 80);
-            this.button17.TabIndex = 19;
-            this.button17.Text = "％";
-            this.button17.UseVisualStyleBackColor = true;
+            this.Percent.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Percent.Location = new System.Drawing.Point(74, 113);
+            this.Percent.Name = "Percent";
+            this.Percent.Size = new System.Drawing.Size(80, 80);
+            this.Percent.TabIndex = 19;
+            this.Percent.Text = "％";
+            this.Percent.UseVisualStyleBackColor = true;
             // 
             // CE
             // 
@@ -275,6 +373,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.textBox1.Location = new System.Drawing.Point(74, 65);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(338, 34);
@@ -282,6 +381,7 @@
             // 
             // textBox2
             // 
+            this.textBox2.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.textBox2.Location = new System.Drawing.Point(160, 40);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(252, 19);
@@ -339,7 +439,7 @@
             this.Controls.Add(this.Sqrt);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button17);
+            this.Controls.Add(this.Percent);
             this.Controls.Add(this.CE);
             this.Controls.Add(this.C);
             this.Controls.Add(this.Back);
@@ -384,16 +484,16 @@
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Button Percent;
         private System.Windows.Forms.Button CE;
         private System.Windows.Forms.Button C;
         private System.Windows.Forms.Button Back;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button Div;
         private System.Windows.Forms.Button Sq;
         private System.Windows.Forms.Button Sqrt;
         private System.Windows.Forms.Button button24;
+        private NumericTextBox textBox1;
+        private NumericTextBox textBox2;
     }
 }
 

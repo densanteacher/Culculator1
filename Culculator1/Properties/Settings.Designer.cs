@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Culculator1.Properties
+namespace Calclator1.Properties
 {
 
 

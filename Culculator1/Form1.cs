@@ -7,9 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Permissions;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Culculator1
+namespace Calclator1
 {
     public partial class Form1 : Form
     {
@@ -17,6 +18,8 @@ namespace Culculator1
         {
             InitializeComponent();
             textBox1.Text = "0";
+            textBox2.ReadOnly = true;
+
 
             //クリア（textBox1とtextBox2両方消す）ボタン
             this.C.Click += (s, e) =>
@@ -58,6 +61,14 @@ namespace Culculator1
                 decimal inputDiv = 1 / decimal.Parse(txt1);
                 textBox1.Text = inputDiv.ToString();
             };
+
+            //％ボタン
+            this.Percent.Click += (s, e) =>
+            {
+                string txt1 = textBox1.Text;
+                decimal inputRev = decimal.Parse(txt1) / 100;
+                textBox1.Text = inputRev.ToString();
+            };
         }
         
         //数字ボタン
@@ -68,6 +79,8 @@ namespace Culculator1
 
             textBox1.Text = inputNum.ToString();
         }
+
+        //キー入力
 
         //.(小数点）ボタン
         private void btnDot_Click(object sender, EventArgs e)
@@ -83,9 +96,7 @@ namespace Culculator1
         private void btnOpe_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            if((textBox2.Text != null) && (textBox2.Text.Trim().Length != 0))
-                btnEq_Click(sender,
-                            new EventArgs());
+            btnEq_Click(sender,new EventArgs());
             string inputOpe = textBox2.Text + textBox1.Text + btn.Text;
             textBox2.Text = inputOpe.ToString();
             textBox1.Text = "0";
@@ -94,19 +105,22 @@ namespace Culculator1
         //＝（イコール）ボタン
         private void btnEq_Click(object sender, EventArgs e)
         {
-            string txt2 = textBox2.Text;
-            string mem = txt2.Remove(txt2.Length - 1);
-            decimal inputEq = 0;
-            if (txt2.Contains("÷"))
-                inputEq = decimal.Parse(mem) / decimal.Parse(textBox1.Text);
-            else if (txt2.Contains("×"))
-                inputEq = decimal.Parse(mem) * decimal.Parse(textBox1.Text);
-            else if (txt2.Contains("-"))
-                inputEq = decimal.Parse(mem) - decimal.Parse(textBox1.Text);
-            else if (txt2.Contains("+"))
-                inputEq = decimal.Parse(mem) + decimal.Parse(textBox1.Text);
-            textBox1.Text = inputEq.ToString();
-            textBox2.Text = null;
+            if ((textBox2.Text != null) && (textBox2.Text.Trim().Length != 0))
+            {
+                string txt2 = textBox2.Text;
+                string mem = txt2.Remove(txt2.Length - 1);
+                decimal inputEq = 0;
+                if (txt2.Contains("÷"))
+                    inputEq = decimal.Parse(mem) / decimal.Parse(textBox1.Text);
+                else if (txt2.Contains("×"))
+                    inputEq = decimal.Parse(mem) * decimal.Parse(textBox1.Text);
+                else if (txt2.Contains("-"))
+                    inputEq = decimal.Parse(mem) - decimal.Parse(textBox1.Text);
+                else if (txt2.Contains("+"))
+                    inputEq = decimal.Parse(mem) + decimal.Parse(textBox1.Text);
+                textBox1.Text = inputEq.ToString();
+                textBox2.Text = null;
+            }
         }
 
         //Back(一文字消す）ボタン
@@ -114,7 +128,7 @@ namespace Culculator1
         {
             string txt1 = textBox1.Text;
             string mem = txt1.Remove(txt1.Length - 1);
-            if (mem.Length == 0)
+            if (mem.Length == 0　|| mem == "-")
                 textBox1.Text = "0";
             else
                 textBox1.Text = mem;

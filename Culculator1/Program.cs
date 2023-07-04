@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Culculator1
+namespace Calclator1
 {
     internal static class Program
     {
