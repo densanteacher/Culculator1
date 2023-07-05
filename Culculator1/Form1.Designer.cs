@@ -62,7 +62,7 @@ namespace Calclator1
                 //IMEを無効にする
                 base.ImeMode = ImeMode.Disable;
                 //数字以外で入力が可能な文字
-                this.SetAllowKeyChars(new char[] { '\b' });
+                this.SetAllowKeyChars(new char[] { '\b', '.' });
             }
 
             [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
@@ -151,7 +151,7 @@ namespace Calclator1
             this.Div = new System.Windows.Forms.Button();
             this.Sq = new System.Windows.Forms.Button();
             this.Sqrt = new System.Windows.Forms.Button();
-            this.button24 = new System.Windows.Forms.Button();
+            this.Equal = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -417,23 +417,23 @@ namespace Calclator1
             this.Sqrt.Text = "√x";
             this.Sqrt.UseVisualStyleBackColor = true;
             // 
-            // button24
+            // Equal
             // 
-            this.button24.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button24.Location = new System.Drawing.Point(332, 543);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(80, 80);
-            this.button24.TabIndex = 25;
-            this.button24.Text = "=";
-            this.button24.UseVisualStyleBackColor = true;
-            this.button24.Click += new System.EventHandler(this.btnEq_Click);
+            this.Equal.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Equal.Location = new System.Drawing.Point(332, 543);
+            this.Equal.Name = "Equal";
+            this.Equal.Size = new System.Drawing.Size(80, 80);
+            this.Equal.TabIndex = 25;
+            this.Equal.Text = "=";
+            this.Equal.UseVisualStyleBackColor = true;
+            this.Equal.Click += new System.EventHandler(this.btnEq_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 629);
-            this.Controls.Add(this.button24);
+            this.Controls.Add(this.Equal);
             this.Controls.Add(this.Div);
             this.Controls.Add(this.Sq);
             this.Controls.Add(this.Sqrt);
@@ -491,7 +491,7 @@ namespace Calclator1
         private System.Windows.Forms.Button Div;
         private System.Windows.Forms.Button Sq;
         private System.Windows.Forms.Button Sqrt;
-        private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Button Equal;
         private NumericTextBox textBox1;
         private NumericTextBox textBox2;
     }

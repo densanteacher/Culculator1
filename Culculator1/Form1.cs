@@ -17,6 +17,7 @@ namespace Calclator1
         public Form1()
         {
             InitializeComponent();
+            this.KeyPreview = true;
             textBox1.Text = "0";
             textBox2.ReadOnly = true;
 
@@ -48,7 +49,8 @@ namespace Calclator1
             };
 
             //√x（平方根）ボタン
-            this.Sqrt.Click += (s, e) => {
+            this.Sqrt.Click += (s, e) =>
+            {
                 string txt1 = textBox1.Text;
                 double inputSqrt = Math.Sqrt(double.Parse(txt1));
                 textBox1.Text = inputSqrt.ToString();
@@ -70,7 +72,7 @@ namespace Calclator1
                 textBox1.Text = inputRev.ToString();
             };
         }
-        
+
         //数字ボタン
         private void btnNum_Click(object sender, EventArgs e)
         {
@@ -80,13 +82,12 @@ namespace Calclator1
             textBox1.Text = inputNum.ToString();
         }
 
-        //キー入力
-
         //.(小数点）ボタン
         private void btnDot_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            if (!textBox1.Text.Contains(".")){
+            if (!textBox1.Text.Contains("."))
+            {
                 string inputDot = textBox1.Text + btn.Text;
                 textBox1.Text = inputDot.ToString();
             }
@@ -96,7 +97,7 @@ namespace Calclator1
         private void btnOpe_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            btnEq_Click(sender,new EventArgs());
+            btnEq_Click(sender, new EventArgs());
             string inputOpe = textBox2.Text + textBox1.Text + btn.Text;
             textBox2.Text = inputOpe.ToString();
             textBox1.Text = "0";
@@ -128,10 +129,11 @@ namespace Calclator1
         {
             string txt1 = textBox1.Text;
             string mem = txt1.Remove(txt1.Length - 1);
-            if (mem.Length == 0　|| mem == "-")
+            if (mem.Length == 0 || mem == "-")
                 textBox1.Text = "0";
             else
                 textBox1.Text = mem;
         }
+
     }
 }
