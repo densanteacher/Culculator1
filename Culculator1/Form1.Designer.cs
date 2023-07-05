@@ -53,71 +53,6 @@ namespace Calclator1
                     }
                 }
 
-                base.WndProc(ref m);
-            }
-
-            public NumericTextBox()
-                : base()
-            {
-                //IMEを無効にする
-                base.ImeMode = ImeMode.Disable;
-                //数字以外で入力が可能な文字
-                this.SetAllowKeyChars(new char[] { '\b', '.' });
-            }
-
-            [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-            public new ImeMode ImeMode
-            {
-                get { return base.ImeMode; }
-                set { }
-            }
-
-            private char[] _allowKeyChars;
-            /// <summary>
-            /// 数字以外で入力が可能な文字を設定する
-            /// </summary>
-            public void SetAllowKeyChars(char[] keyChars)
-            {
-                this._allowKeyChars = keyChars;
-            }
-            /// <summary>
-            /// 数字以外で入力が可能な文字を取得する
-            /// </summary>
-            public char[] GetAllowKeyChars()
-            {
-                return this._allowKeyChars;
-            }
-
-            protected override void OnKeyPress(KeyPressEventArgs e)
-            {
-                base.OnKeyPress(e);
-                //数字以外が入力された時はキャンセルする
-                if ((e.KeyChar < '0' || '9' < e.KeyChar) &&
-                    Array.IndexOf(this._allowKeyChars, e.KeyChar) < 0)
-                {
-                    e.Handled = true;
-                }
-            }
-
-            [SecurityPermission(SecurityAction.Demand,
-                Flags = SecurityPermissionFlag.UnmanagedCode)]
-            protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-            {
-                //Ctrl+VとShift+Insertを無効にする
-                if (((keyData & Keys.Control) == Keys.Control &&
-                    (keyData & Keys.KeyCode) == Keys.V) ||
-                    ((keyData & Keys.Shift) == Keys.Shift &&
-                    (keyData & Keys.KeyCode) == Keys.Insert))
-                {
-                    return true;
-                }
-                else
-                {
-                    return base.ProcessCmdKey(ref msg, keyData);
-                }
-            }
-        }
-
         #region Windows フォーム デザイナーで生成されたコード
 
         /// <summary>
@@ -146,8 +81,6 @@ namespace Calclator1
             this.CE = new System.Windows.Forms.Button();
             this.C = new System.Windows.Forms.Button();
             this.Back = new System.Windows.Forms.Button();
-            this.textBox1 = new Calclator1.Form1.NumericTextBox();
-            this.textBox2 = new Calclator1.Form1.NumericTextBox();
             this.Div = new System.Windows.Forms.Button();
             this.Sq = new System.Windows.Forms.Button();
             this.Sqrt = new System.Windows.Forms.Button();
@@ -374,7 +307,7 @@ namespace Calclator1
             // 
             this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox1.Location = new System.Drawing.Point(74, 65);
+            this.textBox1.Location = new System.Drawing.Point(74, 37);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(338, 34);
             this.textBox1.TabIndex = 20;
@@ -382,7 +315,7 @@ namespace Calclator1
             // textBox2
             // 
             this.textBox2.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox2.Location = new System.Drawing.Point(160, 40);
+            this.textBox2.Location = new System.Drawing.Point(160, 12);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(252, 19);
             this.textBox2.TabIndex = 21;
@@ -432,13 +365,19 @@ namespace Calclator1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 629);
+            this.ClientSize = new System.Drawing.Size(500, 650);
+            this.Controls.Add(this.button20);
+            this.Controls.Add(this.button19);
+            this.Controls.Add(this.button18);
+            this.Controls.Add(this.button17);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
             this.Controls.Add(this.Equal);
             this.Controls.Add(this.Div);
             this.Controls.Add(this.Sq);
             this.Controls.Add(this.Sqrt);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(value: this.textBox1);
+            this.Controls.Add(value: this.textBox2);
             this.Controls.Add(this.Percent);
             this.Controls.Add(this.CE);
             this.Controls.Add(this.C);
