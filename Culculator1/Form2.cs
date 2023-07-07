@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Culculator1;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -91,23 +92,41 @@ namespace Calculator1
         //M+ボタン
         private void btnMplus_Click(object sender, EventArgs e) 
         {
-            Button btn = (Button)sender;
-            int btnNum = Int32.Parse(btn.Name.Substring(5));
-            Control[] cs = this.Controls.Find("lbl" + btnNum, true);
-            decimal memoryPlus = decimal.Parse(_memory[btnNum]) + _result;
-            _memory[btnNum] = Convert.ToString(memoryPlus);
-            cs[0].Text = Convert.ToString(memoryPlus);
+            try
+            {
+                Button btn = (Button)sender;
+                int btnNum = Int32.Parse(btn.Name.Substring(5));
+                Control[] cs = this.Controls.Find("lbl" + btnNum, true);
+                decimal memoryPlus = decimal.Parse(_memory[btnNum]) + _result;
+                _memory[btnNum] = Convert.ToString(memoryPlus);
+                cs[0].Text = Convert.ToString(memoryPlus);
+            } catch(Exception ex)
+            {
+                Form3 f = new Form3();
+                f.ShowDialog(this);
+                f.Dispose();
+                Console.WriteLine(ex.Message);
+            }
         }
         
         //M-ボタン
         private void btnMminus_Click(object sender,EventArgs e)
         {
-            Button btn = (Button)sender;
-            int btnNum = Int32.Parse(btn.Name.Substring(6));
-            Control[] cs = this.Controls.Find("lbl" + btnNum, true);
-            decimal memoryMinus = decimal.Parse(_memory[btnNum]) - _result;
-            _memory[btnNum] = Convert.ToString(memoryMinus);
-            cs[0].Text = Convert.ToString(memoryMinus);
+            try
+            {
+                Button btn = (Button)sender;
+                int btnNum = Int32.Parse(btn.Name.Substring(6));
+                Control[] cs = this.Controls.Find("lbl" + btnNum, true);
+                decimal memoryMinus = decimal.Parse(_memory[btnNum]) - _result;
+                _memory[btnNum] = Convert.ToString(memoryMinus);
+                cs[0].Text = Convert.ToString(memoryMinus);
+            } catch (Exception ex)
+            {
+                Form3 f = new Form3();
+                f.ShowDialog(this);
+                f.Dispose();
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
