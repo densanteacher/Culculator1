@@ -204,6 +204,7 @@ namespace Calclator1
             this.button0.Text = "0";
             this.button0.UseVisualStyleBackColor = true;
             this.button0.Click += new System.EventHandler(this.btnNum_Click);
+            this.button0.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
             // button13
             // 
