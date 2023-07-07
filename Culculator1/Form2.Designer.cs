@@ -45,7 +45,7 @@
             this.ClientSize = new System.Drawing.Size(384, 461);
             this.Controls.Add(this.panel1);
             this.Name = "Form2";
-            this.Text = "Form2";
+            this.Text = "メモリ";
             this.ResumeLayout(false);
 
         }
