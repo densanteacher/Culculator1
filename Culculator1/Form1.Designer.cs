@@ -353,9 +353,10 @@ namespace Calclator1
             // Equal
             // 
             this.Equal.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Equal.Location = new System.Drawing.Point(332, 543);
+            this.Equal.Location = new System.Drawing.Point(443, 679);
+            this.Equal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Equal.Name = "Equal";
-            this.Equal.Size = new System.Drawing.Size(80, 80);
+            this.Equal.Size = new System.Drawing.Size(107, 100);
             this.Equal.TabIndex = 25;
             this.Equal.Text = "=";
             this.Equal.UseVisualStyleBackColor = true;
