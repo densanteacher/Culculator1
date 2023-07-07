@@ -48,10 +48,10 @@ namespace Calclator1
             this.Rev = new System.Windows.Forms.Button();
             this.Dot = new System.Windows.Forms.Button();
             this.button0 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
+            this.Add = new System.Windows.Forms.Button();
+            this.Divide = new System.Windows.Forms.Button();
+            this.Multiply = new System.Windows.Forms.Button();
+            this.Subtract = new System.Windows.Forms.Button();
             this.Percent = new System.Windows.Forms.Button();
             this.CE = new System.Windows.Forms.Button();
             this.C = new System.Windows.Forms.Button();
@@ -81,7 +81,6 @@ namespace Calclator1
             this.button1.Text = "1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnNum_Click);
-            this.button1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
             // button2
             // 
@@ -93,7 +92,6 @@ namespace Calclator1
             this.button2.Text = "2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnNum_Click);
-            this.button2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
             // button3
             // 
@@ -105,7 +103,6 @@ namespace Calclator1
             this.button3.Text = "3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.btnNum_Click);
-            this.button3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
             // button4
             // 
@@ -204,51 +201,50 @@ namespace Calclator1
             this.button0.Text = "0";
             this.button0.UseVisualStyleBackColor = true;
             this.button0.Click += new System.EventHandler(this.btnNum_Click);
-            this.button0.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
-            // button13
+            // Add
             // 
-            this.button13.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button13.Location = new System.Drawing.Point(332, 457);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(80, 80);
-            this.button13.TabIndex = 15;
-            this.button13.Text = "+";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Add.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Add.Location = new System.Drawing.Point(332, 457);
+            this.Add.Name = "Add";
+            this.Add.Size = new System.Drawing.Size(80, 80);
+            this.Add.TabIndex = 15;
+            this.Add.Text = "+";
+            this.Add.UseVisualStyleBackColor = true;
+            this.Add.Click += new System.EventHandler(this.btnOpe_Click);
             // 
-            // button14
+            // Divide
             // 
-            this.button14.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button14.Location = new System.Drawing.Point(332, 199);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(80, 80);
-            this.button14.TabIndex = 14;
-            this.button14.Text = "÷";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Divide.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Divide.Location = new System.Drawing.Point(332, 199);
+            this.Divide.Name = "Divide";
+            this.Divide.Size = new System.Drawing.Size(80, 80);
+            this.Divide.TabIndex = 14;
+            this.Divide.Text = "÷";
+            this.Divide.UseVisualStyleBackColor = true;
+            this.Divide.Click += new System.EventHandler(this.btnOpe_Click);
             // 
-            // button15
+            // Multiply
             // 
-            this.button15.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button15.Location = new System.Drawing.Point(332, 285);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(80, 80);
-            this.button15.TabIndex = 13;
-            this.button15.Text = "×";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Multiply.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Multiply.Location = new System.Drawing.Point(332, 285);
+            this.Multiply.Name = "Multiply";
+            this.Multiply.Size = new System.Drawing.Size(80, 80);
+            this.Multiply.TabIndex = 13;
+            this.Multiply.Text = "×";
+            this.Multiply.UseVisualStyleBackColor = true;
+            this.Multiply.Click += new System.EventHandler(this.btnOpe_Click);
             // 
-            // button16
+            // Subtract
             // 
-            this.button16.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button16.Location = new System.Drawing.Point(332, 371);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(80, 80);
-            this.button16.TabIndex = 12;
-            this.button16.Text = "-";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Subtract.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Subtract.Location = new System.Drawing.Point(332, 371);
+            this.Subtract.Name = "Subtract";
+            this.Subtract.Size = new System.Drawing.Size(80, 80);
+            this.Subtract.TabIndex = 12;
+            this.Subtract.Text = "-";
+            this.Subtract.UseVisualStyleBackColor = true;
+            this.Subtract.Click += new System.EventHandler(this.btnOpe_Click);
             // 
             // Percent
             // 
@@ -354,7 +350,7 @@ namespace Calclator1
             // M
             // 
             this.M.Location = new System.Drawing.Point(373, 89);
-            this.M.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.M.Margin = new System.Windows.Forms.Padding(2);
             this.M.Name = "M";
             this.M.Size = new System.Drawing.Size(38, 18);
             this.M.TabIndex = 26;
@@ -364,7 +360,7 @@ namespace Calclator1
             // MS
             // 
             this.MS.Location = new System.Drawing.Point(330, 89);
-            this.MS.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MS.Margin = new System.Windows.Forms.Padding(2);
             this.MS.Name = "MS";
             this.MS.Size = new System.Drawing.Size(38, 18);
             this.MS.TabIndex = 27;
@@ -374,7 +370,7 @@ namespace Calclator1
             // Mminus
             // 
             this.Mminus.Location = new System.Drawing.Point(287, 89);
-            this.Mminus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Mminus.Margin = new System.Windows.Forms.Padding(2);
             this.Mminus.Name = "Mminus";
             this.Mminus.Size = new System.Drawing.Size(38, 18);
             this.Mminus.TabIndex = 28;
@@ -384,7 +380,7 @@ namespace Calclator1
             // Mplus
             // 
             this.Mplus.Location = new System.Drawing.Point(244, 89);
-            this.Mplus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Mplus.Margin = new System.Windows.Forms.Padding(2);
             this.Mplus.Name = "Mplus";
             this.Mplus.Size = new System.Drawing.Size(38, 18);
             this.Mplus.TabIndex = 29;
@@ -394,7 +390,7 @@ namespace Calclator1
             // MC
             // 
             this.MC.Location = new System.Drawing.Point(160, 89);
-            this.MC.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MC.Margin = new System.Windows.Forms.Padding(2);
             this.MC.Name = "MC";
             this.MC.Size = new System.Drawing.Size(38, 18);
             this.MC.TabIndex = 30;
@@ -404,7 +400,7 @@ namespace Calclator1
             // MR
             // 
             this.MR.Location = new System.Drawing.Point(202, 89);
-            this.MR.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MR.Margin = new System.Windows.Forms.Padding(2);
             this.MR.Name = "MR";
             this.MR.Size = new System.Drawing.Size(38, 18);
             this.MR.TabIndex = 31;
@@ -443,10 +439,10 @@ namespace Calclator1
             this.Controls.Add(this.CE);
             this.Controls.Add(this.C);
             this.Controls.Add(this.Back);
-            this.Controls.Add(this.button13);
-            this.Controls.Add(this.button14);
-            this.Controls.Add(this.button15);
-            this.Controls.Add(this.button16);
+            this.Controls.Add(this.Add);
+            this.Controls.Add(this.Divide);
+            this.Controls.Add(this.Multiply);
+            this.Controls.Add(this.Subtract);
             this.Controls.Add(this.Rev);
             this.Controls.Add(this.Dot);
             this.Controls.Add(this.button0);
@@ -461,6 +457,7 @@ namespace Calclator1
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -480,10 +477,10 @@ namespace Calclator1
         private System.Windows.Forms.Button Rev;
         private System.Windows.Forms.Button Dot;
         private System.Windows.Forms.Button button0;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button Add;
+        private System.Windows.Forms.Button Divide;
+        private System.Windows.Forms.Button Multiply;
+        private System.Windows.Forms.Button Subtract;
         private System.Windows.Forms.Button Percent;
         private System.Windows.Forms.Button CE;
         private System.Windows.Forms.Button C;

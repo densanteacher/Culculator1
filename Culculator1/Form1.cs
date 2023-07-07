@@ -135,22 +135,9 @@ namespace Calclator1
         }
         private void num_keyPress(Object sender, KeyPressEventArgs e)
         {
-            switch(e.KeyChar){
-                case '1':
-                    button1.Focus();
-                    button1.PerformClick();
-                    break;
-                case '2':
-                    button2.Focus();
-                    button2.PerformClick();
-                    break;
-                case '0':
-                    button0.Focus();
-                    button0.PerformClick();
-                    break;
-            };
-                
-            e.Handled = true;
+            
+                   
+            
         }
         //数字ボタン
         private void btnNum_Click(object sender, EventArgs e)
@@ -239,5 +226,90 @@ namespace Calclator1
 
         }
 
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        switch (e.KeyCode)
+        {
+            case Keys.Enter:
+                this.Equal.Focus();
+                this.Equal.PerformClick();
+                break;
+            case Keys.Back:
+                this.Back.Focus();
+                this.Back.PerformClick();
+                break;
+            case Keys.Decimal:
+                this.Dot.Focus();
+                this.Dot.PerformClick();
+                break;
+            case Keys.Divide:
+                this.Divide.Focus();
+                this.Divide.PerformClick();
+                break;
+            case Keys.Multiply:
+                this.Multiply.Focus();
+                this.Multiply.PerformClick();
+                break;
+            case Keys.Subtract: 
+                this.Subtract.Focus();
+                this.Subtract.PerformClick();
+                break;
+            case Keys.Add:
+                this.Add.Focus();
+                this.Add.PerformClick();
+                break;  
+            case Keys.D1:
+            case Keys.NumPad1:
+                this.button1.Focus();
+                this.button1.PerformClick();
+                break;
+            case Keys.D2:
+            case Keys.NumPad2:
+                this.button2.Focus();
+                this.button2.PerformClick();
+                break;
+            case Keys.D3:
+            case Keys.NumPad3:
+                this.button3.Focus();
+                this.button3.PerformClick();
+                break;
+            case Keys.D4:
+            case Keys.NumPad4:
+                this.button4.Focus();
+                this.button4.PerformClick();
+                break;
+            case Keys.D5:
+            case Keys.NumPad5:
+                this.button5.Focus();
+                this.button5.PerformClick();
+                break;
+            case Keys.D6:
+            case Keys.NumPad6:
+                this.button6.Focus();
+                this.button6.PerformClick();
+                break;
+            case Keys.D7:
+            case Keys.NumPad7:
+                this.button7.Focus();
+                this.button7.PerformClick();
+                break;
+            case Keys.D8:
+            case Keys.NumPad8:
+                this.button8.Focus();
+                this.button8.PerformClick();
+                break;
+            case Keys.D9:
+            case Keys.NumPad9:
+                this.button9.Focus();
+                this.button9.PerformClick();
+                break;
+            case Keys.D0:
+            case Keys.NumPad0:
+                this.button0.Focus();
+                this.button0.PerformClick();
+                break;
+            }
+        }
     }
 }
