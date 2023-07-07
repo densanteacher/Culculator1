@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 using Calculator1;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.IO;
-
+using Culculator1;
 
 namespace Calclator1
 {
@@ -41,41 +41,88 @@ namespace Calclator1
             //+/-(プラスマイナス反転）ボタン
             this.Rev.Click += (s, e) =>
             {
-                string txt1 = textBox1.Text;
-                decimal inputRev = -decimal.Parse(txt1);
-                textBox1.Text = inputRev.ToString();
+                try
+                {
+                    string txt1 = textBox1.Text;
+                    decimal inputRev = -decimal.Parse(txt1);
+                    textBox1.Text = inputRev.ToString();
+                }
+                catch(Exception ex) {
+                    Form3 f = new Form3();
+                    f.ShowDialog(this);
+                    f.Dispose();
+                    Console.WriteLine(ex.Message);
+                }
+                
             };
 
             //x^2(二乗)ボタン
             this.Sq.Click += (s, e) =>
             {
-                string txt1 = textBox1.Text;
-                decimal inputSq = decimal.Parse(txt1) * decimal.Parse(txt1);
-                textBox1.Text = inputSq.ToString();
+                try
+                {
+                    string txt1 = textBox1.Text;
+                    decimal inputSq = decimal.Parse(txt1) * decimal.Parse(txt1);
+                    textBox1.Text = inputSq.ToString();
+                } catch (Exception ex)
+                {
+                    Form3 f = new Form3();
+                    f.ShowDialog(this);
+                    f.Dispose();
+                    Console.WriteLine(ex.Message);
+                }
+                
             };
 
             //√x（平方根）ボタン
             this.Sqrt.Click += (s, e) =>
             {
-                string txt1 = textBox1.Text;
-                double inputSqrt = Math.Sqrt(double.Parse(txt1));
-                textBox1.Text = inputSqrt.ToString();
+                try
+                {
+                    string txt1 = textBox1.Text;
+                    double inputSqrt = Math.Sqrt(double.Parse(txt1));
+                    textBox1.Text = inputSqrt.ToString();
+                } catch (Exception ex)
+                {
+                    Form3 f = new Form3();  
+                    f.ShowDialog(this);
+                    f.Dispose();
+                    Console.WriteLine(ex.Message);
+                }
             };
 
             //1/xボタン
             this.Div.Click += (s, e) =>
             {
-                string txt1 = textBox1.Text;
-                decimal inputDiv = 1 / decimal.Parse(txt1);
-                textBox1.Text = inputDiv.ToString();
+                try
+                {
+                    string txt1 = textBox1.Text;
+                    decimal inputDiv = 1 / decimal.Parse(txt1);
+                    textBox1.Text = inputDiv.ToString();
+                } catch(Exception ex)
+                {
+                    Form3 f = new Form3();
+                    f.ShowDialog(this);
+                    f.Dispose();
+                    Console.WriteLine(ex.Message);
+                }
             };
 
             //％ボタン
             this.Percent.Click += (s, e) =>
             {
-                string txt1 = textBox1.Text;
-                decimal inputRev = decimal.Parse(txt1) / 100;
-                textBox1.Text = inputRev.ToString();
+                try
+                {
+                    string txt1 = textBox1.Text;
+                    decimal inputRev = decimal.Parse(txt1) / 100;
+                    textBox1.Text = inputRev.ToString();
+                } catch(Exception ex)
+                {
+                    Form3 f = new Form3();
+                    f.ShowDialog(this);
+                    f.Dispose();
+                    Console.WriteLine(ex.Message);
+                }
             };
             //M(メモリ）機能
             this.M.Click += (s, e) => {
@@ -133,12 +180,6 @@ namespace Calclator1
 
 
         }
-        private void num_keyPress(Object sender, KeyPressEventArgs e)
-        {
-            
-                   
-            
-        }
         //数字ボタン
         private void btnNum_Click(object sender, EventArgs e)
         {
@@ -173,22 +214,32 @@ namespace Calclator1
         //＝（イコール）ボタン
         private void btnEq_Click(object sender, EventArgs e)
         {
-            if ((textBox2.Text != null) && (textBox2.Text.Trim().Length != 0))
+            try
             {
-                string txt2 = textBox2.Text;
-                string mem = txt2.Remove(txt2.Length - 1);
-                decimal inputEq = 0;
-                if (txt2.Contains("÷"))
-                    inputEq = decimal.Parse(mem) / decimal.Parse(textBox1.Text);
-                else if (txt2.Contains("×"))
-                    inputEq = decimal.Parse(mem) * decimal.Parse(textBox1.Text);
-                else if (txt2.Contains("-"))
-                    inputEq = decimal.Parse(mem) - decimal.Parse(textBox1.Text);
-                else if (txt2.Contains("+"))
-                    inputEq = decimal.Parse(mem) + decimal.Parse(textBox1.Text);
-                textBox1.Text = inputEq.ToString();
-                textBox2.Text = null;
+                if ((textBox2.Text != null) && (textBox2.Text.Trim().Length != 0))
+                {
+                    string txt2 = textBox2.Text;
+                    string mem = txt2.Remove(txt2.Length - 1);
+                    decimal inputEq = 0;
+                    if (txt2.Contains("÷"))
+                        inputEq = decimal.Parse(mem) / decimal.Parse(textBox1.Text);
+                    else if (txt2.Contains("×"))
+                        inputEq = decimal.Parse(mem) * decimal.Parse(textBox1.Text);
+                    else if (txt2.Contains("-"))
+                        inputEq = decimal.Parse(mem) - decimal.Parse(textBox1.Text);
+                    else if (txt2.Contains("+"))
+                        inputEq = decimal.Parse(mem) + decimal.Parse(textBox1.Text);
+                    textBox1.Text = inputEq.ToString();
+                    textBox2.Text = null;
+                }
+            } catch(Exception ex)
+            {
+                Form3 f = new Form3();
+                f.ShowDialog(this);
+                f.Dispose();
+                Console.WriteLine(ex.Message);
             }
+            
         }
 
         //Back(一文字消す）ボタン
@@ -231,10 +282,6 @@ namespace Calclator1
             e.Handled = true;
         switch (e.KeyCode)
         {
-            case Keys.Enter:
-                this.Equal.Focus();
-                this.Equal.PerformClick();
-                break;
             case Keys.Back:
                 this.Back.Focus();
                 this.Back.PerformClick();
@@ -311,5 +358,6 @@ namespace Calclator1
                 break;
             }
         }
+
     }
 }

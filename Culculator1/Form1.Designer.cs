@@ -81,6 +81,7 @@ namespace Calclator1
             this.button1.Text = "1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnNum_Click);
+            this.button1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button2
             // 
@@ -92,6 +93,7 @@ namespace Calclator1
             this.button2.Text = "2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnNum_Click);
+            this.button2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button3
             // 
@@ -103,6 +105,7 @@ namespace Calclator1
             this.button3.Text = "3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.btnNum_Click);
+            this.button3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button4
             // 
@@ -114,6 +117,7 @@ namespace Calclator1
             this.button4.Text = "6";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.btnNum_Click);
+            this.button4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button5
             // 
@@ -125,6 +129,7 @@ namespace Calclator1
             this.button5.Text = "5";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.btnNum_Click);
+            this.button5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button6
             // 
@@ -136,6 +141,7 @@ namespace Calclator1
             this.button6.Text = "4";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.btnNum_Click);
+            this.button6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button7
             // 
@@ -147,6 +153,7 @@ namespace Calclator1
             this.button7.Text = "9";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.btnNum_Click);
+            this.button7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button8
             // 
@@ -158,6 +165,7 @@ namespace Calclator1
             this.button8.Text = "8";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.btnNum_Click);
+            this.button8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button9
             // 
@@ -169,6 +177,7 @@ namespace Calclator1
             this.button9.Text = "7";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.btnNum_Click);
+            this.button9.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Rev
             // 
@@ -179,6 +188,7 @@ namespace Calclator1
             this.Rev.TabIndex = 11;
             this.Rev.Text = "+/-";
             this.Rev.UseVisualStyleBackColor = true;
+            this.Rev.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Dot
             // 
@@ -190,6 +200,7 @@ namespace Calclator1
             this.Dot.Text = ".";
             this.Dot.UseVisualStyleBackColor = true;
             this.Dot.Click += new System.EventHandler(this.btnDot_Click);
+            this.Dot.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button0
             // 
@@ -201,6 +212,7 @@ namespace Calclator1
             this.button0.Text = "0";
             this.button0.UseVisualStyleBackColor = true;
             this.button0.Click += new System.EventHandler(this.btnNum_Click);
+            this.button0.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Add
             // 
@@ -212,6 +224,7 @@ namespace Calclator1
             this.Add.Text = "+";
             this.Add.UseVisualStyleBackColor = true;
             this.Add.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Add.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Divide
             // 
@@ -223,6 +236,7 @@ namespace Calclator1
             this.Divide.Text = "÷";
             this.Divide.UseVisualStyleBackColor = true;
             this.Divide.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Divide.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Multiply
             // 
@@ -234,6 +248,7 @@ namespace Calclator1
             this.Multiply.Text = "×";
             this.Multiply.UseVisualStyleBackColor = true;
             this.Multiply.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Multiply.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Subtract
             // 
@@ -245,6 +260,7 @@ namespace Calclator1
             this.Subtract.Text = "-";
             this.Subtract.UseVisualStyleBackColor = true;
             this.Subtract.Click += new System.EventHandler(this.btnOpe_Click);
+            this.Subtract.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Percent
             // 
@@ -255,6 +271,7 @@ namespace Calclator1
             this.Percent.TabIndex = 19;
             this.Percent.Text = "％";
             this.Percent.UseVisualStyleBackColor = true;
+            this.Percent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // CE
             // 
@@ -265,6 +282,7 @@ namespace Calclator1
             this.CE.TabIndex = 18;
             this.CE.Text = "CE";
             this.CE.UseVisualStyleBackColor = true;
+            this.CE.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // C
             // 
@@ -275,6 +293,7 @@ namespace Calclator1
             this.C.TabIndex = 17;
             this.C.Text = "C";
             this.C.UseVisualStyleBackColor = true;
+            this.C.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Back
             // 
@@ -286,6 +305,7 @@ namespace Calclator1
             this.Back.Text = "Back";
             this.Back.UseVisualStyleBackColor = true;
             this.Back.Click += new System.EventHandler(this.btnBack_Click);
+            this.Back.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Div
             // 
@@ -296,6 +316,7 @@ namespace Calclator1
             this.Div.TabIndex = 24;
             this.Div.Text = "1/x";
             this.Div.UseVisualStyleBackColor = true;
+            this.Div.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Sq
             // 
@@ -306,6 +327,7 @@ namespace Calclator1
             this.Sq.TabIndex = 23;
             this.Sq.Text = "x^2";
             this.Sq.UseVisualStyleBackColor = true;
+            this.Sq.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Sqrt
             // 
@@ -316,6 +338,7 @@ namespace Calclator1
             this.Sqrt.TabIndex = 22;
             this.Sqrt.Text = "√x";
             this.Sqrt.UseVisualStyleBackColor = true;
+            this.Sqrt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Equal
             // 
@@ -327,6 +350,7 @@ namespace Calclator1
             this.Equal.Text = "=";
             this.Equal.UseVisualStyleBackColor = true;
             this.Equal.Click += new System.EventHandler(this.btnEq_Click);
+            this.Equal.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // textBox1
             // 
@@ -356,6 +380,7 @@ namespace Calclator1
             this.M.TabIndex = 26;
             this.M.Text = "M";
             this.M.UseVisualStyleBackColor = true;
+            this.M.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // MS
             // 
@@ -366,6 +391,7 @@ namespace Calclator1
             this.MS.TabIndex = 27;
             this.MS.Text = "MS";
             this.MS.UseVisualStyleBackColor = true;
+            this.MS.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Mminus
             // 
@@ -376,6 +402,7 @@ namespace Calclator1
             this.Mminus.TabIndex = 28;
             this.Mminus.Text = "M-";
             this.Mminus.UseVisualStyleBackColor = true;
+            this.Mminus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Mplus
             // 
@@ -386,6 +413,7 @@ namespace Calclator1
             this.Mplus.TabIndex = 29;
             this.Mplus.Text = "M+";
             this.Mplus.UseVisualStyleBackColor = true;
+            this.Mplus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // MC
             // 
@@ -396,6 +424,7 @@ namespace Calclator1
             this.MC.TabIndex = 30;
             this.MC.Text = "MC";
             this.MC.UseVisualStyleBackColor = true;
+            this.MC.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // MR
             // 
@@ -406,6 +435,7 @@ namespace Calclator1
             this.MR.TabIndex = 31;
             this.MR.Text = "MR";
             this.MR.UseVisualStyleBackColor = true;
+            this.MR.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // button10
             // 
@@ -416,6 +446,7 @@ namespace Calclator1
             this.button10.Text = "Output";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.btnOutput_Click);
+            this.button10.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             // 
             // Form1
             // 
