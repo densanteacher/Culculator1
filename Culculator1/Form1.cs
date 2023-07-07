@@ -138,22 +138,45 @@ namespace Calclator1
             //M-ボタン
             this.Mminus.Click += (s, e) =>
             {
-                if (memory.Count > 0)
+                try
                 {
-                    string txt1 = textBox1.Text;
-                    decimal memoryMinus = decimal.Parse(memory[0]) - decimal.Parse(txt1);
-                    memory[0] = memoryMinus.ToString();
+                    if (memory.Count > 0)
+                    {
+                        string txt1 = textBox1.Text;
+                        decimal memoryMinus = decimal.Parse(memory[0]) - decimal.Parse(txt1);
+                        memory[0] = memoryMinus.ToString();
+                    }
+                } catch (Exception ex)
+                {
+                    if (memory.Count > 0)
+                    {
+                        string txt1 = textBox1.Text;
+                        decimal memoryMinus = decimal.Parse(memory[0]) - decimal.Parse(txt1);
+                        memory[0] = memoryMinus.ToString();
+                        Console.WriteLine(ex.Message);
+                    }
                 }
+                
             };
             //M+ボタン
             this.Mplus.Click += (s, e) =>
             {
-                if(memory.Count > 0)
+                try
                 {
-                    string txt1 = textBox1.Text;
-                    decimal memoryPlus = decimal.Parse(memory[0]) + decimal.Parse(txt1);
-                    memory[0] = memoryPlus.ToString();
+                    if (memory.Count > 0)
+                    {
+                        string txt1 = textBox1.Text;
+                        decimal memoryPlus = decimal.Parse(memory[0]) + decimal.Parse(txt1);
+                        memory[0] = memoryPlus.ToString();
+                    }
+                } catch(Exception ex)
+                {
+                    Form3 f = new Form3();
+                    f.ShowDialog(this);
+                    f.Dispose();
+                    Console.WriteLine(ex.Message);
                 }
+                
             };
 
 
