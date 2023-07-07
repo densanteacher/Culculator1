@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Permissions;
 using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Serialization;
+using Culculator1;
 
 namespace Calclator1
 {
     public partial class Form1 : Form
     {
+        public List<string> memory = new List<string>();
         public Form1()
         {
             InitializeComponent();
@@ -71,8 +74,57 @@ namespace Calclator1
                 decimal inputRev = decimal.Parse(txt1) / 100;
                 textBox1.Text = inputRev.ToString();
             };
+            //M(メモリ）機能
+            this.M.Click += (s, e) => {
+                Form2 f = new Form2(memory);
+                //Form2を表示する
+                //ここではモーダルダイアログボックスとして表示する
+                //オーナーウィンドウにthisを指定する
+                f.ShowDialog(this);
+                //フォームが必要なくなったところで、Disposeを呼び出す
+                f.Dispose();
+            };
+            //Ms（メモリ記録）機能
+            this.MS.Click += (s, e) => {memory.Add(textBox1.Text);};
+
+            //M-ボタン
+            this.Mminus.Click += (s, e) =>
+            {
+                string txt1 = textBox1.Text;
+                decimal memoryMinus = decimal.Parse(memory[0]) - decimal.Parse(txt1);
+                memory[0] = memoryMinus.ToString();
+            };
+            //M+ボタン
+            this.Mplus.Click += (s, e) =>
+            {
+                string txt1 = textBox1.Text;
+                decimal memoryPlus = decimal.Parse(memory[0]) + decimal.Parse(txt1);
+                memory[0] = memoryPlus.ToString();
+            };
+
+
+            //MR(メモリ呼び出し）ボタン
+            this.MR.Click += (s, e) =>{textBox1.Text = memory[0];};
+
+
+            //MC(メモリクリア)ボタン
+            this.MC.Click += (s, e) =>{ memory.Clear();};
+
         }
 
+        private void numOnly_keyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\b')
+                return;
+            if (e.KeyChar == '.' && !textBox1.Text.Contains('.'))
+                return;
+
+            //数値0～9以外が押された時はイベントをキャンセルする
+            if ((e.KeyChar < '0' || '9' < e.KeyChar))
+                e.Handled = true;
+
+
+        }
         //数字ボタン
         private void btnNum_Click(object sender, EventArgs e)
         {
@@ -81,6 +133,7 @@ namespace Calclator1
 
             textBox1.Text = inputNum.ToString();
         }
+
 
         //.(小数点）ボタン
         private void btnDot_Click(object sender, EventArgs e)
@@ -135,5 +188,9 @@ namespace Calclator1
                 textBox1.Text = mem;
         }
 
+        public void btnMminus_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

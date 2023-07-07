@@ -25,34 +25,9 @@ namespace Calclator1
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        /// 数字とバックスペース以外の入力を無効にしたTextBox
-        /// </summary>
-        public class NumericTextBox : TextBox
-        {
-            private const int WM_PASTE = 0x302;
-
-            [SecurityPermission(SecurityAction.Demand,
-                Flags = SecurityPermissionFlag.UnmanagedCode)]
-            protected override void WndProc(ref Message m)
-            {
-                if (m.Msg == WM_PASTE)
-                {
-                    IDataObject iData = Clipboard.GetDataObject();
-                    //文字列がクリップボードにあるか
-                    if (iData != null && iData.GetDataPresent(DataFormats.Text))
-                    {
-                        string clipStr = (string)iData.GetData(DataFormats.Text);
-                        //クリップボードの文字列が数字のみか調べる
-                        if (!System.Text.RegularExpressions.Regex.IsMatch(
-                            clipStr,
-                            @"^[0-9]+$"))
-                        {
-                            return;
-                        }
-                    }
-                }
-
+        
+        
+        
         #region Windows フォーム デザイナーで生成されたコード
 
         /// <summary>
@@ -85,6 +60,14 @@ namespace Calclator1
             this.Sq = new System.Windows.Forms.Button();
             this.Sqrt = new System.Windows.Forms.Button();
             this.Equal = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.M = new System.Windows.Forms.Button();
+            this.MS = new System.Windows.Forms.Button();
+            this.Mminus = new System.Windows.Forms.Button();
+            this.Mplus = new System.Windows.Forms.Button();
+            this.MC = new System.Windows.Forms.Button();
+            this.MR = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -303,23 +286,6 @@ namespace Calclator1
             this.Back.UseVisualStyleBackColor = true;
             this.Back.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox1.Location = new System.Drawing.Point(74, 37);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(338, 34);
-            this.textBox1.TabIndex = 20;
-            // 
-            // textBox2
-            // 
-            this.textBox2.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox2.Location = new System.Drawing.Point(160, 12);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(252, 19);
-            this.textBox2.TabIndex = 21;
-            // 
             // Div
             // 
             this.Div.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -353,32 +319,110 @@ namespace Calclator1
             // Equal
             // 
             this.Equal.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.Equal.Location = new System.Drawing.Point(443, 679);
-            this.Equal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Equal.Location = new System.Drawing.Point(332, 543);
             this.Equal.Name = "Equal";
-            this.Equal.Size = new System.Drawing.Size(107, 100);
+            this.Equal.Size = new System.Drawing.Size(80, 80);
             this.Equal.TabIndex = 25;
             this.Equal.Text = "=";
             this.Equal.UseVisualStyleBackColor = true;
             this.Equal.Click += new System.EventHandler(this.btnEq_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.textBox1.Location = new System.Drawing.Point(74, 37);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ShortcutsEnabled = false;
+            this.textBox1.Size = new System.Drawing.Size(338, 34);
+            this.textBox1.TabIndex = 20;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numOnly_keyPress);
+            // 
+            // textBox2
+            // 
+            this.textBox2.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.textBox2.Location = new System.Drawing.Point(160, 12);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(252, 19);
+            this.textBox2.TabIndex = 21;
+            // 
+            // M
+            // 
+            this.M.Location = new System.Drawing.Point(373, 89);
+            this.M.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.M.Name = "M";
+            this.M.Size = new System.Drawing.Size(38, 18);
+            this.M.TabIndex = 26;
+            this.M.Text = "M";
+            this.M.UseVisualStyleBackColor = true;
+            // 
+            // MS
+            // 
+            this.MS.Location = new System.Drawing.Point(330, 89);
+            this.MS.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MS.Name = "MS";
+            this.MS.Size = new System.Drawing.Size(38, 18);
+            this.MS.TabIndex = 27;
+            this.MS.Text = "MS";
+            this.MS.UseVisualStyleBackColor = true;
+            // 
+            // Mminus
+            // 
+            this.Mminus.Location = new System.Drawing.Point(287, 89);
+            this.Mminus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Mminus.Name = "Mminus";
+            this.Mminus.Size = new System.Drawing.Size(38, 18);
+            this.Mminus.TabIndex = 28;
+            this.Mminus.Text = "M-";
+            this.Mminus.UseVisualStyleBackColor = true;
+            // 
+            // Mplus
+            // 
+            this.Mplus.Location = new System.Drawing.Point(244, 89);
+            this.Mplus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Mplus.Name = "Mplus";
+            this.Mplus.Size = new System.Drawing.Size(38, 18);
+            this.Mplus.TabIndex = 29;
+            this.Mplus.Text = "M+";
+            this.Mplus.UseVisualStyleBackColor = true;
+            // 
+            // MC
+            // 
+            this.MC.Location = new System.Drawing.Point(160, 89);
+            this.MC.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MC.Name = "MC";
+            this.MC.Size = new System.Drawing.Size(38, 18);
+            this.MC.TabIndex = 30;
+            this.MC.Text = "MC";
+            this.MC.UseVisualStyleBackColor = true;
+            // 
+            // MR
+            // 
+            this.MR.Location = new System.Drawing.Point(202, 89);
+            this.MR.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MR.Name = "MR";
+            this.MR.Size = new System.Drawing.Size(38, 18);
+            this.MR.TabIndex = 31;
+            this.MR.Text = "MR";
+            this.MR.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 650);
-            this.Controls.Add(this.button20);
-            this.Controls.Add(this.button19);
-            this.Controls.Add(this.button18);
-            this.Controls.Add(this.button17);
-            this.Controls.Add(this.button11);
-            this.Controls.Add(this.button10);
+            this.ClientSize = new System.Drawing.Size(484, 661);
+            this.Controls.Add(this.MR);
+            this.Controls.Add(this.MC);
+            this.Controls.Add(this.Mplus);
+            this.Controls.Add(this.Mminus);
+            this.Controls.Add(this.MS);
+            this.Controls.Add(this.M);
             this.Controls.Add(this.Equal);
             this.Controls.Add(this.Div);
             this.Controls.Add(this.Sq);
             this.Controls.Add(this.Sqrt);
-            this.Controls.Add(value: this.textBox1);
-            this.Controls.Add(value: this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.Percent);
             this.Controls.Add(this.CE);
             this.Controls.Add(this.C);
@@ -432,8 +476,14 @@ namespace Calclator1
         private System.Windows.Forms.Button Sq;
         private System.Windows.Forms.Button Sqrt;
         private System.Windows.Forms.Button Equal;
-        private NumericTextBox textBox1;
-        private NumericTextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private Button M;
+        private Button MS;
+        private Button Mminus;
+        private Button Mplus;
+        private Button MC;
+        private Button MR;
     }
 }
 
