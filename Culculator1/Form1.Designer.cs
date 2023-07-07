@@ -47,7 +47,7 @@ namespace Calclator1
             this.button9 = new System.Windows.Forms.Button();
             this.Rev = new System.Windows.Forms.Button();
             this.Dot = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
+            this.button0 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
@@ -81,6 +81,7 @@ namespace Calclator1
             this.button1.Text = "1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnNum_Click);
+            this.button1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
             // button2
             // 
@@ -92,6 +93,7 @@ namespace Calclator1
             this.button2.Text = "2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnNum_Click);
+            this.button2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
             // button3
             // 
@@ -103,6 +105,7 @@ namespace Calclator1
             this.button3.Text = "3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.btnNum_Click);
+            this.button3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.num_keyPress);
             // 
             // button4
             // 
@@ -191,16 +194,16 @@ namespace Calclator1
             this.Dot.UseVisualStyleBackColor = true;
             this.Dot.Click += new System.EventHandler(this.btnDot_Click);
             // 
-            // button12
+            // button0
             // 
-            this.button12.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button12.Location = new System.Drawing.Point(160, 543);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(80, 80);
-            this.button12.TabIndex = 9;
-            this.button12.Text = "0";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.btnNum_Click);
+            this.button0.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button0.Location = new System.Drawing.Point(160, 543);
+            this.button0.Name = "button0";
+            this.button0.Size = new System.Drawing.Size(80, 80);
+            this.button0.TabIndex = 9;
+            this.button0.Text = "0";
+            this.button0.UseVisualStyleBackColor = true;
+            this.button0.Click += new System.EventHandler(this.btnNum_Click);
             // 
             // button13
             // 
@@ -445,7 +448,7 @@ namespace Calclator1
             this.Controls.Add(this.button16);
             this.Controls.Add(this.Rev);
             this.Controls.Add(this.Dot);
-            this.Controls.Add(this.button12);
+            this.Controls.Add(this.button0);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button9);
@@ -475,7 +478,7 @@ namespace Calclator1
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button Rev;
         private System.Windows.Forms.Button Dot;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button0;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;

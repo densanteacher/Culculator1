@@ -133,6 +133,12 @@ namespace Calclator1
 
 
         }
+        private void num_keyPress(Object sender, KeyPressEventArgs e)
+        {
+            Control[] cs = this.Controls.Find("button" + e.KeyChar, true);
+            cs[0].Focus();
+            
+        }
         //数字ボタン
         private void btnNum_Click(object sender, EventArgs e)
         {
@@ -196,25 +202,27 @@ namespace Calclator1
                 textBox1.Text = mem;
         }
 
-        private async void btnOutput_Click(object sender, EventArgs e)
+        private void btnOutput_Click(object sender, EventArgs e)
         {
-            string path = @"C:\Users\user2\Documents\result.txt";
-            if (!System.IO.File.Exists(path))
+            string path = @"..\..\result.txt";
+            /*if (!System.IO.File.Exists(path))
             { 
                 File.Create(path);
-                await Task.Delay(1000);
             }
             System.IO.StreamWriter sw = new System.IO.StreamWriter(
                 path,
                 false,
-                System.Text.Encoding.GetEncoding("shift_jis"));
+                System.Text.Encoding.GetEncoding("shift_jis"));*/
+            using (FileStream fs = File.Create(path)) ;
             //TextBox1.Textの内容を1行ずつ書き込む
-            foreach (string item in memory)
+            Encoding enc = Encoding.GetEncoding("Shift_JIS");
+            using (StreamWriter writer = new StreamWriter(path, false, enc))
             {
-                sw.WriteLine(item + sw.NewLine);
+                foreach(string item in memory)
+                {
+                    writer.WriteLine(item);
+                }
             }
-            //閉じる
-            sw.Close();
 
         }
 
