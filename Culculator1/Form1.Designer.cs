@@ -68,6 +68,7 @@ namespace Calclator1
             this.Mplus = new System.Windows.Forms.Button();
             this.MC = new System.Windows.Forms.Button();
             this.MR = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -406,11 +407,22 @@ namespace Calclator1
             this.MR.Text = "MR";
             this.MR.UseVisualStyleBackColor = true;
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(74, 87);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.TabIndex = 32;
+            this.button10.Text = "Output";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.btnOutput_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 661);
+            this.Controls.Add(this.button10);
             this.Controls.Add(this.MR);
             this.Controls.Add(this.MC);
             this.Controls.Add(this.Mplus);
@@ -484,6 +496,7 @@ namespace Calclator1
         private Button Mplus;
         private Button MC;
         private Button MR;
+        private Button button10;
     }
 }
 

@@ -10,7 +10,10 @@ using System.Windows.Forms;
 using System.Security.Permissions;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Serialization;
-using Culculator1;
+using Calculator1;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO;
+
 
 namespace Calclator1
 {
@@ -78,8 +81,6 @@ namespace Calclator1
             this.M.Click += (s, e) => {
                 Form2 f = new Form2(memory, decimal.Parse(textBox1.Text));
                 //Form2を表示する
-                //ここではモーダルダイアログボックスとして表示する
-                //オーナーウィンドウにthisを指定する
                 f.ShowDialog(this);
                 //フォームが必要なくなったところで、Disposeを呼び出す
                 f.Dispose();
@@ -90,21 +91,27 @@ namespace Calclator1
             //M-ボタン
             this.Mminus.Click += (s, e) =>
             {
-                string txt1 = textBox1.Text;
-                decimal memoryMinus = decimal.Parse(memory[0]) - decimal.Parse(txt1);
-                memory[0] = memoryMinus.ToString();
+                if (memory.Count > 0)
+                {
+                    string txt1 = textBox1.Text;
+                    decimal memoryMinus = decimal.Parse(memory[0]) - decimal.Parse(txt1);
+                    memory[0] = memoryMinus.ToString();
+                }
             };
             //M+ボタン
             this.Mplus.Click += (s, e) =>
             {
-                string txt1 = textBox1.Text;
-                decimal memoryPlus = decimal.Parse(memory[0]) + decimal.Parse(txt1);
-                memory[0] = memoryPlus.ToString();
+                if(memory.Count > 0)
+                {
+                    string txt1 = textBox1.Text;
+                    decimal memoryPlus = decimal.Parse(memory[0]) + decimal.Parse(txt1);
+                    memory[0] = memoryPlus.ToString();
+                }
             };
 
 
             //MR(メモリ呼び出し）ボタン
-            this.MR.Click += (s, e) =>{textBox1.Text = memory[0];};
+            this.MR.Click += (s, e) =>{if(memory.Count> 0) textBox1.Text = memory[0];};
 
 
             //MC(メモリクリア)ボタン
@@ -112,6 +119,7 @@ namespace Calclator1
 
         }
 
+        //キー押下時数字と一部のキー以外は弾く処理
         private void numOnly_keyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == '\b')
@@ -128,7 +136,7 @@ namespace Calclator1
         //数字ボタン
         private void btnNum_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
+            System.Windows.Forms.Button btn = (System.Windows.Forms.Button)sender;
             decimal inputNum = decimal.Parse(textBox1.Text + btn.Text);
 
             textBox1.Text = inputNum.ToString();
@@ -138,7 +146,7 @@ namespace Calclator1
         //.(小数点）ボタン
         private void btnDot_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
+            System.Windows.Forms.Button btn = (System.Windows.Forms.Button)sender;
             if (!textBox1.Text.Contains("."))
             {
                 string inputDot = textBox1.Text + btn.Text;
@@ -149,7 +157,7 @@ namespace Calclator1
         //四則演算ボタン
         private void btnOpe_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
+            System.Windows.Forms.Button btn = (System.Windows.Forms.Button)sender;
             btnEq_Click(sender, new EventArgs());
             string inputOpe = textBox2.Text + textBox1.Text + btn.Text;
             textBox2.Text = inputOpe.ToString();
@@ -188,9 +196,27 @@ namespace Calclator1
                 textBox1.Text = mem;
         }
 
-        public void btnMminus_Click(object sender, EventArgs e)
+        private async void btnOutput_Click(object sender, EventArgs e)
         {
-            
+            string path = @"C:\Users\user2\Documents\result.txt";
+            if (!System.IO.File.Exists(path))
+            { 
+                File.Create(path);
+                await Task.Delay(1000);
+            }
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(
+                path,
+                false,
+                System.Text.Encoding.GetEncoding("shift_jis"));
+            //TextBox1.Textの内容を1行ずつ書き込む
+            foreach (string item in memory)
+            {
+                sw.WriteLine(item + sw.NewLine);
+            }
+            //閉じる
+            sw.Close();
+
         }
+
     }
 }

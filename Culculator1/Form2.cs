@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Culculator1
+namespace Calculator1
 {
     public partial class Form2 : Form
     {
@@ -27,6 +27,8 @@ namespace Culculator1
                 addControl();
             }
         }
+
+        //ラベル、ボタンを動的に生成
         public void addControl()
         {
             Label label = new Label();
@@ -70,6 +72,7 @@ namespace Culculator1
 
         }
 
+        //MCボタン（メモリクリア）
         private void btnMC_Click (object sender, EventArgs e)
         {
                 Button btn = (Button)sender;
@@ -85,6 +88,7 @@ namespace Culculator1
             
         }
 
+        //M+ボタン
         private void btnMplus_Click(object sender, EventArgs e) 
         {
             Button btn = (Button)sender;
@@ -95,6 +99,7 @@ namespace Culculator1
             cs[0].Text = Convert.ToString(memoryPlus);
         }
         
+        //M-ボタン
         private void btnMminus_Click(object sender,EventArgs e)
         {
             Button btn = (Button)sender;

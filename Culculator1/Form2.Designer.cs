@@ -1,4 +1,4 @@
-﻿namespace Culculator1
+﻿namespace Calculator1
 {
     partial class Form2
     {
