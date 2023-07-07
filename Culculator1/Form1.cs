@@ -76,7 +76,7 @@ namespace Calclator1
             };
             //M(メモリ）機能
             this.M.Click += (s, e) => {
-                Form2 f = new Form2(memory);
+                Form2 f = new Form2(memory, decimal.Parse(textBox1.Text));
                 //Form2を表示する
                 //ここではモーダルダイアログボックスとして表示する
                 //オーナーウィンドウにthisを指定する
