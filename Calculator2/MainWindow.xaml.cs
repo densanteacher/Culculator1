@@ -135,6 +135,14 @@ namespace Calculator2
                 if (!mainText.Text.Contains("."))
                     mainText.Text += ".";
             };
+
+            this.Memory.Click += (s, e) =>
+            {
+                decimal result = decimal.Parse(mainText.Text);
+                MemoryWindow mw = new MemoryWindow(memory, result);
+                mw.Show();
+            };
+
             //Ms（メモリ記録）機能
             this.MS.Click += (s, e) => { memory.Add(mainText.Text); };
 

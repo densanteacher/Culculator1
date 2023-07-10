@@ -5,40 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="950" Width="600">
-    <Grid>
-        <Button Content="1" HorizontalAlignment="Left" Height="72" Margin="70,562,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="2" HorizontalAlignment="Left" Height="72" Margin="192,562,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="3" HorizontalAlignment="Left" Height="72" Margin="321,562,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="4" HorizontalAlignment="Left" Height="72" Margin="70,461,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="5" HorizontalAlignment="Left" Height="72" Margin="192,461,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="6" HorizontalAlignment="Left" Height="72" Margin="321,461,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="7" HorizontalAlignment="Left" Height="72" Margin="70,354,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="8" HorizontalAlignment="Left" Height="72" Margin="192,354,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="9" HorizontalAlignment="Left" Height="72" Margin="321,354,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button Content="0" HorizontalAlignment="Left" Height="72" Margin="192,668,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnNum_Click"/>
-        <Button x:Name="Rev" Content="+/-" HorizontalAlignment="Left" Height="72" Margin="70,668,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="Dot" Content="." HorizontalAlignment="Left" Height="72" Margin="321,668,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="Add" Content="+" HorizontalAlignment="Left" Height="72" Margin="437,562,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnOpe_Click"/>
-        <Button x:Name="Substract" Content="-" HorizontalAlignment="Left" Height="72" Margin="437,461,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnOpe_Click"/>
-        <Button x:Name="Multiply" Content="×" HorizontalAlignment="Left" Height="72" Margin="437,354,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnOpe_Click"/>
-        <Button x:Name="Divide" Content="÷" HorizontalAlignment="Left" Height="72" Margin="437,259,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnOpe_Click"/>
-        <Button x:Name="Eq" Content="=" HorizontalAlignment="Left" Height="72" Margin="437,668,0,0" VerticalAlignment="Top" Width="74" FontSize="18" Click="btnEq_Click"/>
-        <Button x:Name="Div" Content="1/x" HorizontalAlignment="Left" Height="72" Margin="70,259,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="Sq" Content="x^2" HorizontalAlignment="Left" Height="72" Margin="192,259,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="Sqrt" Content="√x" HorizontalAlignment="Left" Height="72" Margin="321,259,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="Percent" Content="%" HorizontalAlignment="Left" Height="72" Margin="70,165,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="CE" Content="CE" HorizontalAlignment="Left" Height="72" Margin="192,165,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="C" Content="C" HorizontalAlignment="Left" Height="72" Margin="321,165,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <Button x:Name="Back" Content="Back" HorizontalAlignment="Left" Height="72" Margin="437,165,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
-        <TextBox x:Name="mainText" TextWrapping="Wrap" Text="0" Margin="70,63,89,822" Height="NaN" Width="NaN" FontSize="20"/>
-        <TextBox x:Name="subText" TextWrapping="Wrap" Height="NaN" Margin="240,10,89,876"/>
-        <Button x:Name="Memory" Content="M" HorizontalAlignment="Left" Height="28" Margin="459,132,0,0" VerticalAlignment="Top" Width="52"/>
-        <Button x:Name="MS" Content="MS" HorizontalAlignment="Left" Height="28" Margin="390,132,0,0" VerticalAlignment="Top" Width="52"/>
-        <Button x:Name="Mminus" Content="M-" HorizontalAlignment="Left" Height="28" Margin="324,132,0,0" VerticalAlignment="Top" Width="52"/>
-        <Button x:Name="Mplus" Content="M+" HorizontalAlignment="Left" Height="28" Margin="248,132,0,0" VerticalAlignment="Top" Width="52"/>
-        <Button x:Name="Memory_Copy" Content="M" HorizontalAlignment="Left" Height="28" Margin="177,132,0,0" VerticalAlignment="Top" Width="52"/>
-        <Button x:Name="Memory_Copy1" Content="M" HorizontalAlignment="Left" Height="28" Margin="120,132,0,0" VerticalAlignment="Top" Width="52"/>
+        Title="MainWindow" Height="700" Width="600">
+    <Grid Height="600">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Button Content="1" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="7" Grid.Column="0"/>
+        <Button Content="2" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="7" Grid.Column="1"/>
+        <Button Content="3" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="7" Grid.Column="2"/>
+        <Button Content="4" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="6"/>
+        <Button Content="5" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="6" Grid.Column="1"/>
+        <Button Content="6" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="6" Grid.Column="2"/>
+        <Button Content="7" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="5"/>
+        <Button Content="8" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="5" Grid.Column="1"/>
+        <Button Content="9" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="5" Grid.Column="2"/>
+        <Button Content="0" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnNum_Click" Grid.Row="8" Grid.Column="1"/>
+        <Button x:Name="Rev" Grid.Row="8" Grid.Column="0" Content="+/-" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="Dot" Grid.Row="8" Grid.Column="2" Content="." HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="Add" Grid.Row="7" Grid.Column="3" Content="+" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnOpe_Click"/>
+        <Button x:Name="Substract" Grid.Row="6" Grid.Column="3" Content="-" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnOpe_Click"/>
+        <Button x:Name="Multiply" Grid.Row="5" Grid.Column="3" Content="×" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnOpe_Click"/>
+        <Button x:Name="Divide" Grid.Row="4" Grid.Column="3" Content="÷" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnOpe_Click"/>
+        <Button x:Name="Eq" Content="=" Grid.Row="8" Grid.Column="3" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18" Click="btnEq_Click"/>
+        <Button x:Name="Div" Grid.Row="4" Content="1/x" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="Sq" Grid.Row="4" Grid.Column="1" Content="x^2" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="Sqrt" Grid.Row="4" Grid.Column="2" Content="√x" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="Percent" Grid.Row="3" Grid.Column="0" Content="%" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="CE" Grid.Row="3" Grid.Column="1" Content="CE" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="C" Grid.Row="3" Grid.Column="2" Content="C" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <Button x:Name="Back" Grid.Row="3"  Grid.Column="3" Content="Back" HorizontalAlignment = "Center" Height="60" VerticalAlignment="Center" Width="60" FontSize="18"/>
+        <TextBox x:Name="mainText" Grid.Row="1" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
+        <TextBox x:Name="subText" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" TextWrapping="Wrap" Height="NaN"/>
+        <Button x:Name="Memory" Content="M" HorizontalAlignment = "Left" Height="28" VerticalAlignment="Center" Width="52" Grid.Column="3" Margin="88,0,0,0" Grid.Row="2"/>
+        <Button x:Name="MS" Content="MS" HorizontalAlignment = "Left" Height="28" VerticalAlignment="Center" Width="52" Grid.Column="3" Margin="10,0,0,0" Grid.Row="2"/>
+        <Button x:Name="Mminus" Content="M-" HorizontalAlignment = "Left" Height="28" VerticalAlignment="Center" Width="52" Grid.Column="2" Margin="88,0,0,0" Grid.Row="2"/>
+        <Button x:Name="Mplus" Content="M+" HorizontalAlignment = "Left" Height="28" VerticalAlignment="Center" Width="52" Grid.Column="2" Margin="10,0,0,0" Grid.Row="2"/>
+        <Button x:Name="MR" Content="MR" HorizontalAlignment = "Left" Height="28" VerticalAlignment="Center" Width="52" Grid.Column="1" Margin="88,0,0,0" Grid.Row="2"/>
+        <Button x:Name="MC" Content="MC" HorizontalAlignment = "Left" Height="28" VerticalAlignment="Center" Width="52" Grid.Column="1" Margin="10,0,0,0" Grid.Row="2"/>
 
     </Grid>
 </Window>
