@@ -53,6 +53,16 @@ namespace Calculator2
 
             };
 
+            this.Back.Click += (s, e) =>
+            {
+                string txt1 = mainText.Text;
+                string mem = txt1.Remove(txt1.Length - 1);
+                if (mem.Length == 0 || mem == "-")
+                    mainText.Text = "0";
+                else
+                    mainText.Text = mem;
+            };
+
             //x^2(二乗)ボタン
             this.Sq.Click += (s, e) =>
             {
@@ -117,6 +127,61 @@ namespace Calculator2
                     Console.WriteLine(ex.Message);
                 }
             };
+
+            //小数点ボタン
+            this.Dot.Click += (s, e) =>
+            {
+                Button btn = (Button)s;
+                if (!mainText.Text.Contains("."))
+                    mainText.Text += ".";
+            };
+            //Ms（メモリ記録）機能
+            this.MS.Click += (s, e) => { memory.Add(mainText.Text); };
+
+            //M-ボタン
+            this.Mminus.Click += (s, e) =>
+            {
+                try
+                {
+                    if (memory.Count > 0)
+                    {
+                        string txt1 = mainText.Text;
+                        decimal memoryMinus = decimal.Parse(memory[0]) - decimal.Parse(txt1);
+                        memory[0] = memoryMinus.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            };
+            //M+ボタン
+            this.Mplus.Click += (s, e) =>
+            {
+                try
+                {
+                    if (memory.Count > 0)
+                    {
+                        string txt1 = mainText.Text;
+                        decimal memoryPlus = decimal.Parse(memory[0]) + decimal.Parse(txt1);
+                        memory[0] = memoryPlus.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            };
+
+
+            //MR(メモリ呼び出し）ボタン
+            this.MR.Click += (s, e) => { if (memory.Count > 0) mainText.Text = memory[0]; };
+
+
+            //MC(メモリクリア)ボタン
+            this.MC.Click += (s, e) => { memory.Clear(); };
         }
         
 
