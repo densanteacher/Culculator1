@@ -30,44 +30,18 @@ namespace Calculator2
 
             foreach (var item in _memory)
             {
-                addControl(item);
+                this.memoryList.Items.Add(item);
             }
-        }
-        public void addControl(string m)
-        {
-            /*var grid = new Grid();
-            grid.Name = "grid" + counter;
-            grid.Width = 600;
-            grid.Height = 50;
-            var setGrid = new TextBlock();
-            setGrid.Text = m;
-            mainPanel.Children.Add(grid);
-            mainPanel.RegisterName(grid.Name, grid);
 
-            var lbl = new Label();
-            lbl.Name = "lbl" + counter;
-            lbl.Content = m;
-            grid.Children.Add(lbl);
-            grid.RegisterName(lbl.Name, lbl);
-
-            var subPanel = new StackPanel();
-            subPanel.Orientation = Orientation.Horizontal;
-            grid.Children.Add(subPanel);
-
-            var MC = new Button();
-            MC.Content = "MC";
-            MC.Height = 20;
-            subPanel.Children.Add(MC);
-
-            var Mplus = new Button();
-            Mplus.Content = "M+";
-            subPanel.Children.Add(Mplus);
-
-            var Mminus = new Button();
-            Mminus.Content = "M-";
-            subPanel.Children.Add(Mminus);
-
-            counter++;*/
+            this.MC.Click += (s, e) =>
+            {
+                string selected = memoryList.SelectedItem.ToString();
+                if (selected != null)
+                {
+                    _memory.Remove(selected);
+                    memoryList.Items.Remove(selected);
+                }
+            };
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Calculator2
 
             };
 
+            //Backボタン
             this.Back.Click += (s, e) =>
             {
                 string txt1 = mainText.Text;

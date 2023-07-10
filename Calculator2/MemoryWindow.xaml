@@ -17,9 +17,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}"  Grid.ColumnSpan="3"/>
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}"  Name="memoryList" Grid.ColumnSpan="3"/>
         <Button x:Name="MC" Content="MC" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0"/>
-        <Button Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
-        <Button Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2"/>
+        <Button Content="M+" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
+        <Button Content="M-" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2"/>
     </Grid>
 </Window>
