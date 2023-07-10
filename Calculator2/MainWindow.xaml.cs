@@ -21,13 +21,19 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
+        // TODO: private のほうがよいでしょう。
+        // TODO: new List<string>() → new() と省略できます。
         public List<string> memory = new List<string>();
+
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+
+            // TODO: 初期化用のメソッドを作るのがよさそうです。
             this.mainText.Text = "0";
 
-            //クリア（mainTextとsubText両方消す）ボタン
+            // TODO: ソースコードをコメントアウトするとスペースなしのコメントになります。そのため、通常のコメントにはスペースを入れたほうが読みやすくなります。
+            // クリア（mainTextとsubText両方消す）ボタン
             this.C.Click += (s, e) =>
             {
                 this.mainText.Text = "0";
@@ -47,7 +53,6 @@ namespace Calculator2
                 }
                 catch (Exception ex)
                 {
-                    
                     Console.WriteLine(ex.Message);
                 }
 
@@ -75,7 +80,7 @@ namespace Calculator2
                 }
                 catch (Exception ex)
                 {
-                    
+
                     Console.WriteLine(ex.Message);
                 }
 
@@ -92,7 +97,7 @@ namespace Calculator2
                 }
                 catch (Exception ex)
                 {
-                    
+
                     Console.WriteLine(ex.Message);
                 }
             };
@@ -108,7 +113,7 @@ namespace Calculator2
                 }
                 catch (Exception ex)
                 {
-                    
+
                     Console.WriteLine(ex.Message);
                 }
             };
@@ -124,7 +129,7 @@ namespace Calculator2
                 }
                 catch (Exception ex)
                 {
-                    
+
                     Console.WriteLine(ex.Message);
                 }
             };
@@ -189,21 +194,36 @@ namespace Calculator2
             this.MR.Click += (s, e) => { if (memory.Count > 0) mainText.Text = memory[0]; };
 
 
-            //MC(メモリクリア)ボタン
-            this.MC.Click += (s, e) => { memory.Clear(); };
+            // TODO: 処理のそばにコメントをつけるよりは、メソッド化するのがよいでしょう。
+            // メソッド化することで処理に名前が付きます。またメソッドにドキュメンテーションコメントを付けることができます。
+            this.MC.Click += (s, e) => { this.ClearMemory(); };
         }
-        
+
+        /// <summary>
+        /// メモリをクリアします。
+        /// </summary>
+        private void ClearMemory()
+        {
+            memory.Clear();
+        }
 
         private void btnNum_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: (Button)のキャストではなく、as によるキャストを推奨します。
             Button btn = (Button)sender;
+            // TODO: decimal.Parse() の decimal は C# の型で、実際のクラスは Decimal になります。そのため、Decimal.Parse() とするほうが意味的には正確です。
+            // TODO: imput→input
+            // TODO: inputという英語は他動詞の意味もあるので、変数名は名詞となる方がよいです。またここでは mainText と Content の計算結果を格納しているので、resultText あたりのほうがよさそうです。
             decimal imputNum = decimal.Parse(mainText.Text + btn.Content);
+            // TODO: mainText も this 参照をつけて揃えましょう。
             mainText.Text = imputNum.ToString();
         }
 
         private void btnOpe_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
+            // TODO: イベントメソッドを直接呼ぶのではなく、中身の処理をメソッド化して、それを呼び出しましょう。
+            // sender と e に渡される内容が、このメソッドのものになるので、実際のイベントで呼び出すコントロールではなくなるのはバグの元です。
             btnEq_Click(sender, e);
             subText.Text = mainText.Text + btn.Content;
             mainText.Text = "0";
@@ -213,11 +233,13 @@ namespace Calculator2
         {
             try
             {
+                // TODO: 早期リターンに書き直してみましょう。
                 if ((subText.Text != null) && (subText.Text.Trim().Length != 0))
                 {
                     string txt2 = subText.Text;
                     string mem = txt2.Remove(txt2.Length - 1);
                     decimal inputEq = 0;
+                    // TODO: if の中括弧は省略しないほうがよいです。稀ですが、マージしてインデントがズレた時に混乱の元となります。
                     if (txt2.Contains("÷"))
                         inputEq = decimal.Parse(mem) / decimal.Parse(mainText.Text);
                     else if (txt2.Contains("×"))
