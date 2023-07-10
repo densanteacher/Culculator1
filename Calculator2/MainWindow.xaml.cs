@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,145 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<string> memory = new List<string>();
         public MainWindow()
         {
             InitializeComponent();
+            this.mainText.Text = "0";
+
+            //クリア（mainTextとsubText両方消す）ボタン
+            this.C.Click += (s, e) =>
+            {
+                this.mainText.Text = "0";
+                this.subText.Text = null;
+            };
+
+            //CE（mainTextのみ消す）ボタン
+            this.CE.Click += (s, e) => { mainText.Text = "0"; };
+            //+/-(プラスマイナス反転）ボタン
+            this.Rev.Click += (s, e) =>
+            {
+                try
+                {
+                    string txt1 = mainText.Text;
+                    decimal inputRev = -decimal.Parse(txt1);
+                    mainText.Text = inputRev.ToString();
+                }
+                catch (Exception ex)
+                {
+                    
+                    Console.WriteLine(ex.Message);
+                }
+
+            };
+
+            //x^2(二乗)ボタン
+            this.Sq.Click += (s, e) =>
+            {
+                try
+                {
+                    string txt1 = mainText.Text;
+                    decimal inputSq = decimal.Parse(txt1) * decimal.Parse(txt1);
+                    mainText.Text = inputSq.ToString();
+                }
+                catch (Exception ex)
+                {
+                    
+                    Console.WriteLine(ex.Message);
+                }
+
+            };
+
+            //√x（平方根）ボタン
+            this.Sqrt.Click += (s, e) =>
+            {
+                try
+                {
+                    string txt1 = mainText.Text;
+                    double inputSqrt = Math.Sqrt(double.Parse(txt1));
+                    mainText.Text = inputSqrt.ToString();
+                }
+                catch (Exception ex)
+                {
+                    
+                    Console.WriteLine(ex.Message);
+                }
+            };
+
+            //1/xボタン
+            this.Div.Click += (s, e) =>
+            {
+                try
+                {
+                    string txt1 = mainText.Text;
+                    decimal inputDiv = 1 / decimal.Parse(txt1);
+                    mainText.Text = inputDiv.ToString();
+                }
+                catch (Exception ex)
+                {
+                    
+                    Console.WriteLine(ex.Message);
+                }
+            };
+
+            //％ボタン
+            this.Percent.Click += (s, e) =>
+            {
+                try
+                {
+                    string txt1 = mainText.Text;
+                    decimal inputPer = decimal.Parse(txt1) / 100;
+                    mainText.Text = inputPer.ToString();
+                }
+                catch (Exception ex)
+                {
+                    
+                    Console.WriteLine(ex.Message);
+                }
+            };
+        }
+        
+
+        private void btnNum_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            decimal imputNum = decimal.Parse(mainText.Text + btn.Content);
+            mainText.Text = imputNum.ToString();
+        }
+
+        private void btnOpe_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            btnEq_Click(sender, e);
+            subText.Text = mainText.Text + btn.Content;
+            mainText.Text = "0";
+        }
+
+        private void btnEq_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((subText.Text != null) && (subText.Text.Trim().Length != 0))
+                {
+                    string txt2 = subText.Text;
+                    string mem = txt2.Remove(txt2.Length - 1);
+                    decimal inputEq = 0;
+                    if (txt2.Contains("÷"))
+                        inputEq = decimal.Parse(mem) / decimal.Parse(mainText.Text);
+                    else if (txt2.Contains("×"))
+                        inputEq = decimal.Parse(mem) * decimal.Parse(mainText.Text);
+                    else if (txt2.Contains("-"))
+                        inputEq = decimal.Parse(mem) - decimal.Parse(mainText.Text);
+                    else if (txt2.Contains("+"))
+                        inputEq = decimal.Parse(mem) + decimal.Parse(mainText.Text);
+                    mainText.Text = inputEq.ToString();
+                    subText.Text = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
