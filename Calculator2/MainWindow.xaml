@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="950" Width="600">
     <Grid>
+        <Button Content="1" HorizontalAlignment="Left" Height="72" Margin="70,532,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="2" HorizontalAlignment="Left" Height="72" Margin="192,532,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="3" HorizontalAlignment="Left" Height="72" Margin="321,532,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="4" HorizontalAlignment="Left" Height="72" Margin="70,0,0,0" VerticalAlignment="Center" Width="74" FontSize="18"/>
+        <Button Content="5" HorizontalAlignment="Left" Height="72" Margin="192,0,0,0" VerticalAlignment="Center" Width="74" FontSize="18"/>
+        <Button Content="6" HorizontalAlignment="Left" Height="72" Margin="321,0,0,0" VerticalAlignment="Center" Width="74" FontSize="18"/>
+        <Button Content="7" HorizontalAlignment="Left" Height="72" Margin="70,324,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="8" HorizontalAlignment="Left" Height="72" Margin="192,324,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="9" HorizontalAlignment="Left" Height="72" Margin="321,324,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="0" HorizontalAlignment="Left" Height="72" Margin="192,638,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="+/-" HorizontalAlignment="Left" Height="72" Margin="70,638,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="." HorizontalAlignment="Left" Height="72" Margin="321,638,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="+" HorizontalAlignment="Left" Height="72" Margin="437,532,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="-" HorizontalAlignment="Left" Height="72" Margin="437,0,0,0" VerticalAlignment="Center" Width="74" FontSize="18"/>
+        <Button Content="×" HorizontalAlignment="Left" Height="72" Margin="437,324,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="=" HorizontalAlignment="Left" Height="72" Margin="437,638,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="1/x" HorizontalAlignment="Left" Height="72" Margin="70,229,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="x^2" HorizontalAlignment="Left" Height="72" Margin="192,229,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="√x" HorizontalAlignment="Left" Height="72" Margin="321,229,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="÷" HorizontalAlignment="Left" Height="72" Margin="437,229,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="%" HorizontalAlignment="Left" Height="72" Margin="70,135,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="CE" HorizontalAlignment="Left" Height="72" Margin="192,135,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="C" HorizontalAlignment="Left" Height="72" Margin="321,135,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <Button Content="Back" HorizontalAlignment="Left" Height="72" Margin="437,135,0,0" VerticalAlignment="Top" Width="74" FontSize="18"/>
+        <TextBox TextWrapping="Wrap" Text="0" Margin="70,63,89,839" Height="NaN" Width="NaN" FontSize="20"/>
+        <TextBox TextWrapping="Wrap" Height="NaN" Margin="240,22,89,894"/>
 
     </Grid>
 </Window>
