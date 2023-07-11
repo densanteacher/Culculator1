@@ -20,10 +20,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}"  Name="memoryList" Grid.ColumnSpan="6" SelectionMode="Single"/>
-        <Button x:Name="MemoryClear" Content="MC" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
-        <Button x:Name="MemoryPlus" Content="M+" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
-        <Button x:Name="MemoryMinus" Content="M-" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
-        <Button x:Name="OK" Content="OK" Width="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="5"/>
+        <ListBox Grid.Row="0" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}"  Name="memoryList" Grid.ColumnSpan="6" SelectionMode="Single"/>
+        <Button Grid.Row="2" Grid.Column="0" x:Name="MemoryClear" Content="MC" VerticalAlignment="Center"/>
+        <Button Grid.Row="2" Grid.Column="1" x:Name="MemoryPlus" Content="M+" VerticalAlignment="Center"/>
+        <Button Grid.Row="2" Grid.Column="2" x:Name="MemoryMinus" Content="M-" VerticalAlignment="Center"/>
+        <Button Grid.Row="2" Grid.Column="5" x:Name="OK" Content="OK" Width="50" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

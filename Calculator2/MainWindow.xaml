@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="600" KeyDown="Window_KeyDown">
+        Title="MainWindow" FontSize="18" Height="700" Width="600" KeyDown="Window_KeyDown">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,42 +25,42 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <!-- TODO: Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" は省略可能と思います。 -->
-        <!-- TODO: Window自体のFontSizeを18に設定して、ButtonのFontSizeは消してしまいましょう。 -->
-        <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="6" Grid.Column="0" x:Name="Four" Content="4" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click" />
-        <Button Grid.Row="6" Grid.Column="1" x:Name="Five" Content="5" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="6" Grid.Column="2" x:Name="Six" Content="6" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="0" x:Name="Seven" Content="7" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="8" Grid.Column="0" x:Name="Inv" Content="+/-" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-        <Button Grid.Row="8" Grid.Column="2" x:Name="Dot" Content="." Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-        <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
-        <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
-        <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
-        <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
-        <Button Grid.Row="8" Grid.Column="3" x:Name="Eq" Content="=" Width="Auto" Height="Auto" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="18" Click="btnEq_Click"/>
-        <Button Grid.Row="4" Grid.Column="0" x:Name="Div" Content="1/x" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-        <Button Grid.Row="4" Grid.Column="1" x:Name="Sq" Content="x^2" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="Sqrt" Content="√x" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-        <Button Grid.Row="3" Grid.Column="0" x:Name="Perc" Content="%" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-        <Button Grid.Row="3" Grid.Column="1" x:Name="CE" Content="CE" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
-        <Button Grid.Row="3" Grid.Column="2" x:Name="C" Content="C" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
+        <!-- DONE: Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" は省略可能と思います。 -->
+        <!-- DONE: Window自体のFontSizeを18に設定して、ButtonのFontSizeは消してしまいましょう。 -->
+        <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Click="btnNum_Click"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Click="btnNum_Click"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Click="btnNum_Click"/>
+        <Button Grid.Row="6" Grid.Column="0" x:Name="Four" Content="4" Click="btnNum_Click" />
+        <Button Grid.Row="6" Grid.Column="1" x:Name="Five" Content="5" Click="btnNum_Click"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="Six" Content="6" Click="btnNum_Click"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="Seven" Content="7" Click="btnNum_Click"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Click="btnNum_Click"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Click="btnNum_Click"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Click="btnNum_Click"/>
+        <Button Grid.Row="8" Grid.Column="0" x:Name="Inv" Content="+/-"/>
+        <Button Grid.Row="8" Grid.Column="2" x:Name="Dot" Content="."/>
+        <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="btnOpe_Click"/>
+        <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="btnOpe_Click"/>
+        <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="btnOpe_Click"/>
+        <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="btnOpe_Click"/>
+        <Button Grid.Row="8" Grid.Column="3" x:Name="Eq" Content="=" Click="btnEq_Click"/>
+        <Button Grid.Row="4" Grid.Column="0" x:Name="Div" Content="1/x"/>
+        <Button Grid.Row="4" Grid.Column="1" x:Name="Sq" Content="x^2"/>
+        <Button Grid.Row="4" Grid.Column="2" x:Name="Sqrt" Content="√x"/>
+        <Button Grid.Row="3" Grid.Column="0" x:Name="Perc" Content="%"/>
+        <Button Grid.Row="3" Grid.Column="1" x:Name="CE" Content="CE"/>
+        <Button Grid.Row="3" Grid.Column="2" x:Name="C" Content="C"/>
 
-        <!-- TODO: 余計なスペースがあります。 -->
-        <Button Grid.Row="3"  Grid.Column="3" x:Name="Back" Content="Back" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
+        <!-- DONE: 余計なスペースがあります。 -->
+        <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back"/>
 
-        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch" Click="btnOutput_Click"/>
-        <!-- TODO: Columnがありません。 -->
-        <TextBox Grid.Row="1" Grid.ColumnSpan="4" x:Name="MainText" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
+        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="btnOutput_Click"/>
+        <!-- DONE: Columnがありません。 -->
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" TextWrapping="Wrap" Height="NaN"/>
 
-        <!-- TODO: ColumnSpanの数？ -->
-        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5">
+        <!-- DONE: ColumnSpanの数？ -->
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -70,17 +70,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- TODO: Rowが一つの場合は省略できます。 -->
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <!-- DONE: Rowが一つの場合は省略できます。 -->
 
-            <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch" />
-            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch"/>
-            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch"/>
-            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecall" Content="MR" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch"/>
-            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClear" Content="MC" Width="Auto" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M"/>
+            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS"/>
+            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-"/>
+            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecall" Content="MR"/>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClear" Content="MC"/>
         </Grid>
     </Grid>
 </Window>

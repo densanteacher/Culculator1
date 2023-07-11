@@ -25,7 +25,7 @@ namespace Calculator2
     {
         // TODO: private にしたら変数名に _(アンダースコア) のプレフィックスをつけてみましょう。他のページで _ をつけている物がありました。
         // TODO: 配列を扱う変数名は複数形にすると読みやすくなります。
-        private List<string> memory = new();
+        private List<string> _memories = new();
 
         public MainWindow()
         {
@@ -39,7 +39,7 @@ namespace Calculator2
             this.CE.Click += (s, e) => { this.TextInitialize(false); };
             // +/-(プラスマイナス反転）ボタン
             this.Inv.Click += (s, e) => { this.Inversion(); };
-            this.Back.Click += (s, e) =>{ this.BackSpace(); };
+            this.Back.Click += (s, e) => { this.BackSpace(); };
 
             // x^2(二乗)ボタン
             this.Sq.Click += (s, e) => { this.Square(); };
@@ -56,7 +56,7 @@ namespace Calculator2
             // 小数点ボタン
             this.Dot.Click += (s, e) => { this.DecimalPoint(); };
 
-            this.Memory.Click += (s, e) =>　{　this.MemoryWindowOpen(); };
+            this.Memory.Click += (s, e) => { this.MemoryWindowOpen(); };
 
             // Ms（メモリ記録）機能
             this.MemorySave.Click += (s, e) => { this.SaveMemory(); };
@@ -79,17 +79,17 @@ namespace Calculator2
         // TODO: コメントの文章は 。 で終わらせるようにしましょう。(英語だとピリオド)
         // これは好みが分かれるところですが、きちんとした文章でコメントを書くほうがよいとされることが多いです。
         // TODO: メソッド名は基本は動詞とします。
-        // TODO: param sub について、コメントを追加しましょう。
-        // TODO: bool の変数名は isXxx としてください。動詞から始めるのはメソッド名ですが、bool 変数は例外です。
+        // DONE: param sub について、コメントを追加しましょう。
+        // DONE: bool の変数名は isXxx としてください。動詞から始めるのはメソッド名ですが、bool 変数は例外です。
         /// <summary>
-        /// テキストボックス初期化メソッド
-        /// trueの時はメインサブ両方、falseの時はメインのみ
+        /// テキストボックス初期化メソッドです。
+        /// isSubがtrueの時はメインサブ両方、falseの時はメインのみ初期化します。
         /// </summary>
         /// <param name="sub"></param>
-        private void TextInitialize(bool sub)
+        private void TextInitialize(bool isSub)
         {
             this.MainText.Text = "0";
-            if (sub == true)
+            if (isSub == true)
             {
                 this.SubText.Text = null;
             }
@@ -99,17 +99,20 @@ namespace Calculator2
         /// <summary>
         /// メインテキストの数値の正負反転を反転します
         /// </summary>
-        private void Inversion()
+        private void Inverse()
         {
             // TODO: { は改行後におきましょう。Ctrl + K, D を活用するとよいでしょう。編集 -> 詳細 -> ドキュメントのフォーマット です。
-            try{
-                // TODO: txt1 → txt でよいでしょう。
-                string txt1 = this.MainText.Text;
+            try
+            {
+                // DONE: txt1 → txt でよいでしょう。
+                string txt = this.MainText.Text;
                 // TODO: Parse と一緒に マイナスの記号をつけるとわかりにくいので、処理を分けたほうが無難です。
-                // TODO: decimal.Parse → Decimal.Parse
-                decimal invResult = -decimal.Parse(txt1);
+                // DONE: decimal.Parse → Decimal.Parse
+                Decimal invResult = Decimal.Parse(txt);
+                invResult = -invResult;
                 this.MainText.Text = invResult.ToString();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ErrorMessage();
                 Console.WriteLine(ex.Message);
@@ -121,9 +124,9 @@ namespace Calculator2
         /// </summary>
         private void BackSpace()
         {
-            string txt1 = this.MainText.Text;
+            string txt = this.MainText.Text;
             // TODO: mem という名前は MemoryStream 関連で使われるので、ここでは別の名前がよいでしょう。
-            string mem = txt1.Remove(txt1.Length - 1);
+            string mem = txt.Remove(txt.Length - 1);
             if (mem.Length == 0 || mem == "-")
                 TextInitialize(false);
             else
