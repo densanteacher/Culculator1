@@ -28,35 +28,77 @@ namespace Calculator2
             _memory = memory;
             _result = result;
 
+            this.ListInitialize();
+
+            this.MemoryClear.Click += (s, e) => { this.ClearMemory(); };
+            this.MemoryPlus.Click += (s, e) => { this.PlusMemory(); };
+            this.MemoryMinus.Click += (s, e) => { this.MinusMemory(); };
+            this.OK.Click += (s, e) => { this.Close(); };
+        }
+
+        /// <summary>
+        /// リストを初期化した後、_memory内の要素を追加し表示します。
+        /// </summary>
+        private void ListInitialize()
+        {
+            this.memoryList.Items.Clear();
             foreach (var item in _memory)
             {
                 this.memoryList.Items.Add(item);
             }
-
-            this.MemoryClear.Click += (s, e) =>
+            if(_memory.Count > 0)
             {
-                ClearMemory();
-            };
-
-            this.MemoryPlus.Click += (s, e) =>
-            {
-                PlusMemory();                
-            };
+                this.memoryList.SelectedIndex = 0;
+            }
         }
+
+        /// <summary>
+        /// リストボックスで選択されている値を削除します
+        /// </summary>
         private void ClearMemory()
         {
-            if (memoryList.SelectedItems == null)
+            if (_memory.Count == 0)
             {
                 return;
             }
-            string? selected = memoryList.SelectedItem.ToString();
+            string? selected = this.memoryList.SelectedItem.ToString();
             _memory.Remove(selected);
-            memoryList.Items.Remove(selected);
-            return;
+            this.memoryList.Items.Remove(selected);
+            this.memoryList.SelectedIndex = 0;
         }
+
+        /// <summary>
+        /// リストボックスで選択されている値に、メインウィンドウのメインテキストに表示されている値を足します
+        /// </summary>
         private void PlusMemory()
         {
+            if (_memory.Count == 0)
+            {
+                return;
+            }
+            string? selected = this.memoryList.SelectedItem.ToString();
+            int index = this.memoryList.SelectedIndex;
+            Decimal plusResult = Decimal.Parse(selected) + _result;
+            _memory[index] = plusResult.ToString();
+            this.ListInitialize();
+            this.memoryList.SelectedIndex = index;
+        }
 
+        /// <summary>
+        /// リストボックスで選択されている値から、メインウィンドウのメインテキストに表示されている値を引きます
+        /// </summary>
+        private void MinusMemory()
+        {
+            if (_memory.Count == 0)
+            {
+                return;
+            }
+            string? selected = this.memoryList.SelectedItem.ToString();
+            int index = this.memoryList.SelectedIndex;
+            Decimal minusResult = Decimal.Parse(selected) - _result;
+            _memory[index] = minusResult.ToString();
+            this.ListInitialize();
+            this.memoryList.SelectedIndex = index;
         }
     }
 }

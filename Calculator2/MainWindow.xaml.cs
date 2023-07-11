@@ -21,18 +21,18 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
-        // TODO: private のほうがよいでしょう。
-        // TODO: new List<string>() → new() と省略できます。
-        public List<string> memory = new List<string>();
+        // DONE: private のほうがよいでしょう。
+        // DONE: new List<string>() → new() と省略できます。
+        private List<string> memory = new();
 
         public MainWindow()
         {
             this.InitializeComponent();
 
-            // TODO: 初期化用のメソッドを作るのがよさそうです。
+            // DONE: 初期化用のメソッドを作るのがよさそうです。
             this.TextInitialize(true);
 
-            // TODO: ソースコードをコメントアウトするとスペースなしのコメントになります。そのため、通常のコメントにはスペースを入れたほうが読みやすくなります。
+            // DONE: ソースコードをコメントアウトするとスペースなしのコメントになります。そのため、通常のコメントにはスペースを入れたほうが読みやすくなります。
             // クリア（MainTextとSubText両方消す）ボタン
             this.C.Click += (s, e) => { this.TextInitialize(true); };
             // CE（MainTextのみ消す）ボタン
@@ -71,7 +71,7 @@ namespace Calculator2
             this.MemoryRecall.Click += (s, e) => { this.RecallMemory(); };
 
 
-            // TODO: 処理のそばにコメントをつけるよりは、メソッド化するのがよいでしょう。
+            // DONE: 処理のそばにコメントをつけるよりは、メソッド化するのがよいでしょう。
             // メソッド化することで処理に名前が付きます。またメソッドにドキュメンテーションコメントを付けることができます。
             this.MemoryClear.Click += (s, e) => { this.ClearMemory(); };
         }
@@ -206,6 +206,7 @@ namespace Calculator2
         {
             Decimal result = Decimal.Parse(this.MainText.Text);
             MemoryWindow mw = new MemoryWindow(memory, result);
+            mw.Owner = this;
             mw.Show();
         }
 
@@ -278,13 +279,13 @@ namespace Calculator2
         /// </summary>
         private void btnNum_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: (Button)のキャストではなく、as によるキャストを推奨します。
+            // DONE: (Button)のキャストではなく、as によるキャストを推奨します。
             Button? btn = sender as Button;
-            // TODO: Decimal.Parse() の Decimal は C# の型で、実際のクラスは Decimal になります。そのため、Decimal.Parse() とするほうが意味的には正確です。
-            // TODO: imput→input
-            // TODO: inputという英語は他動詞の意味もあるので、変数名は名詞となる方がよいです。またここでは MainText と Content の計算結果を格納しているので、resultText あたりのほうがよさそうです。
+            // DONE: Decimal.Parse() の Decimal は C# の型で、実際のクラスは Decimal になります。そのため、Decimal.Parse() とするほうが意味的には正確です。
+            // DONE: imput→input
+            // DONE: inputという英語は他動詞の意味もあるので、変数名は名詞となる方がよいです。またここでは MainText と Content の計算結果を格納しているので、resultText あたりのほうがよさそうです。
             Decimal resultText = Decimal.Parse(this.MainText.Text + btn.Content.ToString());
-            // TODO: MainText も this 参照をつけて揃えましょう。
+            // DONE: MainText も this 参照をつけて揃えましょう。
             this.MainText.Text = resultText.ToString();
         }
 
@@ -295,7 +296,7 @@ namespace Calculator2
         private void btnOpe_Click(object sender, RoutedEventArgs e)
         {
             Button? btn = sender as Button;
-            // TODO: イベントメソッドを直接呼ぶのではなく、中身の処理をメソッド化して、それを呼び出しましょう。
+            // DONE: イベントメソッドを直接呼ぶのではなく、中身の処理をメソッド化して、それを呼び出しましょう。
             // sender と e に渡される内容が、このメソッドのものになるので、実際のイベントで呼び出すコントロールではなくなるのはバグの元です。
             Decimal resultText = this.Calculation();
             this.SubText.Text = resultText.ToString() + btn.Content;
@@ -309,13 +310,13 @@ namespace Calculator2
         {
             /*         try
                      {
-                         // TODO: 早期リターンに書き直してみましょう。
+                         // DONE: 早期リターンに書き直してみましょう。
                          if ((SubText.Text != null) && (SubText.Text.Trim().Length != 0))
                          {
                              string subTxt = SubText.Text;
                              string mem = subTxt.Remove(subTxt.Length - 1);
                              Decimal inputEq = 0;
-                             // TODO: if の中括弧は省略しないほうがよいです。稀ですが、マージしてインデントがズレた時に混乱の元となります。
+                             // DONE: if の中括弧は省略しないほうがよいです。稀ですが、マージしてインデントがズレた時に混乱の元となります。
                              if (subTxt.Contains("÷"))
                              {
                                  inputEq = Decimal.Parse(mem) / Decimal.Parse(MainText.Text);
