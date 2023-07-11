@@ -35,13 +35,25 @@ namespace Calculator2
 
             this.MC.Click += (s, e) =>
             {
-                string selected = memoryList.SelectedItem.ToString();
-                if (selected != null)
-                {
-                    _memory.Remove(selected);
-                    memoryList.Items.Remove(selected);
-                }
+                memoryClear();
             };
+
+            /*this.Mplus.Click += (s, e) =>
+            {
+                string selected = memory.SelectedItem.ToString();
+                
+            };*/
+        }
+        private void memoryClear()
+        {
+            if (memoryList.SelectedItems == null)
+            {
+                return;
+            }
+            string? selected = memoryList.SelectedItem.ToString();
+            _memory.Remove(selected);
+            memoryList.Items.Remove(selected);
+            return;
         }
     }
 }
