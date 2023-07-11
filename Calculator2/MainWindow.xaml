@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="600" KeyDown="Window_KeyDown">
 
-    <!-- DONE: Grid自体のサイズや各ボタンのサイズを固定せず、相対的に変化するようにしてみましょう。 -->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -26,8 +25,8 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <!-- DONE: Grid.Row や Grid.Column はコントロール名の次に固めてしまいましょう。Grid.Row="0" も省略しないほうがコードが読みやすくなります。なお、コントロールの配置順も Row, Column の順に上から配置するほうがよいでしょう。 -->
-        <!-- DONE: Height, Width や Alignment のプロパティは近くにまとめて配置したほうがよいでしょう。 -->
+        <!-- TODO: Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" は省略可能と思います。 -->
+        <!-- TODO: Window自体のFontSizeを18に設定して、ButtonのFontSizeは消してしまいましょう。 -->
         <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
         <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
         <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  FontSize="18" Click="btnNum_Click"/>
@@ -41,7 +40,6 @@
         <Button Grid.Row="8" Grid.Column="0" x:Name="Inv" Content="+/-" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="8" Grid.Column="2" x:Name="Dot" Content="." Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
-        <!-- DONE: Substractタイポ -->
         <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
         <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
         <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
@@ -52,12 +50,16 @@
         <Button Grid.Row="3" Grid.Column="0" x:Name="Perc" Content="%" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="3" Grid.Column="1" x:Name="CE" Content="CE" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="3" Grid.Column="2" x:Name="C" Content="C" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
+
+        <!-- TODO: 余計なスペースがあります。 -->
         <Button Grid.Row="3"  Grid.Column="3" x:Name="Back" Content="Back" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
 
         <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch" Click="btnOutput_Click"/>
-        <!-- DONE: mainText, subText は小文字から始まっています。他と揃えましょう。 -->
+        <!-- TODO: Columnがありません。 -->
         <TextBox Grid.Row="1" Grid.ColumnSpan="4" x:Name="MainText" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" TextWrapping="Wrap" Height="NaN"/>
+
+        <!-- TODO: ColumnSpanの数？ -->
         <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -67,11 +69,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+
+            <!-- TODO: Rowが一つの場合は省略できます。 -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
             <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch" />
-            <!-- DONE: MS, Mminus, ... と略さず、MemorySave と書きましょう。 -->
             <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch"/>
             <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch"/>
             <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch"/>
@@ -81,4 +85,3 @@
     </Grid>
 </Window>
 
-    
