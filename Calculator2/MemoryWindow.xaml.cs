@@ -39,7 +39,7 @@ namespace Calculator2
         /// <summary>
         /// リストを初期化した後、_memory内の要素を追加し表示します。
         /// </summary>
-        private void ListInitialize()
+        public void ListInitialize()
         {
             this.memoryList.Items.Clear();
             foreach (var item in _memory)
@@ -72,16 +72,24 @@ namespace Calculator2
         /// </summary>
         private void PlusMemory()
         {
-            if (_memory.Count == 0)
+            try
             {
-                return;
+                if (_memory.Count == 0)
+                {
+                    return;
+                }
+                string? selected = this.memoryList.SelectedItem.ToString();
+                int index = this.memoryList.SelectedIndex;
+                Decimal plusResult = Decimal.Parse(selected) + _result;
+                _memory[index] = plusResult.ToString();
+                this.ListInitialize();
+                this.memoryList.SelectedIndex = index;
+            } catch (Exception ex)
+            {
+                ErrorMessage();
+                global::System.Console.WriteLine(ex.Message);
             }
-            string? selected = this.memoryList.SelectedItem.ToString();
-            int index = this.memoryList.SelectedIndex;
-            Decimal plusResult = Decimal.Parse(selected) + _result;
-            _memory[index] = plusResult.ToString();
-            this.ListInitialize();
-            this.memoryList.SelectedIndex = index;
+            
         }
 
         /// <summary>
@@ -89,16 +97,30 @@ namespace Calculator2
         /// </summary>
         private void MinusMemory()
         {
-            if (_memory.Count == 0)
+            try
             {
-                return;
+                if (_memory.Count == 0)
+                {
+                    return;
+                }
+                string? selected = this.memoryList.SelectedItem.ToString();
+                int index = this.memoryList.SelectedIndex;
+                Decimal minusResult = Decimal.Parse(selected) - _result;
+                _memory[index] = minusResult.ToString();
+                this.ListInitialize();
+                this.memoryList.SelectedIndex = index;
+            } catch(Exception ex)
+            {
+                ErrorMessage();
+                global::System.Console.WriteLine(ex.Message);
             }
-            string? selected = this.memoryList.SelectedItem.ToString();
-            int index = this.memoryList.SelectedIndex;
-            Decimal minusResult = Decimal.Parse(selected) - _result;
-            _memory[index] = minusResult.ToString();
-            this.ListInitialize();
-            this.memoryList.SelectedIndex = index;
+            
         }
+
+        private void ErrorMessage()
+        {
+            MessageBox.Show("不可能な処理が実行されました。");
+        }
+
     }
 }

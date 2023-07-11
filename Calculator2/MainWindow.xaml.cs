@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 
 namespace Calculator2
 {
@@ -54,7 +56,7 @@ namespace Calculator2
             this.Perc.Click += (s, e) => { this.Percent(); };
 
             // 小数点ボタン
-            this.Dot.Click += (s, e) => { this.DecimalPoint(s); };
+            this.Dot.Click += (s, e) => { this.DecimalPoint(); };
 
             this.Memory.Click += (s, e) =>　{　this.MemoryWindowOpen(); };
 
@@ -99,7 +101,11 @@ namespace Calculator2
                 string txt1 = this.MainText.Text;
                 decimal invResult = -decimal.Parse(txt1);
                 this.MainText.Text = invResult.ToString();
-            } catch (Exception ex) { Console.WriteLine(ex.Message); }
+            } catch (Exception ex) 
+            {
+                ErrorMessage();
+                Console.WriteLine(ex.Message); 
+            }
         }
 
         /// <summary>
@@ -128,7 +134,7 @@ namespace Calculator2
             }
             catch (Exception ex)
             {
-
+                ErrorMessage();
                 Console.WriteLine(ex.Message);
             }
         }
@@ -146,7 +152,7 @@ namespace Calculator2
             }
             catch (Exception ex)
             {
-
+                ErrorMessage();
                 Console.WriteLine(ex.Message);
             }
         }
@@ -164,7 +170,7 @@ namespace Calculator2
             }
             catch (Exception ex)
             {
-
+                ErrorMessage();
                 Console.WriteLine(ex.Message);
             }
         }
@@ -182,7 +188,7 @@ namespace Calculator2
             }
             catch (Exception ex)
             {
-
+                ErrorMessage();
                 Console.WriteLine(ex.Message);
             }
         }
@@ -191,9 +197,8 @@ namespace Calculator2
         /// メインテキストの数値に小数点を追加します
         /// </summary>
         /// <param name="sender"></param>
-        private void DecimalPoint(object sender)
+        private void DecimalPoint()
         {
-            Button? btn = sender as Button;
             if (!this.MainText.Text.Contains("."))
                 this.MainText.Text += ".";
         }
@@ -234,6 +239,7 @@ namespace Calculator2
             }
             catch (Exception ex)
             {
+                ErrorMessage();
                 Console.WriteLine(ex.Message);
             }
         }
@@ -254,6 +260,7 @@ namespace Calculator2
             }
             catch (Exception ex)
             {
+                ErrorMessage();
                 Console.WriteLine(ex.Message);
             }
         }
@@ -272,6 +279,27 @@ namespace Calculator2
         private void ClearMemory()
         {
             memory.Clear();
+        }
+
+        /// <summary>
+        /// memoryに格納されている値をresult.txtに書き込みます
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOutput_Click(object sender, EventArgs e)
+        {
+            string path = @"..\..\..\result.txt";
+            using (FileStream fs = File.Create(path)) ;
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding enc = Encoding.GetEncoding("Shift_JIS");
+            using (StreamWriter writer = new StreamWriter(path, false, enc))
+            {
+                foreach (string item in memory)
+                {
+                    writer.WriteLine(item);
+                }
+            }
+            MessageBox.Show("記録した数値をテキストファイルに出力しました。");
         }
 
         /// <summary>
@@ -308,40 +336,8 @@ namespace Calculator2
         /// </summary>
         private void btnEq_Click(object sender, RoutedEventArgs e)
         {
-            /*         try
-                     {
                          // DONE: 早期リターンに書き直してみましょう。
-                         if ((SubText.Text != null) && (SubText.Text.Trim().Length != 0))
-                         {
-                             string subTxt = SubText.Text;
-                             string mem = subTxt.Remove(subTxt.Length - 1);
-                             Decimal inputEq = 0;
-                             // DONE: if の中括弧は省略しないほうがよいです。稀ですが、マージしてインデントがズレた時に混乱の元となります。
-                             if (subTxt.Contains("÷"))
-                             {
-                                 inputEq = Decimal.Parse(mem) / Decimal.Parse(MainText.Text);
-                             } 
-                             else if (subTxt.Contains("×"))
-                             {
-                                 inputEq = Decimal.Parse(mem) * Decimal.Parse(MainText.Text);
-                             }
-                             else if (subTxt.Contains("-"))
-                             {
-                                 inputEq = Decimal.Parse(mem) - Decimal.Parse(MainText.Text);
-                             }
-                             else if (subTxt.Contains("+"))
-                             {
-
-                                 inputEq = Decimal.Parse(mem) + Decimal.Parse(MainText.Text);
-                             }
-                             MainText.Text = inputEq.ToString();
-                             SubText.Text = null;
-                         }
-                     }
-                     catch (Exception ex)
-                     {
-                         Console.WriteLine(ex.Message);
-                     }*/
+                           // DONE: if の中括弧は省略しないほうがよいです。稀ですが、マージしてインデントがズレた時に混乱の元となります。
             Decimal resultText = this.Calculation();
             this.MainText.Text = resultText.ToString();
             this.SubText.Text = null;
@@ -385,9 +381,119 @@ namespace Calculator2
             } 
             catch (Exception ex)
             {
-                
+                ErrorMessage();
                 Console.WriteLine(ex.Message);
                 return dmain;
+            }
+        }
+        private void ErrorMessage()
+        {
+            MessageBox.Show("不可能な処理が実行されました。");
+        }
+
+        /// <summary>
+        /// キー押下時、対応した数値の入力や四則演算を行います
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            ButtonAutomationPeer peer;
+            IInvokeProvider? provider;
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    Decimal resultText = this.Calculation();
+                    this.MainText.Text = resultText.ToString();
+                    this.SubText.Text = null;
+                    break;
+                case Key.Back:
+                    BackSpace();
+                    break;
+                case Key.Decimal:
+                    DecimalPoint();
+                    break;
+                case Key.Divide:
+                    peer = new ButtonAutomationPeer(this.Divide);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.Multiply:
+                    peer = new ButtonAutomationPeer(this.Multiply);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.Subtract:
+                    peer = new ButtonAutomationPeer(this.Subtract);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.Add:
+                    peer = new ButtonAutomationPeer(this.Add);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D1:
+                case Key.NumPad1:
+                    peer = new ButtonAutomationPeer(this.One);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D2:
+                case Key.NumPad2:
+                    peer = new ButtonAutomationPeer(this.Two);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D3:
+                case Key.NumPad3:
+                    peer = new ButtonAutomationPeer(this.Three);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D4:
+                case Key.NumPad4:
+                    peer = new ButtonAutomationPeer(this.Four);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D5:
+                case Key.NumPad5:
+                    peer = new ButtonAutomationPeer(this.Five);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D6:
+                case Key.NumPad6:
+                    peer = new ButtonAutomationPeer(this.Six);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D7:
+                case Key.NumPad7:
+                    peer = new ButtonAutomationPeer(this.Seven);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D8:
+                case Key.NumPad8:
+                    peer = new ButtonAutomationPeer(this.Eight);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D9:
+                case Key.NumPad9:
+                    peer = new ButtonAutomationPeer(this.Nine);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
+                case Key.D0:
+                case Key.NumPad0:
+                    peer = new ButtonAutomationPeer(this.Zero);
+                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    provider.Invoke();
+                    break;
             }
         }
     }

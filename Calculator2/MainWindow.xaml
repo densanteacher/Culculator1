@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="600">
+        Title="MainWindow" Height="700" Width="600" KeyDown="Window_KeyDown">
 
     <!-- DONE: Grid自体のサイズや各ボタンのサイズを固定せず、相対的に変化するようにしてみましょう。 -->
     <Grid>
@@ -28,16 +28,16 @@
         </Grid.RowDefinitions>
         <!-- DONE: Grid.Row や Grid.Column はコントロール名の次に固めてしまいましょう。Grid.Row="0" も省略しないほうがコードが読みやすくなります。なお、コントロールの配置順も Row, Column の順に上から配置するほうがよいでしょう。 -->
         <!-- DONE: Height, Width や Alignment のプロパティは近くにまとめて配置したほうがよいでしょう。 -->
-        <Button Grid.Row="7" Grid.Column="0" Content="1" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="7" Grid.Column="1" Content="2" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="7" Grid.Column="2" Content="3" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="6" Grid.Column="0" Content="4" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click" />
-        <Button Grid.Row="6" Grid.Column="1" Content="5" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="6" Grid.Column="2" Content="6" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="0" Content="7" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="1" Content="8" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="2" Content="9" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
-        <Button Grid.Row="8" Grid.Column="1" Content="0" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="6" Grid.Column="0" x:Name="Four" Content="4" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click" />
+        <Button Grid.Row="6" Grid.Column="1" x:Name="Five" Content="5" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="Six" Content="6" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="Seven" Content="7" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnNum_Click"/>
         <Button Grid.Row="8" Grid.Column="0" x:Name="Inv" Content="+/-" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="8" Grid.Column="2" x:Name="Dot" Content="." Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" Click="btnOpe_Click"/>
@@ -53,6 +53,8 @@
         <Button Grid.Row="3" Grid.Column="1" x:Name="CE" Content="CE" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="3" Grid.Column="2" x:Name="C" Content="C" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
         <Button Grid.Row="3"  Grid.Column="3" x:Name="Back" Content="Back" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18"/>
+
+        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Width="Auto" Height="Auto" HorizontalAlignment = "Stretch" VerticalAlignment="Stretch" Click="btnOutput_Click"/>
         <!-- DONE: mainText, subText は小文字から始まっています。他と揃えましょう。 -->
         <TextBox Grid.Row="1" Grid.ColumnSpan="4" x:Name="MainText" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" TextWrapping="Wrap" Height="NaN"/>
