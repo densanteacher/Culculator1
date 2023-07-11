@@ -33,18 +33,17 @@ namespace Calculator2
                 this.memoryList.Items.Add(item);
             }
 
-            this.MC.Click += (s, e) =>
+            this.MemoryClear.Click += (s, e) =>
             {
-                memoryClear();
+                ClearMemory();
             };
 
-            /*this.Mplus.Click += (s, e) =>
+            this.MemoryPlus.Click += (s, e) =>
             {
-                string selected = memory.SelectedItem.ToString();
-                
-            };*/
+                PlusMemory();                
+            };
         }
-        private void memoryClear()
+        private void ClearMemory()
         {
             if (memoryList.SelectedItems == null)
             {
@@ -54,6 +53,10 @@ namespace Calculator2
             _memory.Remove(selected);
             memoryList.Items.Remove(selected);
             return;
+        }
+        private void PlusMemory()
+        {
+
         }
     }
 }

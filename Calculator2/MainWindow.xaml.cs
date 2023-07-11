@@ -33,9 +33,9 @@ namespace Calculator2
             this.TextInitialize(true);
 
             // TODO: ソースコードをコメントアウトするとスペースなしのコメントになります。そのため、通常のコメントにはスペースを入れたほうが読みやすくなります。
-            // クリア（mainTextとsubText両方消す）ボタン
+            // クリア（MainTextとSubText両方消す）ボタン
             this.C.Click += (s, e) => { this.TextInitialize(true); };
-            // CE（mainTextのみ消す）ボタン
+            // CE（MainTextのみ消す）ボタン
             this.CE.Click += (s, e) => { this.TextInitialize(false); };
             // +/-(プラスマイナス反転）ボタン
             this.Inv.Click += (s, e) => { this.Inversion(); };
@@ -59,21 +59,21 @@ namespace Calculator2
             this.Memory.Click += (s, e) =>　{　this.MemoryWindowOpen(); };
 
             // Ms（メモリ記録）機能
-            this.MS.Click += (s, e) => { this.MemorySave(); };
+            this.MemorySave.Click += (s, e) => { this.SaveMemory(); };
 
             // M-ボタン
-            this.Mminus.Click += (s, e) => { this.MemoryMinus(); };
+            this.MemoryMinus.Click += (s, e) => { this.MinusMemory(); };
             // M+ボタン
-            this.Mplus.Click += (s, e) => { this.MemoryPlus(); };
+            this.MemoryPlus.Click += (s, e) => { this.PlusMemory(); };
 
 
             // MR(メモリ呼び出し）ボタン
-            this.MR.Click += (s, e) => { this.MemoryRecall(); };
+            this.MemoryRecall.Click += (s, e) => { this.RecallMemory(); };
 
 
             // TODO: 処理のそばにコメントをつけるよりは、メソッド化するのがよいでしょう。
             // メソッド化することで処理に名前が付きます。またメソッドにドキュメンテーションコメントを付けることができます。
-            this.MC.Click += (s, e) => { this.ClearMemory(); };
+            this.MemoryClear.Click += (s, e) => { this.ClearMemory(); };
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace Calculator2
         /// <param name="sub"></param>
         private void TextInitialize(bool sub)
         {
-            this.mainText.Text = "0";
+            this.MainText.Text = "0";
             if (sub == true)
             {
-                this.subText.Text = null;
+                this.SubText.Text = null;
             }
         }
 
@@ -96,9 +96,9 @@ namespace Calculator2
         private void Inversion()
         {
             try{
-                string txt1 = this.mainText.Text;
+                string txt1 = this.MainText.Text;
                 decimal invResult = -decimal.Parse(txt1);
-                this.mainText.Text = invResult.ToString();
+                this.MainText.Text = invResult.ToString();
             } catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
@@ -107,12 +107,12 @@ namespace Calculator2
         /// </summary>
         private void BackSpace()
         {
-            string txt1 = this.mainText.Text;
+            string txt1 = this.MainText.Text;
             string mem = txt1.Remove(txt1.Length - 1);
             if (mem.Length == 0 || mem == "-")
                 TextInitialize(false);
             else
-                this.mainText.Text = mem;
+                this.MainText.Text = mem;
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Calculator2
         {
             try
             {
-                string txt1 = this.mainText.Text;
+                string txt1 = this.MainText.Text;
                 Decimal sqResult = Decimal.Parse(txt1) * Decimal.Parse(txt1);
-                this.mainText.Text = sqResult.ToString();
+                this.MainText.Text = sqResult.ToString();
             }
             catch (Exception ex)
             {
@@ -140,9 +140,9 @@ namespace Calculator2
         {
             try
             {
-                string txt1 = this.mainText.Text;
+                string txt1 = this.MainText.Text;
                 double sqrtResult = Math.Sqrt(double.Parse(txt1));
-                this.mainText.Text = sqrtResult.ToString();
+                this.MainText.Text = sqrtResult.ToString();
             }
             catch (Exception ex)
             {
@@ -158,9 +158,9 @@ namespace Calculator2
         {
             try
             {
-                string txt1 = this.mainText.Text;
+                string txt1 = this.MainText.Text;
                 Decimal divResult = 1 / Decimal.Parse(txt1);
-                this.mainText.Text = divResult.ToString();
+                this.MainText.Text = divResult.ToString();
             }
             catch (Exception ex)
             {
@@ -176,9 +176,9 @@ namespace Calculator2
         {
             try
             {
-                string txt1 = this.mainText.Text;
+                string txt1 = this.MainText.Text;
                 Decimal perResult = Decimal.Parse(txt1) / 100;
-                this.mainText.Text = perResult.ToString();
+                this.MainText.Text = perResult.ToString();
             }
             catch (Exception ex)
             {
@@ -194,8 +194,8 @@ namespace Calculator2
         private void DecimalPoint(object sender)
         {
             Button? btn = sender as Button;
-            if (!this.mainText.Text.Contains("."))
-                this.mainText.Text += ".";
+            if (!this.MainText.Text.Contains("."))
+                this.MainText.Text += ".";
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Calculator2
         /// </summary>
         private void MemoryWindowOpen()
         {
-            Decimal result = Decimal.Parse(this.mainText.Text);
+            Decimal result = Decimal.Parse(this.MainText.Text);
             MemoryWindow mw = new MemoryWindow(memory, result);
             mw.Show();
         }
@@ -212,21 +212,21 @@ namespace Calculator2
         /// <summary>
         /// memoryリストにメインテキストの数値を記録します。
         /// </summary>
-        private void MemorySave()
+        private void SaveMemory()
         {
-            memory.Add(this.mainText.Text);
+            memory.Add(this.MainText.Text);
         }
 
         /// <summary>
         /// memoryリストに最初に追加された数値から、現在のメインテキストの数値を引きます
         /// </summary>
-        private void MemoryMinus()
+        private void MinusMemory()
         {
             try
             {
                 if (memory.Count > 0)
                 {
-                    string txt1 = this.mainText.Text;
+                    string txt1 = this.MainText.Text;
                     Decimal memoryMinus = Decimal.Parse(memory[0]) - Decimal.Parse(txt1);
                     memory[0] = memoryMinus.ToString();
                 }
@@ -240,13 +240,13 @@ namespace Calculator2
         /// <summary>
         /// memoryリストに最初に追加された数値に、現在のメインテキストの数値を足します
         /// </summary>
-        private void MemoryPlus()
+        private void PlusMemory()
         {
             try
             {
                 if (memory.Count > 0)
                 {
-                    string txt1 = this.mainText.Text;
+                    string txt1 = this.MainText.Text;
                     Decimal memoryPlus = Decimal.Parse(memory[0]) + Decimal.Parse(txt1);
                     memory[0] = memoryPlus.ToString();
                 }
@@ -260,9 +260,9 @@ namespace Calculator2
         /// <summary>
         /// memoryリストに最初に追加された数値を、メインテキストに再表示します
         /// </summary>
-        private void MemoryRecall()
+        private void RecallMemory()
         {
-            if (memory.Count > 0) this.mainText.Text = memory[0];
+            if (memory.Count > 0) this.MainText.Text = memory[0];
         }
 
         /// <summary>
@@ -282,10 +282,10 @@ namespace Calculator2
             Button? btn = sender as Button;
             // TODO: Decimal.Parse() の Decimal は C# の型で、実際のクラスは Decimal になります。そのため、Decimal.Parse() とするほうが意味的には正確です。
             // TODO: imput→input
-            // TODO: inputという英語は他動詞の意味もあるので、変数名は名詞となる方がよいです。またここでは mainText と Content の計算結果を格納しているので、resultText あたりのほうがよさそうです。
-            Decimal resultText = Decimal.Parse(this.mainText.Text + btn.Content.ToString());
-            // TODO: mainText も this 参照をつけて揃えましょう。
-            this.mainText.Text = resultText.ToString();
+            // TODO: inputという英語は他動詞の意味もあるので、変数名は名詞となる方がよいです。またここでは MainText と Content の計算結果を格納しているので、resultText あたりのほうがよさそうです。
+            Decimal resultText = Decimal.Parse(this.MainText.Text + btn.Content.ToString());
+            // TODO: MainText も this 参照をつけて揃えましょう。
+            this.MainText.Text = resultText.ToString();
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Calculator2
             // TODO: イベントメソッドを直接呼ぶのではなく、中身の処理をメソッド化して、それを呼び出しましょう。
             // sender と e に渡される内容が、このメソッドのものになるので、実際のイベントで呼び出すコントロールではなくなるのはバグの元です。
             Decimal resultText = this.Calculation();
-            this.subText.Text = resultText.ToString() + btn.Content;
+            this.SubText.Text = resultText.ToString() + btn.Content;
             TextInitialize(false);
         }
 
@@ -310,31 +310,31 @@ namespace Calculator2
             /*         try
                      {
                          // TODO: 早期リターンに書き直してみましょう。
-                         if ((subText.Text != null) && (subText.Text.Trim().Length != 0))
+                         if ((SubText.Text != null) && (SubText.Text.Trim().Length != 0))
                          {
-                             string subTxt = subText.Text;
+                             string subTxt = SubText.Text;
                              string mem = subTxt.Remove(subTxt.Length - 1);
                              Decimal inputEq = 0;
                              // TODO: if の中括弧は省略しないほうがよいです。稀ですが、マージしてインデントがズレた時に混乱の元となります。
                              if (subTxt.Contains("÷"))
                              {
-                                 inputEq = Decimal.Parse(mem) / Decimal.Parse(mainText.Text);
+                                 inputEq = Decimal.Parse(mem) / Decimal.Parse(MainText.Text);
                              } 
                              else if (subTxt.Contains("×"))
                              {
-                                 inputEq = Decimal.Parse(mem) * Decimal.Parse(mainText.Text);
+                                 inputEq = Decimal.Parse(mem) * Decimal.Parse(MainText.Text);
                              }
                              else if (subTxt.Contains("-"))
                              {
-                                 inputEq = Decimal.Parse(mem) - Decimal.Parse(mainText.Text);
+                                 inputEq = Decimal.Parse(mem) - Decimal.Parse(MainText.Text);
                              }
                              else if (subTxt.Contains("+"))
                              {
 
-                                 inputEq = Decimal.Parse(mem) + Decimal.Parse(mainText.Text);
+                                 inputEq = Decimal.Parse(mem) + Decimal.Parse(MainText.Text);
                              }
-                             mainText.Text = inputEq.ToString();
-                             subText.Text = null;
+                             MainText.Text = inputEq.ToString();
+                             SubText.Text = null;
                          }
                      }
                      catch (Exception ex)
@@ -342,8 +342,8 @@ namespace Calculator2
                          Console.WriteLine(ex.Message);
                      }*/
             Decimal resultText = this.Calculation();
-            this.mainText.Text = resultText.ToString();
-            this.subText.Text = null;
+            this.MainText.Text = resultText.ToString();
+            this.SubText.Text = null;
         }
 
         /// <summary>
@@ -353,10 +353,10 @@ namespace Calculator2
         private Decimal Calculation()
         {
 
-            Decimal dmain = Decimal.Parse(this.mainText.Text);
+            Decimal dmain = Decimal.Parse(this.MainText.Text);
             try
             {
-                string sub = this.subText.Text;
+                string sub = this.SubText.Text;
                 if ((sub == null) || (sub.Trim().Length == 0))
                 {
                     return dmain;
