@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="600" FontSize="18" KeyDown="Window_KeyDown">
+    <!-- TODO: Windowサイズの最小値を設定してみましょう。 -->
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,11 +26,11 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <!-- DONE: Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" は省略可能と思います。 -->
-        <!-- DONE: Window自体のFontSizeを18に設定して、ButtonのFontSizeは消してしまいましょう。 -->
+
         <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Click="ClickNumberButton"/>
         <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Click="ClickNumberButton"/>
         <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Click="ClickNumberButton"/>
+        <!-- TODO: 余計なスペースあります。 -->
         <Button Grid.Row="6" Grid.Column="0" x:Name="Four" Content="4" Click="ClickNumberButton" />
         <Button Grid.Row="6" Grid.Column="1" x:Name="Five" Content="5" Click="ClickNumberButton"/>
         <Button Grid.Row="6" Grid.Column="2" x:Name="Six" Content="6" Click="ClickNumberButton"/>
@@ -37,6 +38,7 @@
         <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Click="ClickNumberButton"/>
         <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Click="ClickNumberButton"/>
         <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Click="ClickNumberButton"/>
+        <!-- TODO: ラムダ式は試せたと思いますので、xaml側でClickイベントを登録する方式に統一しましょう。もしくはコード側。 -->
         <Button Grid.Row="8" Grid.Column="0" x:Name="Inversion" Content="+/-"/>
         <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="."/>
         <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="ClickOperatorButton"/>
@@ -50,16 +52,13 @@
         <Button Grid.Row="3" Grid.Column="0" x:Name="Percent" Content="%"/>
         <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntry" Content="CE"/>
         <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C"/>
-
-        <!-- DONE: 余計なスペースがあります。 -->
         <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back"/>
-
         <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="ClickOutputButton"/>
-        <!-- DONE: Columnがありません。 -->
+        <!-- TODO: TextWrappingの設定は省略してよいと思います。折返しもしないでしょうし。 -->
+        <!-- TODO: Height="NaN"？ -->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" TextWrapping="Wrap" Height="NaN" IsReadOnly="True"/>
 
-        <!-- DONE: ColumnSpanの数？ -->
         <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -69,8 +68,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <!-- DONE: Rowが一つの場合は省略できます。 -->
 
             <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M"/>
             <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS"/>

@@ -25,8 +25,7 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
-        // DONE: private にしたら変数名に _(アンダースコア) のプレフィックスをつけてみましょう。他のページで _ をつけている物がありました。
-        // DONE: 配列を扱う変数名は複数形にすると読みやすくなります。
+        // TODO: インスタンスは一度だけnewして変わることがないので、readonlyをつけることができます。
         private List<string> _memories = new();
 
         public MainWindow()
@@ -72,17 +71,10 @@ namespace Calculator2
             // MR(メモリ呼び出し）ボタン
             this.MemoryRecall.Click += (s, e) => { this.RecallMemory(); };
 
-
-            // DONE: 処理のそばにコメントをつけるよりは、メソッド化するのがよいでしょう。
-            // メソッド化することで処理に名前が付きます。またメソッドにドキュメンテーションコメントを付けることができます。
             this.MemoryClear.Click += (s, e) => { this.ClearMemory(); };
         }
 
-        // DONE: コメントの文章は 。 で終わらせるようにしましょう。(英語だとピリオド)
-        // これは好みが分かれるところですが、きちんとした文章でコメントを書くほうがよいとされることが多いです。
-        // DONE: メソッド名は基本は動詞とします。
-        // DONE: param sub について、コメントを追加しましょう。
-        // DONE: bool の変数名は isXxx としてください。動詞から始めるのはメソッド名ですが、bool 変数は例外です。
+        // TODO: メソッド名は動詞から始めます。例 ClearMemory()
         /// <summary>
         /// テキストボックス初期化メソッドです。
         /// </summary>
@@ -92,23 +84,21 @@ namespace Calculator2
             this.MainText.Text = "0";
             if (isSub == true)
             {
+                // TODO: TextBoxの内容を消去したい場合は、Clear()メソッドがあります。
                 this.SubText.Text = null;
             }
         }
 
-        // DONE: メソッド名は動詞から始めます。重要なのでもう一度指摘しておきます。
+        // TODO: Inverse の意味は、数学英語だと逆数となるようです。
         /// <summary>
         /// メインテキストの数値の正負反転を反転します。
         /// </summary>
         private void Inverse()
         {
-            // DONE: { は改行後におきましょう。Ctrl + K, D を活用するとよいでしょう。編集 -> 詳細 -> ドキュメントのフォーマット です。
             try
             {
-                // DONE: txt → txt でよいでしょう。
                 string txt = this.MainText.Text;
-                // DONE: Parse と一緒に マイナスの記号をつけるとわかりにくいので、処理を分けたほうが無難です。
-                // DONE: decimal.Parse → Decimal.Parse
+                // TODO: Parseした時点では、まだ反転していないのでinvResultと呼ばない方がよいでしょう。
                 Decimal invResult = Decimal.Parse(txt);
                 invResult = -invResult;
                 this.MainText.Text = invResult.ToString();
@@ -120,6 +110,7 @@ namespace Calculator2
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
+                // TODO: ShowErrorMessage()メソッドとセットで使われているので、ShowErrorMessage()メソッドの中にいれてしまいましょう。
                 Console.WriteLine(ex.Message);
             }
         }
@@ -130,8 +121,8 @@ namespace Calculator2
         private void BackSpace()
         {
             string txt = this.MainText.Text;
-            // DONE: mem という名前は MemoryStream 関連で使われるので、ここでは別の名前がよいでしょう。
             string bs = txt.Remove(txt.Length - 1);
+            // TODO: if の中括弧抜けです。if でドキュメント内を検索し、全体的に見直してみましょう。
             if (bs.Length == 0 || bs == "-")
                 TextInitialize(false);
             else
@@ -143,13 +134,13 @@ namespace Calculator2
         /// </summary>
         private void SquareOfX()
         {
+            // TODO: この行がtryの中にあったり外にあったりすることが多いようです。統一しましょう。
             string txt = this.MainText.Text;
             try
             {
                 Decimal sqResult = Decimal.Parse(txt);
                 sqResult *= sqResult;
                 this.MainText.Text = sqResult.ToString();
-
             }
             catch (ArithmeticException ex)
             {
@@ -170,6 +161,10 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
+                // TODO: double.Parse→Double.Parse
+                // TODO: ParseとSqrtは分けたほうが無難です。
+                // ここは簡単な処理なので混乱しませんが、複雑な処理になると、どこで例外が発生しているかデバッグしにくくなります。
+                // またInverseで符号逆転の処理を分けたので、コードの処理の粒度を揃える上でも分けたほうがよいでしょう。
                 double sqrtResult = Math.Sqrt(double.Parse(txt));
                 this.MainText.Text = sqrtResult.ToString();
             }
@@ -233,7 +228,6 @@ namespace Calculator2
         /// </summary>
         private void HitTheDecimalPoint()
         {
-            // DONE: { } 中括弧は省略しないようにしましょう。
             if (!this.MainText.Text.Contains("."))
             {
                 this.MainText.Text += ".";
@@ -247,8 +241,8 @@ namespace Calculator2
         private void OpenMemoryWindow()
         {
             Decimal result = Decimal.Parse(this.MainText.Text);
-            // DONE?: この方法だとMemoryWindowが多重起動できてしまいます。
 
+            // UNDONE: この方法だとMemoryWindowが多重起動できてしまいます。
             MemoryWindow mw = new MemoryWindow(_memories, result);
             mw.Owner = this;
             mw.ShowDialog();
@@ -259,6 +253,7 @@ namespace Calculator2
         /// </summary>
         private void SaveMemory()
         {
+            // TODO: _memoriesはMainWindowの持つインスタンスなので、thisをつけましょう。Shift+F12で参照箇所を検索するとよいでしょう。
             _memories.Add(this.MainText.Text);
         }
 
@@ -269,6 +264,7 @@ namespace Calculator2
         {
             try
             {
+                // TODO: 早期リターンに変えてみましょう。
                 if (_memories.Count > 0)
                 {
                     string txt = this.MainText.Text;
@@ -364,11 +360,13 @@ namespace Calculator2
         /// </summary>
         private void ClickOperatorButton(object sender, RoutedEventArgs e)
         {
-            // DONE: 型を判定してかつ変換したい場合は is も使えます。どちらがよか検討してみましょう。
+            // TODO: var と is を組み合わせて使ってみましょう。
             if (sender is Button btn)
             {
                 this.Calculate();
                 this.SubText.Text = MainText.Text + btn.Content;
+                // TODO: this抜け。他の箇所も見直してみましょう。
+                // インスタンスのメソッドだということを常に意識することが大切です。
                 TextInitialize(false);
             }
         }
@@ -379,7 +377,6 @@ namespace Calculator2
         private void ClickEqualButton(object sender, RoutedEventArgs e)
         {
             this.Calculate();
-
         }
 
         /// <summary>
@@ -388,7 +385,7 @@ namespace Calculator2
         /// <returns></returns>
         private void Calculate()
         {
-            // DONE: Parse() メソッドは例外を発生する可能性があります。try の中に入れましょう。もしくは TryParse() を使いましょう。
+            // TODO: ここで変数宣言するのではなく、TryParse(xxxx, out var valueMain)とできます。
             Decimal valueMain;
             string sub = this.SubText.Text;
             bool isSuccess = Decimal.TryParse(this.MainText.Text, out valueMain);
@@ -396,14 +393,15 @@ namespace Calculator2
             {
                 return;
             }
+
             try
             {
+                // TODO: C#のNullableについて調べてみましょう。
+                // またC#8.0からnull参照許容型がデフォルトでオフになっています。
                 if ((sub == null) || (sub.Trim().Length == 0))
                 {
                     return;
                 }
-                // DONE: 型名+変数名という命名の仕方はハンガリアン記法と呼ばれます。その場合はmSubかdecSubとなります。mはdecimalのリテラルで使われるキーワードです。dだとdoubleの意味になります。
-                // ただ、ハンガリアン記法はC#ではあまり使われないので違う命名のほうがよいでしょう。
                 Decimal valueSub = Decimal.Parse(sub.Remove(sub.Length - 1));
                 Decimal result = 0;
                 if (sub.Contains("÷"))
@@ -438,15 +436,11 @@ namespace Calculator2
             }
             catch (Exception ex)
             {
-                // DONE: 自分のインスタンスのメソッドには this をつけましょう。
                 this.ShowErrorMessage(ex);
                 Console.WriteLine(ex.Message);
             }
         }
 
-        // DONE: ドキュメンテーションコメントを書きましょう。
-        // DONE: メソッド名は動詞から始めましょう。
-        // DONE: Exception ex を引数として取れるようにして、表示されるメッセージに反映できるようにしてみましょう。
         /// <summary>
         /// エラーメッセージを表示します
         /// </summary>
@@ -454,6 +448,9 @@ namespace Calculator2
         {
             try
             {
+                // TODO: 再スローする必要はありません。
+                // また再スローする場合は throw ex; と書けます。
+                // 再スローの仕方によってエラー内容が変わることがあります。
                 ExceptionDispatchInfo.Capture(ex).Throw();
             }
             catch (DivideByZeroException)
@@ -474,11 +471,11 @@ namespace Calculator2
             }
             finally
             {
+                // TODO: global:: を使ってみたかった？その意味も調べてみましょう。
                 global::System.Console.WriteLine(ex.Message);
             }
         }
 
-        // DONE: sender, e は既定の引数で説明がなくてもわかりますので、その場合はコメント行を削除してしまいましょう。
         /// <summary>
         /// キー押下時、対応した数値の入力や四則演算を行います。
         /// </summary>
@@ -491,13 +488,13 @@ namespace Calculator2
                     this.Calculate();
                     break;
                 case Key.Back:
+                    // TODO: this
                     BackSpace();
                     break;
                 case Key.Decimal:
                     HitTheDecimalPoint();
                     break;
                 case Key.Divide:
-                // DONE: ボタンの押下をInvokeしていますが、BackSpace()やDecimalPoint()みたいにメソッドを呼び出す方がスッキリするでしょう。
                 case Key.Multiply:
                 case Key.Subtract:
                 case Key.Add:
@@ -526,8 +523,9 @@ namespace Calculator2
                     DownNumberKey(e.Key);
                     break;
             }
-
         }
+
+        // TODO: DOCコメント
         private void DownNumberKey(Key key)
         {
             Decimal result;
@@ -586,18 +584,21 @@ namespace Calculator2
             }
         }
 
+        // TODO: Downはボタンを押したという動詞にはなりません。
         /// <summary>
         /// 現在のメインテキストと四則演算の記号をサブテキストに格納します。
         /// 既に格納されている場合は、計算も行います。
         /// </summary>
         private void DowndOperatorKey(Key key)
         {
-
+            // TODO: 「既に格納されている場合は、計算も行います。」ということですが、先に計算をしている？
+            // 言いたいことは推測できますが、コメントが正しい状況を表現できていない状態になっているようです。
             this.Calculate();
             string result = this.MainText.Text;
             switch (key)
             {
                 case Key.Divide:
+                    // TODO: += という演算子が使えそうです。
                     this.SubText.Text = result + "÷";
                     break;
                 case Key.Multiply:
