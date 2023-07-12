@@ -488,7 +488,6 @@ namespace Calculator2
             switch (e.Key)
             {
                 case Key.Enter:
-
                     this.Calculate();
                     break;
                 case Key.Back:
@@ -502,7 +501,7 @@ namespace Calculator2
                 case Key.Multiply:
                 case Key.Subtract:
                 case Key.Add:
-                    DowndOperatorKey(e);
+                    DowndOperatorKey(e.Key);
                     break;
                 case Key.D1:
                 case Key.NumPad1:
@@ -524,15 +523,15 @@ namespace Calculator2
                 case Key.NumPad9:
                 case Key.D0:
                 case Key.NumPad0:
-                    DownNumberKey(e);
+                    DownNumberKey(e.Key);
                     break;
             }
 
         }
-        private void DownNumberKey(KeyEventArgs e)
+        private void DownNumberKey(Key key)
         {
             Decimal result;
-            switch (e.Key)
+            switch (key)
             {
                 case Key.D1:
                 case Key.NumPad1:
@@ -591,12 +590,12 @@ namespace Calculator2
         /// 現在のメインテキストと四則演算の記号をサブテキストに格納します。
         /// 既に格納されている場合は、計算も行います。
         /// </summary>
-        private void DowndOperatorKey(KeyEventArgs e)
+        private void DowndOperatorKey(Key key)
         {
 
             this.Calculate();
             string result = this.MainText.Text;
-            switch (e.Key)
+            switch (key)
             {
                 case Key.Divide:
                     this.SubText.Text = result + "÷";
