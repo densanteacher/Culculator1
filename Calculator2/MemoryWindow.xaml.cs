@@ -27,7 +27,7 @@ namespace Calculator2
         public MemoryWindow(List<string> memories, decimal result)
         {
             InitializeComponent();
-            _memories = memories;
+            this._memories = memories;
             _result = result;
 
             this.InitializeList();
@@ -44,11 +44,11 @@ namespace Calculator2
         public void InitializeList()
         {
             this.memoryList.Items.Clear();
-            foreach (var item in _memories)
+            foreach (var item in this._memories)
             {
                 this.memoryList.Items.Add(item);
             }
-            if(_memories.Count > 0)
+            if(this._memories.Count > 0)
             {
                 this.memoryList.SelectedIndex = 0;
             }
@@ -59,12 +59,12 @@ namespace Calculator2
         /// </summary>
         private void ClearMemory()
         {
-            if (_memories.Count == 0)
+            if (this._memories.Count == 0)
             {
                 return;
             }
             string? selected = this.memoryList.SelectedItem.ToString();
-            _memories.Remove(selected);
+            this._memories.Remove(selected);
             this.memoryList.Items.Remove(selected);
             this.memoryList.SelectedIndex = 0;
         }
@@ -76,14 +76,14 @@ namespace Calculator2
         {
             try
             {
-                if (_memories.Count == 0)
+                if (this._memories.Count == 0)
                 {
                     return;
                 }
                 string? selected = this.memoryList.SelectedItem.ToString();
                 int index = this.memoryList.SelectedIndex;
                 Decimal plusResult = Decimal.Parse(selected) + _result;
-                _memories[index] = plusResult.ToString();
+                this._memories[index] = plusResult.ToString();
                 this.InitializeList();
                 this.memoryList.SelectedIndex = index;
             } catch (Exception ex)
@@ -100,14 +100,14 @@ namespace Calculator2
         {
             try
             {
-                if (_memories.Count == 0)
+                if (this._memories.Count == 0)
                 {
                     return;
                 }
                 string? selected = this.memoryList.SelectedItem.ToString();
                 int index = this.memoryList.SelectedIndex;
                 Decimal minusResult = Decimal.Parse(selected) - _result;
-                _memories[index] = minusResult.ToString();
+                this._memories[index] = minusResult.ToString();
                 this.InitializeList();
                 this.memoryList.SelectedIndex = index;
             } catch(Exception ex)

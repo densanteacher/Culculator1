@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="600" FontSize="18" KeyDown="Window_KeyDown">
-    <!-- TODO: Windowサイズの最小値を設定してみましょう。 -->
+        Title="MainWindow" Height="700" Width="600" MinHeight="400" MinWidth="300"
+        FontSize="18" KeyDown="Window_KeyDown">
+    <!-- DONE: Windowサイズの最小値を設定してみましょう。 -->
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -27,17 +28,17 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Click="ClickNumberButton"/>
-        <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Click="ClickNumberButton"/>
-        <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Click="ClickNumberButton"/>
-        <!-- TODO: 余計なスペースあります。 -->
-        <Button Grid.Row="6" Grid.Column="0" x:Name="Four" Content="4" Click="ClickNumberButton" />
-        <Button Grid.Row="6" Grid.Column="1" x:Name="Five" Content="5" Click="ClickNumberButton"/>
-        <Button Grid.Row="6" Grid.Column="2" x:Name="Six" Content="6" Click="ClickNumberButton"/>
-        <Button Grid.Row="5" Grid.Column="0" x:Name="Seven" Content="7" Click="ClickNumberButton"/>
-        <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Click="ClickNumberButton"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Click="ClickNumberButton"/>
-        <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Click="ClickNumberButton"/>
+        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThree" Content="3"/>
+        <!-- DONE: 余計なスペースあります。 -->
+        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFour" Content="4"/>
+        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFive" Content="5"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSix" Content="6"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSeven" Content="7"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEight" Content="8"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNine" Content="9"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZero" Content="0"/>
         <!-- TODO: ラムダ式は試せたと思いますので、xaml側でClickイベントを登録する方式に統一しましょう。もしくはコード側。 -->
         <Button Grid.Row="8" Grid.Column="0" x:Name="Inversion" Content="+/-"/>
         <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="."/>
@@ -54,10 +55,10 @@
         <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C"/>
         <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back"/>
         <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="ClickOutputButton"/>
-        <!-- TODO: TextWrappingの設定は省略してよいと思います。折返しもしないでしょうし。 -->
-        <!-- TODO: Height="NaN"？ -->
-        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
-        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" TextWrapping="Wrap" Height="NaN" IsReadOnly="True"/>
+        <!-- DONE: TextWrappingの設定は省略してよいと思います。折返しもしないでしょうし。 -->
+        <!-- DONE: Height="NaN"？ -->
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Text="0" FontSize="20"/>
+        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" IsReadOnly="True"/>
 
         <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
