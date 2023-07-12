@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="600" MinHeight="400" MinWidth="300"
         FontSize="18" KeyDown="Window_KeyDown">
-    <!-- DONE: Windowサイズの最小値を設定してみましょう。 -->
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,7 +30,6 @@
         <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1"/>
         <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2"/>
         <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThree" Content="3"/>
-        <!-- DONE: 余計なスペースあります。 -->
         <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFour" Content="4"/>
         <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFive" Content="5"/>
         <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSix" Content="6"/>
@@ -55,8 +53,6 @@
         <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C"/>
         <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back"/>
         <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="ClickOutputButton"/>
-        <!-- DONE: TextWrappingの設定は省略してよいと思います。折返しもしないでしょうし。 -->
-        <!-- DONE: Height="NaN"？ -->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Text="0" FontSize="20"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" IsReadOnly="True"/>
 

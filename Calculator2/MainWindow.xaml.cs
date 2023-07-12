@@ -25,7 +25,6 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
-        // DONE: インスタンスは一度だけnewして変わることがないので、readonlyをつけることができます。
         private readonly List<string> _memories = new();
 
         public MainWindow()
@@ -34,7 +33,7 @@ namespace Calculator2
 
             this.InitializeText(true);
 
-            
+
             // クリア（MainTextとSubText両方消す）ボタン
             this.Clear.Click += (s, e) => { this.InitializeText(true); };
             // CE（MainTextのみ消す）ボタン
@@ -75,7 +74,8 @@ namespace Calculator2
             this.MemoryClear.Click += (s, e) => { this.ClearMemory(); };
         }
 
-        // DONE: メソッド名は動詞から始めます。例 ClearMemory()
+        // TODO: Initializeという名前は、最初に一回初期化するときだけ使いましょう。
+        // 今回はテキストをクリアする目的なのでClearという単語を使うのがよいでしょう。
         /// <summary>
         /// テキストボックス初期化メソッドです。
         /// </summary>
@@ -85,12 +85,12 @@ namespace Calculator2
             this.MainText.Text = "0";
             if (isSub == true)
             {
-                // DONE: TextBoxの内容を消去したい場合は、Clear()メソッドがあります。
                 this.SubText.Clear();
             }
         }
 
-        // DONE: Inverse の意味は、数学英語だと逆数となるようです。
+        // TODO: 反転という意味でのReverseはよいと思います。Reverseというメソッド名はStringクラスにもあります。なので符号の反転とわかるようにしてみましょう。
+        // String.Reverse() についても調べてみましょう。
         /// <summary>
         /// メインテキストの数値の正負反転を反転します。
         /// </summary>
@@ -99,7 +99,8 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                // DONE: Parseした時点では、まだ反転していないのでinvResultと呼ばない方がよいでしょう。
+                // TODO: Parseした時点では、まだ反転していないのでreverseと呼ばない方が正確です。
+                // 本来はこの程度は指摘しないのですが、なるべく正しい名前をつける習慣をつけておくほうがよいでしょう。
                 Decimal reverse = Decimal.Parse(txt);
                 reverse = -reverse;
                 this.MainText.Text = reverse.ToString();
@@ -107,7 +108,6 @@ namespace Calculator2
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
-                // DONE: ShowErrorMessage()メソッドとセットで使われているので、ShowErrorMessage()メソッドの中にいれてしまいましょう。
             }
         }
 
@@ -118,9 +118,9 @@ namespace Calculator2
         {
             string txt = this.MainText.Text;
             string bs = txt.Remove(txt.Length - 1);
-            // DONE: if の中括弧抜けです。if でドキュメント内を検索し、全体的に見直してみましょう。
             if (bs.Length == 0 || bs == "-")
             {
+                // TODO: this
                 InitializeText(false);
             }
             else
@@ -134,10 +134,10 @@ namespace Calculator2
         /// </summary>
         private void SquareOfX()
         {
-            // DONE: この行がtryの中にあったり外にあったりすることが多いようです。統一しましょう。
             try
             {
                 string txt = this.MainText.Text;
+                // TODO: 変数宣言の型のDecimalはdecimalでよいです。
                 Decimal square = Decimal.Parse(txt);
                 square *= square;
                 this.MainText.Text = square.ToString();
@@ -156,10 +156,6 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                // DONE: double.Parse→Double.Parse
-                // DONE: ParseとSqrtは分けたほうが無難です。
-                // ここは簡単な処理なので混乱しませんが、複雑な処理になると、どこで例外が発生しているかデバッグしにくくなります。
-                // またInverseで符号逆転の処理を分けたので、コードの処理の粒度を揃える上でも分けたほうがよいでしょう。
                 Double squareRoot = double.Parse(txt);
                 squareRoot = Math.Sqrt(squareRoot);
                 this.MainText.Text = squareRoot.ToString();
@@ -221,9 +217,11 @@ namespace Calculator2
         /// </summary>
         private void OpenMemoryWindow()
         {
+            // TODO: 例外が起こりそうなところはtry-catchがあるとよいでしょう。
+            // 他にも該当箇所がありそうです。
             Decimal result = Decimal.Parse(this.MainText.Text);
 
-            // UNDONE: この方法だとMemoryWindowが多重起動できてしまいます。
+            // TODO: 今まで直した内容を MemoryWindow にも適用してみましょう。
             MemoryWindow mw = new MemoryWindow(this._memories, result);
             mw.Owner = this;
             mw.ShowDialog();
@@ -234,7 +232,6 @@ namespace Calculator2
         /// </summary>
         private void SaveMemory()
         {
-            // DONE: _memoriesはMainWindowの持つインスタンスなので、thisをつけましょう。Shift+F12で参照箇所を検索するとよいでしょう。
             this._memories.Add(this.MainText.Text);
         }
 
@@ -245,7 +242,6 @@ namespace Calculator2
         {
             try
             {
-                // DONE: 早期リターンに変えてみましょう。
                 if (this._memories.Count == 0)
                 {
                     return;
@@ -267,6 +263,9 @@ namespace Calculator2
         {
             try
             {
+                // TODO: 早期リターン
+                // 他にも早期リターンができる箇所があります。
+                // 場合によるのですが、たいていはインデントが深くないほうが喜ばれます。
                 if (this._memories.Count > 0)
                 {
                     string txt = this.MainText.Text;
@@ -340,8 +339,6 @@ namespace Calculator2
             {
                 this.Calculate();
                 this.SubText.Text = MainText.Text + btn.Content;
-                // DONE: this抜け。他の箇所も見直してみましょう。
-                // インスタンスのメソッドだということを常に意識することが大切です。
                 this.InitializeText(false);
             }
         }
@@ -360,7 +357,6 @@ namespace Calculator2
         /// <returns></returns>
         private void Calculate()
         {
-            // DONE: ここで変数宣言するのではなく、TryParse(xxxx, out var valueMain)とできます。
             string sub = this.SubText.Text;
             bool isSuccess = Decimal.TryParse(this.MainText.Text, out var valueMain);
             if (!isSuccess)
@@ -441,9 +437,7 @@ namespace Calculator2
             }
             finally
             {
-                // DONE: global:: を使ってみたかった？その意味も調べてみましょう。
-                // ANSWER:cwにTabキー二回押したらこのように書かれました。単にショートカット使って横着しただけです。紛らわしくてすみません。
-                global::System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -496,7 +490,8 @@ namespace Calculator2
             }
         }
 
-        // DONE: DOCコメント
+        // TODO: 押した際の処理というコメントを具体的にどういった処理をしているかを要約した内容に変更してみましょう。
+        // summary(要約) 以外の情報を記載したい場合は、remarks(備考) というドキュメンテーションコメントが使えます。
         /// <summary>
         /// キーボードで数値キーを押下した際の処理です。
         /// </summary>
@@ -559,21 +554,25 @@ namespace Calculator2
             }
         }
 
-        // DONE: Downはボタンを押したという動詞にはなりません。
         /// <summary>
         /// 現在のメインテキストと四則演算の記号をサブテキストに格納します。
         /// 既に格納されている場合は、計算も行います。
         /// </summary>
         private void PressOperatorKey(Key key)
         {
-            // DONE?: 「既に格納されている場合は、計算も行います。」ということですが、先に計算をしている？
+            // TODO: 「既に格納されている場合は、計算も行います。」ということですが、先に計算をしている？
             // 言いたいことは推測できますが、コメントが正しい状況を表現できていない状態になっているようです。
+            // 格納済みが何をあらわすかはわかりませんが、素直にコメントとを読むと以下の処理のように読めます。
+            //if (is格納済み)
+            //{
+            //    Calculate();
+            //}
+
             this.Calculate();
             string result = this.MainText.Text;
             switch (key)
             {
                 case Key.Divide:
-                    // DONE: += という演算子が使えそうです。
                     result += "÷";
                     break;
                 case Key.Multiply:
