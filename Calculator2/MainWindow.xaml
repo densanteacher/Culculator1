@@ -27,23 +27,23 @@
         </Grid.RowDefinitions>
         <!-- DONE: Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" は省略可能と思います。 -->
         <!-- DONE: Window自体のFontSizeを18に設定して、ButtonのFontSizeは消してしまいましょう。 -->
-        <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Click="btnNum_Click"/>
-        <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Click="btnNum_Click"/>
-        <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Click="btnNum_Click"/>
-        <Button Grid.Row="6" Grid.Column="0" x:Name="Four" Content="4" Click="btnNum_Click" />
-        <Button Grid.Row="6" Grid.Column="1" x:Name="Five" Content="5" Click="btnNum_Click"/>
-        <Button Grid.Row="6" Grid.Column="2" x:Name="Six" Content="6" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="0" x:Name="Seven" Content="7" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Click="btnNum_Click"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Click="btnNum_Click"/>
-        <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Click="btnNum_Click"/>
+        <Button Grid.Row="7" Grid.Column="0" x:Name="One" Content="1" Click="ClickNumberButton"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="Two" Content="2" Click="ClickNumberButton"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="Three" Content="3" Click="ClickNumberButton"/>
+        <Button Grid.Row="6" Grid.Column="0" x:Name="Four" Content="4" Click="ClickNumberButton" />
+        <Button Grid.Row="6" Grid.Column="1" x:Name="Five" Content="5" Click="ClickNumberButton"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="Six" Content="6" Click="ClickNumberButton"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="Seven" Content="7" Click="ClickNumberButton"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Click="ClickNumberButton"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Click="ClickNumberButton"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Click="ClickNumberButton"/>
         <Button Grid.Row="8" Grid.Column="0" x:Name="Inversion" Content="+/-"/>
         <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="."/>
-        <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="btnOpe_Click"/>
-        <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="btnOpe_Click"/>
-        <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="btnOpe_Click"/>
-        <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="btnOpe_Click"/>
-        <Button Grid.Row="8" Grid.Column="3" x:Name="Equal" Content="=" Click="btnEq_Click"/>
+        <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="ClickOperatorButton"/>
+        <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="ClickOperatorButton"/>
+        <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="ClickOperatorButton"/>
+        <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="ClickOperatorButton"/>
+        <Button Grid.Row="8" Grid.Column="3" x:Name="Equal" Content="=" Click="ClickEqualButton"/>
         <Button Grid.Row="4" Grid.Column="0" x:Name="DivideBy" Content="1/x"/>
         <Button Grid.Row="4" Grid.Column="1" x:Name="Square" Content="x^2"/>
         <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRoot" Content="√x"/>
@@ -54,10 +54,10 @@
         <!-- DONE: 余計なスペースがあります。 -->
         <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back"/>
 
-        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="btnOutput_Click"/>
+        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="ClickOutputButton"/>
         <!-- DONE: Columnがありません。 -->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" TextWrapping="Wrap" Text="0" Height="NaN" Width="NaN" FontSize="20"/>
-        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" TextWrapping="Wrap" Height="NaN"/>
+        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" TextWrapping="Wrap" Height="NaN" IsReadOnly="True"/>
 
         <!-- DONE: ColumnSpanの数？ -->
         <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">

@@ -331,7 +331,7 @@ namespace Calculator2
         /// <summary>
         /// memoryに格納されている値をresult.txtに書き込みます。
         /// </summary>
-        private void btnOutput_Click(object sender, EventArgs e)
+        private void ClickOutputButton(object sender, EventArgs e)
         {
             string path = @"..\..\..\result.txt";
             using (FileStream fs = File.Create(path)) ;
@@ -350,7 +350,7 @@ namespace Calculator2
         /// <summary>
         /// 押したボタンの数値をメインテキストに追加します。
         /// </summary>
-        private void btnNum_Click(object sender, RoutedEventArgs e)
+        private void ClickNumberButton(object sender, RoutedEventArgs e)
         {
             // DONE: 変数の型として var を使ってみましょう。
             var btn = sender as Button;
@@ -362,13 +362,13 @@ namespace Calculator2
         /// 現在のメインテキストと四則演算の記号をサブテキストに格納します。
         /// 既に格納されている場合は、計算も行います。
         /// </summary>
-        private void btnOpe_Click(object sender, RoutedEventArgs e)
+        private void ClickOperatorButton(object sender, RoutedEventArgs e)
         {
             // DONE: 型を判定してかつ変換したい場合は is も使えます。どちらがよか検討してみましょう。
             if (sender is Button btn)
             {
-                Decimal result = this.Calculate();
-                this.SubText.Text = result.ToString() + btn.Content;
+                this.Calculate();
+                this.SubText.Text = MainText.Text + btn.Content;
                 TextInitialize(false);
             }
         }
@@ -376,67 +376,71 @@ namespace Calculator2
         /// <summary>
         /// 計算を行い、結果をメインテキストに表示します。
         /// </summary>
-        private void btnEq_Click(object sender, RoutedEventArgs e)
+        private void ClickEqualButton(object sender, RoutedEventArgs e)
         {
-            Decimal result = this.Calculate();
-            this.MainText.Text = result.ToString();
-            this.SubText.Text = null;
+            this.Calculate();
+
         }
 
         /// <summary>
         /// 計算を行います。
         /// </summary>
         /// <returns></returns>
-        private Decimal Calculate()
+        private void Calculate()
         {
             // DONE: Parse() メソッドは例外を発生する可能性があります。try の中に入れましょう。もしくは TryParse() を使いましょう。
             Decimal valueMain;
+            string sub = this.SubText.Text;
             bool isSuccess = Decimal.TryParse(this.MainText.Text, out valueMain);
             if (!isSuccess)
             {
-                return valueMain;
+                return;
             }
             try
             {
-                string sub = this.SubText.Text;
                 if ((sub == null) || (sub.Trim().Length == 0))
                 {
-                    return valueMain;
+                    return;
                 }
                 // DONE: 型名+変数名という命名の仕方はハンガリアン記法と呼ばれます。その場合はmSubかdecSubとなります。mはdecimalのリテラルで使われるキーワードです。dだとdoubleの意味になります。
                 // ただ、ハンガリアン記法はC#ではあまり使われないので違う命名のほうがよいでしょう。
                 Decimal valueSub = Decimal.Parse(sub.Remove(sub.Length - 1));
+                Decimal result = 0;
                 if (sub.Contains("÷"))
                 {
-                    return valueSub / valueMain;
+                    result = valueSub / valueMain;
+                    this.MainText.Text = result.ToString();
                 }
                 else if (sub.Contains("×"))
                 {
-                    return valueSub * valueMain;
+                    result = valueSub * valueMain;
+                    this.MainText.Text = result.ToString();
+
                 }
                 else if (sub.Contains("+"))
                 {
 
-                    return valueSub + valueMain;
+                    result = valueSub + valueMain;
+                    this.MainText.Text = result.ToString();
+
                 }
                 else if (sub.Contains("-"))
                 {
-                    return valueSub - valueMain;
-                }
+                    result = valueSub - valueMain;
+                    this.MainText.Text = result.ToString();
 
-                return valueMain;
+                }
+                this.SubText.Text = null;
             }
             catch (ArithmeticException ex)
             {
                 this.ShowErrorMessage(ex);
-                return valueMain;
             }
             catch (Exception ex)
             {
                 // DONE: 自分のインスタンスのメソッドには this をつけましょう。
                 this.ShowErrorMessage(ex);
                 Console.WriteLine(ex.Message);
-                return valueMain;
             }
         }
 
@@ -452,19 +456,19 @@ namespace Calculator2
             {
                 ExceptionDispatchInfo.Capture(ex).Throw();
             }
-            catch(DivideByZeroException)
+            catch (DivideByZeroException)
             {
                 MessageBox.Show("0で除算することはできません。");
             }
-            catch(OverflowException)
+            catch (OverflowException)
             {
                 MessageBox.Show("オーバーフローが発生しました。この計算は行えません。");
             }
-            catch(ArithmeticException)
+            catch (ArithmeticException)
             {
                 MessageBox.Show("計算中にエラーが発生しました。実行を中止します。");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("予期せぬエラーが発生しました。実行を中止します。");
             }
@@ -481,14 +485,11 @@ namespace Calculator2
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
-            ButtonAutomationPeer peer;
-            IInvokeProvider? provider;
             switch (e.Key)
             {
                 case Key.Enter:
-                    Decimal resultText = this.Calculate();
-                    this.MainText.Text = resultText.ToString();
-                    this.SubText.Text = null;
+
+                    this.Calculate();
                     break;
                 case Key.Back:
                     BackSpace();
@@ -497,87 +498,122 @@ namespace Calculator2
                     HitTheDecimalPoint();
                     break;
                 case Key.Divide:
-                    // TODO: ボタンの押下をInvokeしていますが、BackSpace()やDecimalPoint()みたいにメソッドを呼び出す方がスッキリするでしょう。
-                    peer = new ButtonAutomationPeer(this.Divide);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
-                    break;
+                // DONE: ボタンの押下をInvokeしていますが、BackSpace()やDecimalPoint()みたいにメソッドを呼び出す方がスッキリするでしょう。
                 case Key.Multiply:
-                    peer = new ButtonAutomationPeer(this.Multiply);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
-                    break;
                 case Key.Subtract:
-                    peer = new ButtonAutomationPeer(this.Subtract);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
-                    break;
                 case Key.Add:
-                    peer = new ButtonAutomationPeer(this.Add);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    DowndOperatorKey(e);
                     break;
                 case Key.D1:
                 case Key.NumPad1:
-                    peer = new ButtonAutomationPeer(this.One);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                case Key.D2:
+                case Key.NumPad2:
+                case Key.D3:
+                case Key.NumPad3:
+                case Key.D4:
+                case Key.NumPad4:
+                case Key.D5:
+                case Key.NumPad5:
+                case Key.D6:
+                case Key.NumPad6:
+                case Key.D7:
+                case Key.NumPad7:
+                case Key.D8:
+                case Key.NumPad8:
+                case Key.D9:
+                case Key.NumPad9:
+                case Key.D0:
+                case Key.NumPad0:
+                    DownNumberKey(e);
+                    break;
+            }
+
+        }
+        private void DownNumberKey(KeyEventArgs e)
+        {
+            Decimal result;
+            switch (e.Key)
+            {
+                case Key.D1:
+                case Key.NumPad1:
+                    result = Decimal.Parse(this.MainText.Text + 1);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D2:
                 case Key.NumPad2:
-                    peer = new ButtonAutomationPeer(this.Two);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 2);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D3:
                 case Key.NumPad3:
-                    peer = new ButtonAutomationPeer(this.Three);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 3);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D4:
                 case Key.NumPad4:
-                    peer = new ButtonAutomationPeer(this.Four);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 4);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D5:
                 case Key.NumPad5:
-                    peer = new ButtonAutomationPeer(this.Five);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 5);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D6:
                 case Key.NumPad6:
-                    peer = new ButtonAutomationPeer(this.Six);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 6);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D7:
                 case Key.NumPad7:
-                    peer = new ButtonAutomationPeer(this.Seven);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 7);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D8:
                 case Key.NumPad8:
-                    peer = new ButtonAutomationPeer(this.Eight);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 8);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D9:
                 case Key.NumPad9:
-                    peer = new ButtonAutomationPeer(this.Nine);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 9);
+                    this.MainText.Text = result.ToString();
                     break;
                 case Key.D0:
                 case Key.NumPad0:
-                    peer = new ButtonAutomationPeer(this.Zero);
-                    provider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                    provider.Invoke();
+                    result = Decimal.Parse(this.MainText.Text + 0);
+                    this.MainText.Text = result.ToString();
                     break;
             }
+        }
+
+        /// <summary>
+        /// 現在のメインテキストと四則演算の記号をサブテキストに格納します。
+        /// 既に格納されている場合は、計算も行います。
+        /// </summary>
+        private void DowndOperatorKey(KeyEventArgs e)
+        {
+
+            this.Calculate();
+            string result = this.MainText.Text;
+            switch (e.Key)
+            {
+                case Key.Divide:
+                    this.SubText.Text = result + "÷";
+                    break;
+                case Key.Multiply:
+                    this.SubText.Text = result + "×";
+                    break;
+                case Key.Subtract:
+                    this.SubText.Text = result + "-";
+                    break;
+                case Key.Add:
+                    this.SubText.Text = result + "+";
+                    break;
+            }
+
+            TextInitialize(false);
+
         }
     }
 }
