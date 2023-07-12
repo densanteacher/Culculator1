@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="MainWindow" FontSize="18" Height="700" Width="600" KeyDown="Window_KeyDown">
+        Title="MainWindow" Height="700" Width="600" FontSize="18" KeyDown="Window_KeyDown">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -37,19 +37,19 @@
         <Button Grid.Row="5" Grid.Column="1" x:Name="Eight" Content="8" Click="btnNum_Click"/>
         <Button Grid.Row="5" Grid.Column="2" x:Name="Nine" Content="9" Click="btnNum_Click"/>
         <Button Grid.Row="8" Grid.Column="1" x:Name="Zero" Content="0" Click="btnNum_Click"/>
-        <Button Grid.Row="8" Grid.Column="0" x:Name="Inv" Content="+/-"/>
-        <Button Grid.Row="8" Grid.Column="2" x:Name="Dot" Content="."/>
+        <Button Grid.Row="8" Grid.Column="0" x:Name="Inversion" Content="+/-"/>
+        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="."/>
         <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="btnOpe_Click"/>
         <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="btnOpe_Click"/>
         <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="btnOpe_Click"/>
         <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="btnOpe_Click"/>
-        <Button Grid.Row="8" Grid.Column="3" x:Name="Eq" Content="=" Click="btnEq_Click"/>
-        <Button Grid.Row="4" Grid.Column="0" x:Name="Div" Content="1/x"/>
-        <Button Grid.Row="4" Grid.Column="1" x:Name="Sq" Content="x^2"/>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="Sqrt" Content="√x"/>
-        <Button Grid.Row="3" Grid.Column="0" x:Name="Perc" Content="%"/>
-        <Button Grid.Row="3" Grid.Column="1" x:Name="CE" Content="CE"/>
-        <Button Grid.Row="3" Grid.Column="2" x:Name="C" Content="C"/>
+        <Button Grid.Row="8" Grid.Column="3" x:Name="Equal" Content="=" Click="btnEq_Click"/>
+        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideBy" Content="1/x"/>
+        <Button Grid.Row="4" Grid.Column="1" x:Name="Square" Content="x^2"/>
+        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRoot" Content="√x"/>
+        <Button Grid.Row="3" Grid.Column="0" x:Name="Percent" Content="%"/>
+        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntry" Content="CE"/>
+        <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C"/>
 
         <!-- DONE: 余計なスペースがあります。 -->
         <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back"/>
