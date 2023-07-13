@@ -25,24 +25,24 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly List<string> _memories = new();
+        private readonly List<string> _results = new();
 
         public MainWindow()
         {
             this.InitializeComponent();
-            this.Cleartext(true);
+            this.ClearText(true);
         }
 
-        // TODO: メソッド名はキャメルケース
+        // DONE: メソッド名はキャメルケース
         /// <summary>
         /// テキストボックス初期化メソッドです。
         /// </summary>
         /// <param name="isSub">trueの時はSubTextも初期化し、falseの時はMainTextのみ初期化します。</param>
-        private void Cleartext(bool isSub)
+        private void ClearText(bool isSub)
         {
             this.MainText.Text = "0";
-            // TODO: bool型は true/false と比較することはしません。たまにbool?型だと使うことがあります。
-            if (isSub == true)
+            // DONE: bool型は true/false と比較することはしません。たまにbool?型だと使うことがあります。
+            if (isSub)
             {
                 this.SubText.Clear();
             }
@@ -56,11 +56,9 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                // DONE: Parseした時点では、まだ反転していないのでreverseと呼ばない方が正確です。
-                // 本来はこの程度は指摘しないのですが、なるべく正しい名前をつける習慣をつけておくほうがよいでしょう。
                 decimal parsed = Decimal.Parse(txt);
-                // TODO: こっちは反転しているので、parsed　のままだとまずいでしょう。
-                parsed = -parsed;
+                // DONE: こっちは反転しているので、parsed　のままだとまずいでしょう。
+                decimal result = -parsed;
                 this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
@@ -74,16 +72,23 @@ namespace Calculator2
         /// </summary>
         private void BackSpace()
         {
-            // TODO: try-catch。ここはなくてもセーフですが、Removeするときに例外が発生する可能性があります。
-            string txt = this.MainText.Text;
-            string bs = txt.Remove(txt.Length - 1);
-            if (bs.Length == 0 || bs == "-")
+            // DONE: try-catch。ここはなくてもセーフですが、Removeするときに例外が発生する可能性があります。
+            try
             {
-                this.Cleartext(false);
+                string txt = this.MainText.Text;
+                string bs = txt.Remove(txt.Length - 1);
+                if (bs.Length == 0 || bs == "-")
+                {
+                    this.ClearText(false);
+                }
+                else
+                {
+                    this.MainText.Text = bs;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.MainText.Text = bs;
+                this.ShowErrorMessage(ex);
             }
         }
 
@@ -95,16 +100,9 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-<<<<<<< HEAD
-                // DONE: 変数宣言の型のDecimalはdecimalでよいです。
                 decimal parsed = Decimal.Parse(txt);
-                parsed *= parsed;
-                this.MainText.Text = parsed.ToString();
-=======
-                decimal square = Decimal.Parse(txt);
-                square *= square;
-                this.MainText.Text = square.ToString();
->>>>>>> 1b0cf5b713b8397ec6a350d55137541753e76ee1
+                decimal result = parsed * parsed;
+                this.MainText.Text = result.ToString();
             }
             catch (Exception ex)
             {
@@ -121,7 +119,7 @@ namespace Calculator2
             {
                 string txt = this.MainText.Text;
                 double parsed = Double.Parse(txt);
-                parsed = Math.Sqrt(parsed);
+                double result = Math.Sqrt(parsed);
                 this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
@@ -139,7 +137,7 @@ namespace Calculator2
             {
                 string txt = this.MainText.Text;
                 decimal parsed = Decimal.Parse(txt);
-                parsed = 1 / parsed;
+                decimal result = 1 / parsed;
                 this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
@@ -148,17 +146,17 @@ namespace Calculator2
             }
         }
 
-        // TODO: GetXxx という名前のメソッドは返り値としてXxxを受け取る場合に使います。別の名前を考えてみましょう。
+        // DONE: GetXxx という名前のメソッドは返り値としてXxxを受け取る場合に使います。別の名前を考えてみましょう。
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
-        private void GetPercentage()
+        private void GainPercentage()
         {
             try
             {
                 string txt = this.MainText.Text;
                 decimal parsed = Decimal.Parse(txt);
-                parsed /= 100;
+                decimal result = parsed / 100;
                 this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
@@ -182,16 +180,12 @@ namespace Calculator2
         /// MemoryWindowを表示します。
         /// MemoryWindowには、現在のmemoryリストの一覧が表示されます。
         /// </summary>
-        private void OpenMemoryWindow()
+        private void OpenResultsWindow()
         {
-            // DONE?: 例外が起こりそうなところはtry-catchがあるとよいでしょう。
-            // 他にも該当箇所がありそうです。
             try
             {
                 decimal result = Decimal.Parse(this.MainText.Text);
-
-                // DONE: 今まで直した内容を MemoryWindow にも適用してみましょう。
-                MemoryWindow mw = new MemoryWindow(this._memories, result);
+                ResultsWindow mw = new ResultsWindow(this._results, result);
                 mw.Owner = this;
                 mw.ShowDialog();
             }
@@ -204,26 +198,28 @@ namespace Calculator2
         /// <summary>
         /// memoryリストにメインテキストの数値を記録します。
         /// </summary>
-        private void SaveMemory()
+        private void SaveResult()
         {
-            this._memories.Add(this.MainText.Text);
+            this._results.Add(this.MainText.Text);
         }
 
         /// <summary>
         /// memoryリストに最初に追加された数値から、現在のメインテキストの数値を引きます。
         /// </summary>
-        private void SubtractMemory()
+        private void SubtractResult()
         {
             try
             {
-                if (this._memories.Count == 0)
+                if (this._results.Count == 0)
                 {
                     return;
                 }
 
                 string txt = this.MainText.Text;
-                decimal memoryMinus = Decimal.Parse(this._memories[0]) - Decimal.Parse(txt);
-                this._memories[0] = memoryMinus.ToString();
+                var parsed = Decimal.Parse(txt);
+                var result = Decimal.Parse(this._results[0]);
+                result -= parsed;
+                this._results[0] = result.ToString();
             }
             catch (Exception ex)
             {
@@ -231,24 +227,23 @@ namespace Calculator2
             }
         }
 
-        // TODO: Addはここでは加算の意味で使用していますが、this._memoriesがリストなので、Addという用語はリストに追加するような印象をうけます。別のメソッド名を検討しましょう。
+        // DONE?: Addはここでは加算の意味で使用していますが、this._memoriesがリストなので、Addという用語はリストに追加するような印象をうけます。別のメソッド名を検討しましょう。
         /// <summary>
         /// memoryリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
-        private void AddMemory()
+        private void AddResult()
         {
             try
             {
-                // DONE?: 早期リターン
-                // 他にも早期リターンができる箇所があります。
-                // 場合によるのですが、たいていはインデントが深くないほうが喜ばれます。
-                if (this._memories.Count == 0)
+                if (this._results.Count == 0)
                 {
                     return;
                 }
                 string txt = this.MainText.Text;
-                decimal memoryPlus = Decimal.Parse(this._memories[0]) + Decimal.Parse(txt);
-                this._memories[0] = memoryPlus.ToString();
+                var parsed = Decimal.Parse(txt);
+                var result = Decimal.Parse(this._results[0]);
+                result += parsed;
+                this._results[0] = result.ToString();
             }
             catch (Exception ex)
             {
@@ -259,28 +254,36 @@ namespace Calculator2
         /// <summary>
         /// メモリリストに最初に追加された数値を、メインテキストに再表示します。
         /// </summary>
-        private void RecallMemory()
+        private void RecallResult()
         {
-            // TODO: try-catch
-            // TODO: 早期リターンにしたほうが、他のメソッドと書き方が揃うでしょう。
-            if (this._memories.Count > 0)
+            // DONE: try-catch
+            // DONE: 早期リターンにしたほうが、他のメソッドと書き方が揃うでしょう。
+            if (this._results.Count == 0)
             {
-                this.MainText.Text = this._memories[0];
-            }; // TODO: trim ;
+                return;
+            } // DONE: trim ;
+            try
+            {
+                this.MainText.Text = this._results[0];
+            }
+            catch(Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+            }
         }
 
         /// <summary>
         /// メモリをクリアします。
         /// </summary>
-        private void ClearMemory()
+        private void ClearResults()
         {
-            this._memories.Clear();
+            this._results.Clear();
         }
 
         /// <summary>
         ///　_memoriesに格納されている値をresult.txtに書き込みます。
         /// </summary>
-        private void ClickOutputButton(object sender, EventArgs e)
+        private void OutputButton_OnClick(object sender, EventArgs e)
         {
             try
             {
@@ -290,7 +293,7 @@ namespace Calculator2
                 Encoding enc = Encoding.GetEncoding("Shift_JIS");
                 using (StreamWriter writer = new StreamWriter(path, false, enc))
                 {
-                    foreach (string item in this._memories)
+                    foreach (string item in this._results)
                     {
                         writer.WriteLine(item);
                     }
@@ -306,21 +309,27 @@ namespace Calculator2
         /// <summary>
         /// 押したボタンの数値をメインテキストに追加します。
         /// </summary>
-        private void ClickNumberButton(object sender, RoutedEventArgs e)
+        private void NumberButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // TODO: try-catch。Parseしている箇所は必要です。
+            // DONE: try-catch。Parseしている箇所は必要です。
 
-            // DONE: 変数の型として var を使ってみましょう。
             // TODO: 他に var が使える箇所に適用してみましょう。
-            var btn = sender as Button;
-            decimal result = Decimal.Parse(this.MainText.Text + btn.Content.ToString());
-            this.MainText.Text = result.ToString();
+            try
+            {
+                var btn = sender as Button;
+                decimal result = Decimal.Parse(this.MainText.Text + btn.Content.ToString());
+                this.MainText.Text = result.ToString();
+            }
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+            }
         }
 
         /// <summary>
         /// +/-ボタンを押したとき、メインテキストの数値の正負を反転させます。
         /// </summary>
-        private void ClickSignReverseButton(object sender, RoutedEventArgs e)
+        private void SignReverseButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.ReverseSign();
         }
@@ -328,7 +337,7 @@ namespace Calculator2
         /// <summary>
         /// .ボタンを押したとき、メインテキストの末尾に小数点を追加します
         /// </summary>
-        private void ClickDecimalPointButton(object sender, RoutedEventArgs e)
+        private void DecimalPointButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.HitTheDecimalPoint();
         }
@@ -337,32 +346,21 @@ namespace Calculator2
         /// 現在のメインテキストと四則演算の記号をサブテキストに格納します。
         /// 既に格納されている場合は、計算を行ってからサブテキストに格納します。
         /// </summary>
-        private void ClickOperatorButton(object sender, RoutedEventArgs e)
+        private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
-            // DONE: var と is を組み合わせて使ってみましょう。
-
+            // TODO: as だと btn が null になる可能性があります。検証方法がいくつかあるので調べて適用してみましょう。
             if (sender is Button btn)
             {
                 this.Calculate();
                 this.SubText.Text = MainText.Text + btn.Content;
-                this.Cleartext(false);
+                this.ClearText(false);
             }
-=======
-            // TODO: try-catch。nullになる可能性があるところには必要です。
-
-            var btn = sender as Button;
-            this.Calculate();
-            // TODO: as だと btn が null になる可能性があります。検証方法がいくつかあるので調べて適用してみましょう。
-            this.SubText.Text = MainText.Text + btn.Content;
-            this.Cleartext(false);
->>>>>>> 1b0cf5b713b8397ec6a350d55137541753e76ee1
         }
 
         /// <summary>
         /// 1/xボタンを押したとき、メインテキストの値をxとして1/xを表示します。
         /// </summary>
-        private void ClickDivideByButton(object sender, RoutedEventArgs e)
+        private void DivideByButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.DivideByX();
         }
@@ -370,7 +368,7 @@ namespace Calculator2
         /// <summary>
         /// x^2ボタンを押したとき、メインテキストの値を二乗した数値を表示します。
         /// </summary>
-        private void ClickSquareButton(object sender, RoutedEventArgs e)
+        private void SquareButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.SquareOfX();
         }
@@ -378,7 +376,7 @@ namespace Calculator2
         /// <summary>
         /// √xボタンを押したとき、メインテキストの値の平方根を表示します。
         /// </summary>
-        private void ClickSquareRootButton(object sender, RoutedEventArgs e)
+        private void SquareRootButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.SquareRootOfX();
         }
@@ -386,31 +384,31 @@ namespace Calculator2
         /// <summary>
         /// %ボタンを押したとき、メインテキストの値の100分の1を表示します。
         /// </summary>
-        private void ClickPercentButton(object sender, RoutedEventArgs e)
+        private void PercentButton__OnClick(object sender, RoutedEventArgs e)
         {
-            this.GetPercentage();
+            this.GainPercentage();
         }
 
         /// <summary>
         /// CEボタンを押したとき、メインテキストの値を消去し0にします。
         /// </summary>
-        private void ClickClearEntryButton(object sender, RoutedEventArgs e)
+        private void ClearEntryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Cleartext(false);
+            this.ClearText(false);
         }
 
         /// <summary>
         /// Cボタンを押したとき、メインテキストとサブテキストの値を消去します。
         /// </summary>
-        private void ClickClearButton(object sender, RoutedEventArgs e)
+        private void ClearButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Cleartext(true);
+            this.ClearText(true);
         }
 
         /// <summary>
         /// Backボタンを押したとき、メインテキストの末尾一文字を消去します。
         /// </summary>
-        private void ClickBackSpaceButton(object sender, RoutedEventArgs e)
+        private void BackSpaceButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.BackSpace();
         }
@@ -418,7 +416,7 @@ namespace Calculator2
         /// <summary>
         /// =ボタンを押したとき、計算を行い結果をメインテキストに表示します。
         /// </summary>
-        private void ClickEqualButton(object sender, RoutedEventArgs e)
+        private void EqualButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.Calculate();
         }
@@ -426,49 +424,49 @@ namespace Calculator2
         /// <summary>
         /// Mボタンを押したとき、MemoryWindowを開きます。
         /// </summary>
-        private void ClickMemoryButton(object sender, RoutedEventArgs e)
+        private void MemoryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.OpenMemoryWindow();
+            this.OpenResultsWindow();
         }
 
         /// <summary>
         /// MSボタンを押したとき、メモリリストにメインテキストの計算結果を記録します。
         /// </summary>
-        private void ClickMemorySaveButton(object sender, RoutedEventArgs e)
+        private void MemorySaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SaveMemory();
+            this.SaveResult();
         }
 
         /// <summary>
         /// M-ボタンを押したとき、メモリに保存された計算結果から現在のメインテキストの数値を引きます。
         /// </summary>
-        private void ClickMemoryMinusButton(object sender, RoutedEventArgs e)
+        private void MemoryMinusButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SubtractMemory();
+            this.SubtractResult();
         }
 
         /// <summary>
         /// M+ボタンを押したとき、メモリに保存された計算結果に現在のメインテキストの数値を足します。
         /// </summary>
-        private void ClickMemoryPlusButton(object sender, RoutedEventArgs e)
+        private void MemoryPlusButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.AddMemory();
+            this.AddResult();
         }
 
         /// <summary>
         /// MRボタンを押したとき、メモリに保存された計算結果をメインテキストに表示します。
         /// </summary>
-        private void ClickMemoryRecallButton(object sender, RoutedEventArgs e)
+        private void MemoryRecallButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.RecallMemory();
+            this.RecallResult();
         }
 
         /// <summary>
         /// MCボタンを押したとき、メモリを全て消去します。
         /// </summary>
-        private void ClickMemoryClearButton(object sender, RoutedEventArgs e)
+        private void MemoryClearButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.ClearMemory();
+            this.ClearResults();
         }
 
         /// <summary>
@@ -476,19 +474,15 @@ namespace Calculator2
         /// </summary>
         private void Calculate()
         {
-            // TODO: sub変数のスコープは、使う直前に宣言するほうがよいです。
-            string sub = this.SubText.Text;
-
+            // DONE: sub変数のスコープは、使う直前に宣言するほうがよいです。
             bool isSuccess = Decimal.TryParse(this.MainText.Text, out var valueMain);
             if (!isSuccess)
             {
                 return;
             }
-
             try
             {
-                // DONE: C#のNullableについて調べてみましょう。
-                // またC#8.0からnull参照許容型がデフォルトでオフになっています。
+                string sub = this.SubText.Text;
                 if ((sub == "") || (sub.Trim().Length == 0))
                 {
                     return;
@@ -524,8 +518,7 @@ namespace Calculator2
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
-                // TODO: delete
-                Console.WriteLine(ex.Message);
+                // DONE: delete
             }
         }
 
@@ -604,67 +597,72 @@ namespace Calculator2
             }
         }
 
-        // DONE: 押した際の処理というコメントを具体的にどういった処理をしているかを要約した内容に変更してみましょう。
-        // summary(要約) 以外の情報を記載したい場合は、remarks(備考) というドキュメンテーションコメントが使えます。
         /// <summary>
         /// キーボードで数値キーを押下した際、対応する数値をメインテキストの末尾に表示する処理です。
         /// </summary>
         /// <param name="key">Keyはキーボードで押されたキー情報です。</param>
         private void PressNumberKey(Key key)
         {
-            decimal result;
-            switch (key)
+            try
             {
-                case Key.D1:
-                case Key.NumPad1:
-                    result = Decimal.Parse(this.MainText.Text + 1);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D2:
-                case Key.NumPad2:
-                    result = Decimal.Parse(this.MainText.Text + 2);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D3:
-                case Key.NumPad3:
-                    result = Decimal.Parse(this.MainText.Text + 3);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D4:
-                case Key.NumPad4:
-                    result = Decimal.Parse(this.MainText.Text + 4);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D5:
-                case Key.NumPad5:
-                    result = Decimal.Parse(this.MainText.Text + 5);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D6:
-                case Key.NumPad6:
-                    result = Decimal.Parse(this.MainText.Text + 6);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D7:
-                case Key.NumPad7:
-                    result = Decimal.Parse(this.MainText.Text + 7);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D8:
-                case Key.NumPad8:
-                    result = Decimal.Parse(this.MainText.Text + 8);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D9:
-                case Key.NumPad9:
-                    result = Decimal.Parse(this.MainText.Text + 9);
-                    this.MainText.Text = result.ToString();
-                    break;
-                case Key.D0:
-                case Key.NumPad0:
-                    result = Decimal.Parse(this.MainText.Text + 0);
-                    this.MainText.Text = result.ToString();
-                    break;
+                decimal result;
+                switch (key)
+                {
+                    case Key.D1:
+                    case Key.NumPad1:
+                        result = Decimal.Parse(this.MainText.Text + 1);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D2:
+                    case Key.NumPad2:
+                        result = Decimal.Parse(this.MainText.Text + 2);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D3:
+                    case Key.NumPad3:
+                        result = Decimal.Parse(this.MainText.Text + 3);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D4:
+                    case Key.NumPad4:
+                        result = Decimal.Parse(this.MainText.Text + 4);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D5:
+                    case Key.NumPad5:
+                        result = Decimal.Parse(this.MainText.Text + 5);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D6:
+                    case Key.NumPad6:
+                        result = Decimal.Parse(this.MainText.Text + 6);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D7:
+                    case Key.NumPad7:
+                        result = Decimal.Parse(this.MainText.Text + 7);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D8:
+                    case Key.NumPad8:
+                        result = Decimal.Parse(this.MainText.Text + 8);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D9:
+                    case Key.NumPad9:
+                        result = Decimal.Parse(this.MainText.Text + 9);
+                        this.MainText.Text = result.ToString();
+                        break;
+                    case Key.D0:
+                    case Key.NumPad0:
+                        result = Decimal.Parse(this.MainText.Text + 0);
+                        this.MainText.Text = result.ToString();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
             }
         }
 
@@ -674,16 +672,6 @@ namespace Calculator2
         /// <param name="key">Keyはキーボードで押されたキー情報です。</param>
         private void PressOperatorKey(Key key)
         {
-            // DONE？: 「既に格納されている場合は、計算も行います。」ということですが、先に計算をしている？
-            // 言いたいことは推測できますが、コメントが正しい状況を表現できていない状態になっているようです。
-            // 格納済みが何をあらわすかはわかりませんが、素直にコメントとを読むと以下の処理のように読めます。
-            //if (is格納済み)
-            //{
-            //    Calculate();
-            //}
-
-            // ANSWER：実際に格納されているか否かを判定するのはCalculate（）メソッド内の処理なので、そちらのSummaryに説明を移しました。
-
             this.Calculate();
             string result = this.MainText.Text;
             switch (key)
@@ -702,9 +690,8 @@ namespace Calculator2
                     break;
             }
             this.SubText.Text = result;
-            // TODO: this
-            Cleartext(false);
-
+            // DONE: this
+            this.ClearText(false);
         }
     }
 }

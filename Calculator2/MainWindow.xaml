@@ -27,36 +27,35 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <!-- TODO: IDEのデフォルトのイベントメソッド名だと NumberOne_OnClick となります。
+        <!-- DONE: IDEのデフォルトのイベントメソッド名だと NumberOne_OnClick となります。
         特別な意図がない限りデフォルトで使う方が共通認識を保てます。
         おそらく「メソッド名は動詞から」を忠実に守ったのだと思うのですが、イベントメソッドは例外です。
         -->
-        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1" Click="ClickNumberButton"/>
-        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2" Click="ClickNumberButton"/>
-        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThree" Content="3" Click="ClickNumberButton"/>
-        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFour" Content="4" Click="ClickNumberButton"/>
-        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFive" Content="5" Click="ClickNumberButton"/>
-        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSix" Content="6" Click="ClickNumberButton"/>
-        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSeven" Content="7" Click="ClickNumberButton"/>
-        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEight" Content="8" Click="ClickNumberButton"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNine" Content="9" Click="ClickNumberButton"/>
-        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZero" Content="0" Click="ClickNumberButton"/>
-        <!-- DONE: ラムダ式は試せたと思いますので、xaml側でClickイベントを登録する方式に統一しましょう。もしくはコード側。 -->
-        <Button Grid.Row="8" Grid.Column="0" x:Name="SignReverse" Content="+/-" Click="ClickSignReverseButton"/>
-        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="." Click="ClickDecimalPointButton"/>
-        <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="ClickOperatorButton"/>
-        <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="ClickOperatorButton"/>
-        <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="ClickOperatorButton"/>
-        <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="ClickOperatorButton"/>
-        <Button Grid.Row="8" Grid.Column="3" x:Name="Equal" Content="=" Click="ClickEqualButton"/>
-        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideBy" Content="1/x" Click="ClickDivideByButton"/>
-        <Button Grid.Row="4" Grid.Column="1" x:Name="Square" Content="x^2" Click="ClickSquareButton"/>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRoot" Content="√x" Click="ClickSquareRootButton"/>
-        <Button Grid.Row="3" Grid.Column="0" x:Name="Percent" Content="%" Click="ClickPercentButton"/>
-        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntry" Content="CE" Click="ClickClearEntryButton"/>
-        <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C" Click="ClickClearButton"/>
-        <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back" Click="ClickBackSpaceButton"/>
-        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="ClickOutputButton"/>
+        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThree" Content="3" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFour" Content="4" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFive" Content="5" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSix" Content="6" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSeven" Content="7" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEight" Content="8" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNine" Content="9" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZero" Content="0" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="0" x:Name="SignReverse" Content="+/-" Click="SignReverseButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="." Click="DecimalPointButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="3" x:Name="Equal" Content="=" Click="EqualButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideBy" Content="1/x" Click="DivideByButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="1" x:Name="Square" Content="x^2" Click="SquareButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRoot" Content="√x" Click="SquareRootButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="0" x:Name="Percent" Content="%" Click="PercentButton__OnClick"/>
+        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntry" Content="CE" Click="ClearEntryButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C" Click="ClearButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back" Click="BackSpaceButton_OnClick"/>
+        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="OutputButton_OnClick"/>
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Text="0" FontSize="20"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" IsReadOnly="True"/>
 
@@ -70,12 +69,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M" Click="ClickMemoryButton"/>
-            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS" Click="ClickMemorySaveButton"/>
-            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-" Click="ClickMemoryMinusButton"/>
-            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+" Click="ClickMemoryPlusButton"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecall" Content="MR" Click="ClickMemoryRecallButton"/>
-            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClear" Content="MC" Click="ClickMemoryClearButton"/>
+            <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M" Click="MemoryButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS" Click="MemorySaveButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-" Click="MemoryMinusButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+" Click="MemoryPlusButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecall" Content="MR" Click="MemoryRecallButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClear" Content="MC" Click="MemoryClearButton_OnClick"/>
         </Grid>
     </Grid>
 </Window>

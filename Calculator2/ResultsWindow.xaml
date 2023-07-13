@@ -1,4 +1,4 @@
-﻿<Window x:Class="Calculator2.MemoryWindow"
+﻿<Window x:Class="Calculator2.ResultsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -20,7 +20,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="0" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}" Name="memoryList" Grid.ColumnSpan="6" SelectionMode="Single"/>
+        <ListBox Grid.Row="0" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}" Name="resultsList" Grid.ColumnSpan="6" SelectionMode="Single"/>
         <Button Grid.Row="2" Grid.Column="0" x:Name="MemoryClear" Content="MC" VerticalAlignment="Center" Click="ClickMemoryClearButton"/>
         <Button Grid.Row="2" Grid.Column="1" x:Name="MemoryPlus" Content="M+" VerticalAlignment="Center" Click="ClickMemoryPlusButton"/>
         <Button Grid.Row="2" Grid.Column="2" x:Name="MemoryMinus" Content="M-" VerticalAlignment="Center" Click="ClickMemoryMinusButton"/>
