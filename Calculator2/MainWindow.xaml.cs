@@ -97,9 +97,9 @@ namespace Calculator2
             {
                 string txt = this.MainText.Text;
                 // DONE: 変数宣言の型のDecimalはdecimalでよいです。
-                decimal square = Decimal.Parse(txt);
-                square *= square;
-                this.MainText.Text = square.ToString();
+                decimal parsed = Decimal.Parse(txt);
+                parsed *= parsed;
+                this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
             {
@@ -115,9 +115,9 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                double squareRoot = Double.Parse(txt);
-                squareRoot = Math.Sqrt(squareRoot);
-                this.MainText.Text = squareRoot.ToString();
+                double parsed = Double.Parse(txt);
+                parsed = Math.Sqrt(parsed);
+                this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
             {
@@ -133,8 +133,9 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                decimal divResult = 1 / Decimal.Parse(txt);
-                this.MainText.Text = divResult.ToString();
+                decimal parsed = Decimal.Parse(txt);
+                parsed = 1 / parsed;
+                this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
             {
@@ -150,8 +151,9 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                decimal perResult = Decimal.Parse(txt) / 100;
-                this.MainText.Text = perResult.ToString();
+                decimal parsed = Decimal.Parse(txt);
+                parsed /= 100;
+                this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
             {
@@ -273,7 +275,7 @@ namespace Calculator2
             try
             {
                 string path = @"..\..\..\result.txt";
-                using (FileStream fs = File.Create(path)) ;
+                using (FileStream fs = File.Create(path)) { };
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 Encoding enc = Encoding.GetEncoding("Shift_JIS");
                 using (StreamWriter writer = new StreamWriter(path, false, enc))
@@ -324,14 +326,14 @@ namespace Calculator2
         /// </summary>
         private void ClickOperatorButton(object sender, RoutedEventArgs e)
         {
-            // DONE?: var と is を組み合わせて使ってみましょう。
+            // DONE: var と is を組み合わせて使ってみましょう。
 
-            // QUESTION: var と is を組み合わせた使い方がよくわからないです。　var isBool = sender is Button btn; というような書き方だとエラーが出ました。
-
-            var btn = sender as Button;
-            this.Calculate();
-            this.SubText.Text = MainText.Text + btn.Content;
-            this.Cleartext(false);
+            if (sender is Button btn)
+            {
+                this.Calculate();
+                this.SubText.Text = MainText.Text + btn.Content;
+                this.Cleartext(false);
+            }
         }
 
         /// <summary>
@@ -505,40 +507,25 @@ namespace Calculator2
         /// </summary>
         private void ShowErrorMessage(Exception ex)
         {
-            try
+            switch (ex)
             {
-                // DONE?: 再スローする必要はありません。
-                // また再スローする場合は throw ex; と書けます。
-                // 再スローの仕方によってエラー内容が変わることがあります。
-
-                // QUESTION: 再スローしない場合、どうやってエラーをキャッチするのか調べてもよくわかりませんでした。
-
-                throw (ex);
+                case DivideByZeroException:
+                    MessageBox.Show("0で除算することはできません。");
+                    break;
+                case OverflowException:
+                    MessageBox.Show("オーバーフローが発生しました。この計算は行えません。");
+                    break;
+                case ArithmeticException:
+                    MessageBox.Show("計算中にエラーが発生しました。実行を中止します。");
+                    break;
+                case NullReferenceException:
+                    MessageBox.Show("参照がNullです。実行できません。");
+                    break;
+                case Exception:
+                    MessageBox.Show("予期せぬエラーが発生しました。実行を中止します。");
+                    break;
             }
-            catch (DivideByZeroException)
-            {
-                MessageBox.Show("0で除算することはできません。");
-            }
-            catch (OverflowException)
-            {
-                MessageBox.Show("オーバーフローが発生しました。この計算は行えません。");
-            }
-            catch (ArithmeticException)
-            {
-                MessageBox.Show("計算中にエラーが発生しました。実行を中止します。");
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("参照がNullです。");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("予期せぬエラーが発生しました。実行を中止します。");
-            }
-            finally
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Console.WriteLine(ex.Message);
         }
 
         /// <summary>
