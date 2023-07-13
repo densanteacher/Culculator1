@@ -21,10 +21,16 @@ namespace Calculator2
     /// </summary>
     public partial class MemoryWindow : Window
     {
+        // TODO: readonly のものをコンストラクタで代入する場合はnewは不要です。
         private readonly List<string> _memories = new List<string>();
+
+        // TODO: private
+        // TODO: result という名前は適正か？
         public decimal result2;
+
         public MemoryWindow(List<string> memories, decimal result)
         {
+            // TODO: this
             InitializeComponent();
             this._memories = memories;
             result2 = result;
@@ -38,11 +44,14 @@ namespace Calculator2
         /// </summary>
         public void ClearListBox()
         {
+            // DONE: 適切な開業がほしいです。
             this.memoryList.Items.Clear();
+
             foreach (var item in this._memories)
             {
                 this.memoryList.Items.Add(item);
             }
+
             if (this._memories.Count > 0)
             {
                 this.memoryList.SelectedIndex = 0;
@@ -58,6 +67,8 @@ namespace Calculator2
             {
                 return;
             }
+
+            // TODO: null になる可能性があります。回避およびtry-catch。
             string? selected = this.memoryList.SelectedItem.ToString();
             this._memories.Remove(selected);
             this.memoryList.Items.Remove(selected);
@@ -77,6 +88,8 @@ namespace Calculator2
                 }
                 string? selected = this.memoryList.SelectedItem.ToString();
                 int index = this.memoryList.SelectedIndex;
+                // TODO: selected というのは形容なので、実態を表す単語の方がわかりやすいです。
+                // selected だけだと、選ばれた何の？ってなります。宣言の箇所まで戻って確認しなければならなくなります。
                 Decimal plusResult = Decimal.Parse(selected) + result2;
                 this._memories[index] = plusResult.ToString();
                 this.ClearListBox();
