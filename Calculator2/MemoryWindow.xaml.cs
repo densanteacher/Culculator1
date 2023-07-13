@@ -21,34 +21,29 @@ namespace Calculator2
     /// </summary>
     public partial class MemoryWindow : Window
     {
-        private List<string> _memories = new List<string>();
-        public decimal _result;
-        public int counter = 0;
+        private readonly List<string> _memories = new List<string>();
+        public decimal result2;
         public MemoryWindow(List<string> memories, decimal result)
         {
             InitializeComponent();
             this._memories = memories;
-            _result = result;
+            result2 = result;
 
-            this.InitializeList();
+            this.ClearListBox();
 
-            this.MemoryClear.Click += (s, e) => { this.ClearMemory(); };
-            this.MemoryPlus.Click += (s, e) => { this.AddMemory(); };
-            this.MemoryMinus.Click += (s, e) => { this.SubtractMemory(); };
-            this.OK.Click += (s, e) => { this.Close(); };
         }
 
         /// <summary>
-        /// リストを初期化した後、_memory内の要素を追加し表示します。
+        /// リストを初期化した後、_memories内の要素を追加し表示します。
         /// </summary>
-        public void InitializeList()
+        public void ClearListBox()
         {
             this.memoryList.Items.Clear();
             foreach (var item in this._memories)
             {
                 this.memoryList.Items.Add(item);
             }
-            if(this._memories.Count > 0)
+            if (this._memories.Count > 0)
             {
                 this.memoryList.SelectedIndex = 0;
             }
@@ -82,15 +77,16 @@ namespace Calculator2
                 }
                 string? selected = this.memoryList.SelectedItem.ToString();
                 int index = this.memoryList.SelectedIndex;
-                Decimal plusResult = Decimal.Parse(selected) + _result;
+                Decimal plusResult = Decimal.Parse(selected) + result2;
                 this._memories[index] = plusResult.ToString();
-                this.InitializeList();
+                this.ClearListBox();
                 this.memoryList.SelectedIndex = index;
-            } catch (Exception ex)
-            {
-                ShowErrorMessage(ex);
             }
-            
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+            }
+
         }
 
         /// <summary>
@@ -106,15 +102,37 @@ namespace Calculator2
                 }
                 string? selected = this.memoryList.SelectedItem.ToString();
                 int index = this.memoryList.SelectedIndex;
-                Decimal minusResult = Decimal.Parse(selected) - _result;
+                Decimal minusResult = Decimal.Parse(selected) - result2;
                 this._memories[index] = minusResult.ToString();
-                this.InitializeList();
+                this.ClearListBox();
                 this.memoryList.SelectedIndex = index;
-            } catch(Exception ex)
-            {
-                ShowErrorMessage(ex);
             }
-            
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+            }
+
+        }
+
+        private void ClickMemoryClearButton(object sender, RoutedEventArgs e)
+        {
+            this.ClearMemory();
+        }
+
+        /// <summary>
+        /// M+ボタンを押したとき、リストボックスで選択している値に、メインウィンドウのメインテキストに表示されている値を足します。
+        /// </summary>
+        private void ClickMemoryPlusButton(object sender, RoutedEventArgs e)
+        {
+            this.AddMemory();
+        }
+
+        /// <summary>
+        /// M-ボタンを押したとき、リストボックスで選択している値から、メインウィンドウのメインテキストに表示されている値を引きます。
+        /// </summary>
+        private void ClickMemoryMinusButton(object sender, RoutedEventArgs e)
+        {
+            this.SubtractMemory();
         }
 
         /// <summary>
@@ -140,8 +158,13 @@ namespace Calculator2
             }
             finally
             {
-                global::System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
+        }
+
+        private void ClickOKButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

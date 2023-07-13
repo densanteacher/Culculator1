@@ -27,31 +27,31 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1"/>
-        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2"/>
-        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThree" Content="3"/>
-        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFour" Content="4"/>
-        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFive" Content="5"/>
-        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSix" Content="6"/>
-        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSeven" Content="7"/>
-        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEight" Content="8"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNine" Content="9"/>
-        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZero" Content="0"/>
-        <!-- TODO: ラムダ式は試せたと思いますので、xaml側でClickイベントを登録する方式に統一しましょう。もしくはコード側。 -->
-        <Button Grid.Row="8" Grid.Column="0" x:Name="Inversion" Content="+/-"/>
-        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="."/>
+        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1" Click="ClickNumberButton"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2" Click="ClickNumberButton"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThree" Content="3" Click="ClickNumberButton"/>
+        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFour" Content="4" Click="ClickNumberButton"/>
+        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFive" Content="5" Click="ClickNumberButton"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSix" Content="6" Click="ClickNumberButton"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSeven" Content="7" Click="ClickNumberButton"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEight" Content="8" Click="ClickNumberButton"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNine" Content="9" Click="ClickNumberButton"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZero" Content="0" Click="ClickNumberButton"/>
+        <!-- DONE: ラムダ式は試せたと思いますので、xaml側でClickイベントを登録する方式に統一しましょう。もしくはコード側。 -->
+        <Button Grid.Row="8" Grid.Column="0" x:Name="SignReverse" Content="+/-" Click="ClickSignReverseButton"/>
+        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="." Click="ClickDecimalPointButton"/>
         <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="ClickOperatorButton"/>
         <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="ClickOperatorButton"/>
         <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="ClickOperatorButton"/>
         <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="ClickOperatorButton"/>
         <Button Grid.Row="8" Grid.Column="3" x:Name="Equal" Content="=" Click="ClickEqualButton"/>
-        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideBy" Content="1/x"/>
-        <Button Grid.Row="4" Grid.Column="1" x:Name="Square" Content="x^2"/>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRoot" Content="√x"/>
-        <Button Grid.Row="3" Grid.Column="0" x:Name="Percent" Content="%"/>
-        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntry" Content="CE"/>
-        <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C"/>
-        <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back"/>
+        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideBy" Content="1/x" Click="ClickDivideByButton"/>
+        <Button Grid.Row="4" Grid.Column="1" x:Name="Square" Content="x^2" Click="ClickSquareButton"/>
+        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRoot" Content="√x" Click="ClickSquareRootButton"/>
+        <Button Grid.Row="3" Grid.Column="0" x:Name="Percent" Content="%" Click="ClickPercentButton"/>
+        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntry" Content="CE" Click="ClickClearEntryButton"/>
+        <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C" Click="ClickClearButton"/>
+        <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back" Click="ClickBackSpaceButton"/>
         <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="ClickOutputButton"/>
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Text="0" FontSize="20"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" IsReadOnly="True"/>
@@ -66,12 +66,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M"/>
-            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS"/>
-            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-"/>
-            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecall" Content="MR"/>
-            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClear" Content="MC"/>
+            <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M" Click="ClickMemoryButton"/>
+            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS" Click="ClickMemorySaveButton"/>
+            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-" Click="ClickMemoryMinusButton"/>
+            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+" Click="ClickMemoryPlusButton"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecall" Content="MR" Click="ClickMemoryRecallButton"/>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClear" Content="MC" Click="ClickMemoryClearButton"/>
         </Grid>
     </Grid>
 </Window>
