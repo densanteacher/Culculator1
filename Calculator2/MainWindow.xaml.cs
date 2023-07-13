@@ -33,8 +33,7 @@ namespace Calculator2
             this.Cleartext(true);
         }
 
-        // DONE: Initializeという名前は、最初に一回初期化するときだけ使いましょう。
-        // 今回はテキストをクリアする目的なのでClearという単語を使うのがよいでしょう。
+        // TODO: メソッド名はキャメルケース
         /// <summary>
         /// テキストボックス初期化メソッドです。
         /// </summary>
@@ -42,14 +41,13 @@ namespace Calculator2
         private void Cleartext(bool isSub)
         {
             this.MainText.Text = "0";
+            // TODO: bool型は true/false と比較することはしません。たまにbool?型だと使うことがあります。
             if (isSub == true)
             {
                 this.SubText.Clear();
             }
         }
 
-        // DONE: 反転という意味でのReverseはよいと思います。Reverseというメソッド名はStringクラスにもあります。なので符号の反転とわかるようにしてみましょう。
-        // String.Reverse() についても調べてみましょう。
         /// <summary>
         /// メインテキストの数値の正負反転を反転します。
         /// </summary>
@@ -61,6 +59,7 @@ namespace Calculator2
                 // DONE: Parseした時点では、まだ反転していないのでreverseと呼ばない方が正確です。
                 // 本来はこの程度は指摘しないのですが、なるべく正しい名前をつける習慣をつけておくほうがよいでしょう。
                 decimal parsed = Decimal.Parse(txt);
+                // TODO: こっちは反転しているので、parsed　のままだとまずいでしょう。
                 parsed = -parsed;
                 this.MainText.Text = parsed.ToString();
             }
@@ -75,11 +74,11 @@ namespace Calculator2
         /// </summary>
         private void BackSpace()
         {
+            // TODO: try-catch。ここはなくてもセーフですが、Removeするときに例外が発生する可能性があります。
             string txt = this.MainText.Text;
             string bs = txt.Remove(txt.Length - 1);
             if (bs.Length == 0 || bs == "-")
             {
-                // DONE: this
                 this.Cleartext(false);
             }
             else
@@ -96,10 +95,16 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
+<<<<<<< HEAD
                 // DONE: 変数宣言の型のDecimalはdecimalでよいです。
                 decimal parsed = Decimal.Parse(txt);
                 parsed *= parsed;
                 this.MainText.Text = parsed.ToString();
+=======
+                decimal square = Decimal.Parse(txt);
+                square *= square;
+                this.MainText.Text = square.ToString();
+>>>>>>> 1b0cf5b713b8397ec6a350d55137541753e76ee1
             }
             catch (Exception ex)
             {
@@ -143,6 +148,7 @@ namespace Calculator2
             }
         }
 
+        // TODO: GetXxx という名前のメソッドは返り値としてXxxを受け取る場合に使います。別の名前を考えてみましょう。
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
@@ -214,6 +220,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 string txt = this.MainText.Text;
                 decimal memoryMinus = Decimal.Parse(this._memories[0]) - Decimal.Parse(txt);
                 this._memories[0] = memoryMinus.ToString();
@@ -224,6 +231,7 @@ namespace Calculator2
             }
         }
 
+        // TODO: Addはここでは加算の意味で使用していますが、this._memoriesがリストなので、Addという用語はリストに追加するような印象をうけます。別のメソッド名を検討しましょう。
         /// <summary>
         /// memoryリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
@@ -253,10 +261,12 @@ namespace Calculator2
         /// </summary>
         private void RecallMemory()
         {
+            // TODO: try-catch
+            // TODO: 早期リターンにしたほうが、他のメソッドと書き方が揃うでしょう。
             if (this._memories.Count > 0)
             {
                 this.MainText.Text = this._memories[0];
-            };
+            }; // TODO: trim ;
         }
 
         /// <summary>
@@ -298,7 +308,10 @@ namespace Calculator2
         /// </summary>
         private void ClickNumberButton(object sender, RoutedEventArgs e)
         {
+            // TODO: try-catch。Parseしている箇所は必要です。
+
             // DONE: 変数の型として var を使ってみましょう。
+            // TODO: 他に var が使える箇所に適用してみましょう。
             var btn = sender as Button;
             decimal result = Decimal.Parse(this.MainText.Text + btn.Content.ToString());
             this.MainText.Text = result.ToString();
@@ -326,6 +339,7 @@ namespace Calculator2
         /// </summary>
         private void ClickOperatorButton(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             // DONE: var と is を組み合わせて使ってみましょう。
 
             if (sender is Button btn)
@@ -334,6 +348,15 @@ namespace Calculator2
                 this.SubText.Text = MainText.Text + btn.Content;
                 this.Cleartext(false);
             }
+=======
+            // TODO: try-catch。nullになる可能性があるところには必要です。
+
+            var btn = sender as Button;
+            this.Calculate();
+            // TODO: as だと btn が null になる可能性があります。検証方法がいくつかあるので調べて適用してみましょう。
+            this.SubText.Text = MainText.Text + btn.Content;
+            this.Cleartext(false);
+>>>>>>> 1b0cf5b713b8397ec6a350d55137541753e76ee1
         }
 
         /// <summary>
@@ -447,12 +470,15 @@ namespace Calculator2
         {
             this.ClearMemory();
         }
+
         /// <summary>
         /// SubTextに数値と演算記号が格納されている場合、計算を行います。
         /// </summary>
         private void Calculate()
         {
+            // TODO: sub変数のスコープは、使う直前に宣言するほうがよいです。
             string sub = this.SubText.Text;
+
             bool isSuccess = Decimal.TryParse(this.MainText.Text, out var valueMain);
             if (!isSuccess)
             {
@@ -498,6 +524,7 @@ namespace Calculator2
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
+                // TODO: delete
                 Console.WriteLine(ex.Message);
             }
         }
@@ -675,6 +702,7 @@ namespace Calculator2
                     break;
             }
             this.SubText.Text = result;
+            // TODO: this
             Cleartext(false);
 
         }
