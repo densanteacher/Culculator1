@@ -33,7 +33,6 @@ namespace Calculator2
             this.ClearText(true);
         }
 
-        // DONE: メソッド名はキャメルケース
         /// <summary>
         /// テキストボックス初期化メソッドです。
         /// </summary>
@@ -41,7 +40,6 @@ namespace Calculator2
         private void ClearText(bool isSub)
         {
             this.MainText.Text = "0";
-            // DONE: bool型は true/false と比較することはしません。たまにbool?型だと使うことがあります。
             if (isSub)
             {
                 this.SubText.Clear();
@@ -57,8 +55,9 @@ namespace Calculator2
             {
                 string txt = this.MainText.Text;
                 decimal parsed = Decimal.Parse(txt);
-                // DONE: こっちは反転しているので、parsed　のままだとまずいでしょう。
+                // UNDONE: こっちは反転しているので、parsed　のままだとまずいでしょう。
                 decimal result = -parsed;
+                // TODO: 使われていません。他にもあり。
                 this.MainText.Text = parsed.ToString();
             }
             catch (Exception ex)
@@ -72,7 +71,6 @@ namespace Calculator2
         /// </summary>
         private void BackSpace()
         {
-            // DONE: try-catch。ここはなくてもセーフですが、Removeするときに例外が発生する可能性があります。
             try
             {
                 string txt = this.MainText.Text;
@@ -146,7 +144,10 @@ namespace Calculator2
             }
         }
 
-        // DONE: GetXxx という名前のメソッドは返り値としてXxxを受け取る場合に使います。別の名前を考えてみましょう。
+        // TODO: Gain？
+        // メソッド名はコメントの日本語見比べるとよいです。
+        // 命名のループバックチェックという手法があります。
+        // たしかプリンシプル オブ プログラミングに記述があったと思います。
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
@@ -256,12 +257,11 @@ namespace Calculator2
         /// </summary>
         private void RecallResult()
         {
-            // DONE: try-catch
-            // DONE: 早期リターンにしたほうが、他のメソッドと書き方が揃うでしょう。
             if (this._results.Count == 0)
             {
                 return;
-            } // DONE: trim ;
+            }
+
             try
             {
                 this.MainText.Text = this._results[0];
@@ -287,10 +287,18 @@ namespace Calculator2
         {
             try
             {
+                // TODO: パスをstatic readonlyでMainWindowにもたせてみましょう。
+                // Constants.cs を作ってもよいです。
                 string path = @"..\..\..\result.txt";
+
+                // TODO: fs のファイルスコープを考えてみましょう。
                 using (FileStream fs = File.Create(path)) { };
+
+                // TODO: SJISではなく、UTF-8を使用してみましょう。
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 Encoding enc = Encoding.GetEncoding("Shift_JIS");
+
+                // TODO: Using Declarationについて調べてみましょう。
                 using (StreamWriter writer = new StreamWriter(path, false, enc))
                 {
                     foreach (string item in this._results)
@@ -298,6 +306,8 @@ namespace Calculator2
                         writer.WriteLine(item);
                     }
                 }
+
+                // TODO: 不要の場合もありますが、基本的にはShow()メソッドにMainWindowのインスタンスを渡しておきましょう。
                 MessageBox.Show("記録した数値をテキストファイルに出力しました。");
             }
             catch (Exception ex)
@@ -311,12 +321,11 @@ namespace Calculator2
         /// </summary>
         private void NumberButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // DONE: try-catch。Parseしている箇所は必要です。
-
             // TODO: 他に var が使える箇所に適用してみましょう。
             try
             {
                 var btn = sender as Button;
+                // TODO: 単純なParseが好まれる場合もありますが、基本的にTryParseの方が安全です。
                 decimal result = Decimal.Parse(this.MainText.Text + btn.Content.ToString());
                 this.MainText.Text = result.ToString();
             }
@@ -474,12 +483,12 @@ namespace Calculator2
         /// </summary>
         private void Calculate()
         {
-            // DONE: sub変数のスコープは、使う直前に宣言するほうがよいです。
             bool isSuccess = Decimal.TryParse(this.MainText.Text, out var valueMain);
             if (!isSuccess)
             {
                 return;
             }
+
             try
             {
                 string sub = this.SubText.Text;
@@ -518,7 +527,6 @@ namespace Calculator2
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
-                // DONE: delete
             }
         }
 
@@ -541,10 +549,13 @@ namespace Calculator2
                 case NullReferenceException:
                     MessageBox.Show("参照がNullです。実行できません。");
                     break;
+
+                // TODO: このメソッドの引数がExceptionなので、この条件は変えた方がよいでしょう。
                 case Exception:
                     MessageBox.Show("予期せぬエラーが発生しました。実行を中止します。");
                     break;
             }
+
             Console.WriteLine(ex.Message);
         }
 
@@ -554,6 +565,7 @@ namespace Calculator2
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
+
             switch (e.Key)
             {
                 case Key.Enter:
@@ -594,6 +606,7 @@ namespace Calculator2
                 case Key.NumPad0:
                     this.PressNumberKey(e.Key);
                     break;
+                // TODO: switch文の場合は使わなくてもdefaultを置いた方がよいでしょう。
             }
         }
 
@@ -605,6 +618,7 @@ namespace Calculator2
         {
             try
             {
+                // TODO: switchでひとつずつ変換しない方法を考えてみてください。Keyのenum値は数値に変換できます。
                 decimal result;
                 switch (key)
                 {
@@ -690,7 +704,6 @@ namespace Calculator2
                     break;
             }
             this.SubText.Text = result;
-            // DONE: this
             this.ClearText(false);
         }
     }

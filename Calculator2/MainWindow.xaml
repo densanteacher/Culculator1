@@ -27,9 +27,9 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <!-- DONE: IDEのデフォルトのイベントメソッド名だと NumberOne_OnClick となります。
-        特別な意図がない限りデフォルトで使う方が共通認識を保てます。
-        おそらく「メソッド名は動詞から」を忠実に守ったのだと思うのですが、イベントメソッドは例外です。
+        <!--
+        TODO: ClickメソッドにButtonとつけるのであれば、NameにもButtonとつけたほうが丁寧でしょう。
+        賛否ありますが、コントロール名だけハンガリアン記法を許可し、BtnOne, BtnTwo, BtnAdd などとするパターンもあります。
         -->
         <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1" Click="NumberButton_OnClick"/>
         <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2" Click="NumberButton_OnClick"/>
