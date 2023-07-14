@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator2", "Calculator2\Calculator2.csproj", "{285B458E-A875-45BD-BB18-E92F06E4E982}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{27951A67-4871-44BB-B99C-2A3A43221A03}"
-	ProjectSection(SolutionItems) = preProject
-		Constants.cs = Constants.cs
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

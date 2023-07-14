@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="MemoryWindow" Height="200" Width="400"  MinHeight="200" MinWidth="300" FontSize="16">
+        Title="MemoryWindow" Height="200" Width="400" 
+        MinHeight="200" MinWidth="300"
+        MaxWidth="600" FontSize="16">
     <Window.Resources>
         <SolidColorBrush x:Key="Memory" Color="GhostWhite"/>
         <Style TargetType="Button">
@@ -30,8 +32,12 @@
 
         <ListBox Grid.Row="0" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}" Name="resultsList" Grid.ColumnSpan="6" SelectionMode="Single"/>
         <!-- DONE: Row=2は範囲外 -->
-        <!-- TODO: このGridの使い方だとWindowを大きくしたときに問題となりそうです。 -->
-        <Button Grid.Row="1" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" VerticalAlignment="Center" Click="MemoryClearButton_OnClick"/>
+        <!-- DONE?: このGridの使い方だとWindowを大きくしたときに問題となりそうです。 -->
+        <Button Grid.Row="1" Grid.Column="0" x:Name="MemoryClearButton" VerticalAlignment="Center" Click="MemoryClearButton_OnClick">
+                <Viewbox Stretch="Uniform">
+                <Label Content="MC"/>
+            </Viewbox>
+                </Button>
         <Button Grid.Row="1" Grid.Column="1" x:Name="MemoryPlusButton" Content="M+" VerticalAlignment="Center" Click="MemoryPlusButton_OnClick"/>
         <Button Grid.Row="1" Grid.Column="2" x:Name="MemoryMinusButton" Content="M-" VerticalAlignment="Center" Click="MemoryMinusButton_OnClick"/>
         <Button Grid.Row="1" Grid.Column="5" x:Name="OKButton" Content="OK" Width="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="OKButton_OnClick"/>
