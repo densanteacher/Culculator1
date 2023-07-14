@@ -31,6 +31,8 @@ namespace Calculator2
         {
             this.InitializeComponent();
             this.ClearText(true);
+
+            using (var fs = File.Create(Constants.path)) { };
         }
 
         /// <summary>
@@ -54,11 +56,15 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                decimal parsed = Decimal.Parse(txt);
-                // UNDONE: こっちは反転しているので、parsed　のままだとまずいでしょう。
+                bool isSuccess = Decimal.TryParse(txt, out var parsed);
+                if (!isSuccess)
+                {
+                    return;
+                }
+                // DONE: こっちは反転しているので、parsed　のままだとまずいでしょう。
                 decimal result = -parsed;
-                // TODO: 使われていません。他にもあり。
-                this.MainText.Text = parsed.ToString();
+                // DONE: 使われていません。他にもあり。
+                this.MainText.Text = result.ToString();
             }
             catch (Exception ex)
             {
@@ -98,7 +104,11 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                decimal parsed = Decimal.Parse(txt);
+                bool isSuccess = Decimal.TryParse(txt, out var parsed);
+                if (!isSuccess)
+                {
+                    return;
+                }
                 decimal result = parsed * parsed;
                 this.MainText.Text = result.ToString();
             }
@@ -116,9 +126,13 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                double parsed = Double.Parse(txt);
+                bool isSuccess = Double.TryParse(txt, out var parsed);
+                if (!isSuccess)
+                {
+                    return;
+                }
                 double result = Math.Sqrt(parsed);
-                this.MainText.Text = parsed.ToString();
+                this.MainText.Text = result.ToString();
             }
             catch (Exception ex)
             {
@@ -134,9 +148,13 @@ namespace Calculator2
             try
             {
                 string txt = this.MainText.Text;
-                decimal parsed = Decimal.Parse(txt);
+                bool isSuccess = Decimal.TryParse(txt, out var parsed);
+                if (!isSuccess)
+                {
+                    return;
+                }
                 decimal result = 1 / parsed;
-                this.MainText.Text = parsed.ToString();
+                this.MainText.Text = result.ToString();
             }
             catch (Exception ex)
             {
@@ -144,21 +162,25 @@ namespace Calculator2
             }
         }
 
-        // TODO: Gain？
+        // DONE: Gain？
         // メソッド名はコメントの日本語見比べるとよいです。
         // 命名のループバックチェックという手法があります。
         // たしかプリンシプル オブ プログラミングに記述があったと思います。
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
-        private void GainPercentage()
+        private void AskForPercentage()
         {
             try
             {
                 string txt = this.MainText.Text;
-                decimal parsed = Decimal.Parse(txt);
+                bool isSuccess = Decimal.TryParse(txt, out var parsed);
+                if (!isSuccess)
+                {
+                    return;
+                }
                 decimal result = parsed / 100;
-                this.MainText.Text = parsed.ToString();
+                this.MainText.Text = result.ToString();
             }
             catch (Exception ex)
             {
@@ -185,8 +207,12 @@ namespace Calculator2
         {
             try
             {
-                decimal result = Decimal.Parse(this.MainText.Text);
-                ResultsWindow mw = new ResultsWindow(this._results, result);
+                bool isSuccess = Decimal.TryParse(this.MainText.Text, out var result);
+                if (!isSuccess)
+                {
+                    return;
+                }
+                var mw = new ResultsWindow(this._results, result);
                 mw.Owner = this;
                 mw.ShowDialog();
             }
@@ -217,7 +243,11 @@ namespace Calculator2
                 }
 
                 string txt = this.MainText.Text;
-                var parsed = Decimal.Parse(txt);
+                bool isSuccess = Decimal.TryParse(txt, out var parsed);
+                if (!isSuccess)
+                {
+                    return;
+                }
                 var result = Decimal.Parse(this._results[0]);
                 result -= parsed;
                 this._results[0] = result.ToString();
@@ -228,7 +258,7 @@ namespace Calculator2
             }
         }
 
-        // DONE?: Addはここでは加算の意味で使用していますが、this._memoriesがリストなので、Addという用語はリストに追加するような印象をうけます。別のメソッド名を検討しましょう。
+        // DONE: Addはここでは加算の意味で使用していますが、this._memoriesがリストなので、Addという用語はリストに追加するような印象をうけます。別のメソッド名を検討しましょう。
         /// <summary>
         /// memoryリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
@@ -241,8 +271,12 @@ namespace Calculator2
                     return;
                 }
                 string txt = this.MainText.Text;
-                var parsed = Decimal.Parse(txt);
-                var result = Decimal.Parse(this._results[0]);
+                bool isSuccess = Decimal.TryParse(txt, out var parsed);
+                bool isSuccess2 = Decimal.TryParse(this._results[0], out var result);
+                if (!isSuccess || !isSuccess2)
+                {
+                    return;
+                }
                 result += parsed;
                 this._results[0] = result.ToString();
             }
@@ -266,7 +300,7 @@ namespace Calculator2
             {
                 this.MainText.Text = this._results[0];
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
             }
@@ -287,28 +321,29 @@ namespace Calculator2
         {
             try
             {
-                // TODO: パスをstatic readonlyでMainWindowにもたせてみましょう。
+                // DONE: パスをstatic readonlyでMainWindowにもたせてみましょう。
                 // Constants.cs を作ってもよいです。
-                string path = @"..\..\..\result.txt";
 
-                // TODO: fs のファイルスコープを考えてみましょう。
-                using (FileStream fs = File.Create(path)) { };
+                // DONE?: fs のファイルスコープを考えてみましょう。
 
-                // TODO: SJISではなく、UTF-8を使用してみましょう。
+                // DONE: SJISではなく、UTF-8を使用してみましょう。
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                Encoding enc = Encoding.GetEncoding("Shift_JIS");
+                var enc = Encoding.GetEncoding("UTF-8");
 
-                // TODO: Using Declarationについて調べてみましょう。
-                using (StreamWriter writer = new StreamWriter(path, false, enc))
+                // DONE: Using Declarationについて調べてみましょう。
+
+                // 調べた結果、下記のように変数の宣言前にusingを宣言し、using文を中括弧の中に入れる記法をUsing Declarationといいます。
+                // usingを複数使うことによってネストが深くなることを防ぐことができるものであると理解しました。
                 {
+                    using var writer = new StreamWriter(Constants.path, false, enc);
                     foreach (string item in this._results)
                     {
                         writer.WriteLine(item);
                     }
                 }
 
-                // TODO: 不要の場合もありますが、基本的にはShow()メソッドにMainWindowのインスタンスを渡しておきましょう。
-                MessageBox.Show("記録した数値をテキストファイルに出力しました。");
+                // DONE: 不要の場合もありますが、基本的にはShow()メソッドにMainWindowのインスタンスを渡しておきましょう。
+                MessageBox.Show(this,"記録した数値をテキストファイルに出力しました。", "出力完了", MessageBoxButton.OK);
             }
             catch (Exception ex)
             {
@@ -321,18 +356,19 @@ namespace Calculator2
         /// </summary>
         private void NumberButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // TODO: 他に var が使える箇所に適用してみましょう。
-            try
+            // DONE: 他に var が使える箇所に適用してみましょう。
+            //var btn = sender as Button;
+            if (!(sender is Button btn))
             {
-                var btn = sender as Button;
-                // TODO: 単純なParseが好まれる場合もありますが、基本的にTryParseの方が安全です。
-                decimal result = Decimal.Parse(this.MainText.Text + btn.Content.ToString());
+                return;
+            }
+            // DONE: 単純なParseが好まれる場合もありますが、基本的にTryParseの方が安全です。
+            if (Decimal.TryParse(this.MainText.Text + btn.Content.ToString(), out var result))
+            {
                 this.MainText.Text = result.ToString();
+
             }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
+
         }
 
         /// <summary>
@@ -357,13 +393,11 @@ namespace Calculator2
         /// </summary>
         private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // TODO: as だと btn が null になる可能性があります。検証方法がいくつかあるので調べて適用してみましょう。
-            if (sender is Button btn)
-            {
-                this.Calculate();
-                this.SubText.Text = MainText.Text + btn.Content;
-                this.ClearText(false);
-            }
+            // DONE: as だと btn が null になる可能性があります。検証方法がいくつかあるので調べて適用してみましょう。
+            var btn = sender as Button;
+            this.Calculate();
+            this.SubText.Text = MainText.Text + btn?.Content;
+            this.ClearText(false);
         }
 
         /// <summary>
@@ -395,7 +429,7 @@ namespace Calculator2
         /// </summary>
         private void PercentButton__OnClick(object sender, RoutedEventArgs e)
         {
-            this.GainPercentage();
+            this.AskForPercentage();
         }
 
         /// <summary>
@@ -496,7 +530,12 @@ namespace Calculator2
                 {
                     return;
                 }
-                decimal valueSub = Decimal.Parse(sub.Remove(sub.Length - 1));
+                sub = sub.Remove(sub.Length - 1);
+                isSuccess = Decimal.TryParse(sub, out var valueSub);
+                if(!isSuccess)
+                {
+                    return;
+                }
                 decimal result = 0;
                 if (sub.Contains("÷"))
                 {
@@ -538,24 +577,23 @@ namespace Calculator2
             switch (ex)
             {
                 case DivideByZeroException:
-                    MessageBox.Show("0で除算することはできません。");
+                    MessageBox.Show(this,"0で除算することはできません。");
                     break;
                 case OverflowException:
-                    MessageBox.Show("オーバーフローが発生しました。この計算は行えません。");
+                    MessageBox.Show(this,"オーバーフローが発生しました。この計算は行えません。");
                     break;
                 case ArithmeticException:
-                    MessageBox.Show("計算中にエラーが発生しました。実行を中止します。");
+                    MessageBox.Show(this,"計算中にエラーが発生しました。実行を中止します。");
                     break;
                 case NullReferenceException:
-                    MessageBox.Show("参照がNullです。実行できません。");
+                    MessageBox.Show(this,"参照がNullです。実行できません。");
                     break;
 
-                // TODO: このメソッドの引数がExceptionなので、この条件は変えた方がよいでしょう。
-                case Exception:
-                    MessageBox.Show("予期せぬエラーが発生しました。実行を中止します。");
+                // DONE: このメソッドの引数がExceptionなので、この条件は変えた方がよいでしょう。
+                default:
+                    MessageBox.Show(this,"予期せぬエラーが発生しました。実行を中止します。");
                     break;
             }
-
             Console.WriteLine(ex.Message);
         }
 
@@ -606,7 +644,9 @@ namespace Calculator2
                 case Key.NumPad0:
                     this.PressNumberKey(e.Key);
                     break;
-                // TODO: switch文の場合は使わなくてもdefaultを置いた方がよいでしょう。
+                default:
+                    break;
+                    // DONE: switch文の場合は使わなくてもdefaultを置いた方がよいでしょう。
             }
         }
 
@@ -616,67 +656,25 @@ namespace Calculator2
         /// <param name="key">Keyはキーボードで押されたキー情報です。</param>
         private void PressNumberKey(Key key)
         {
-            try
+
+            // DONE: switchでひとつずつ変換しない方法を考えてみてください。Keyのenum値は数値に変換できます。
+            decimal result;
+            switch ((int)key)
             {
-                // TODO: switchでひとつずつ変換しない方法を考えてみてください。Keyのenum値は数値に変換できます。
-                decimal result;
-                switch (key)
-                {
-                    case Key.D1:
-                    case Key.NumPad1:
-                        result = Decimal.Parse(this.MainText.Text + 1);
+                case int i when i >= 34 && i <= 43:
+                    if (Decimal.TryParse(this.MainText.Text + ((int)key - 34), out result))
+                    {
                         this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D2:
-                    case Key.NumPad2:
-                        result = Decimal.Parse(this.MainText.Text + 2);
+                    }
+                    break;
+                case int i when i >= 74 && i <= 83:
+                    if (Decimal.TryParse(this.MainText.Text + ((int)key - 74), out result))
+                    {
                         this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D3:
-                    case Key.NumPad3:
-                        result = Decimal.Parse(this.MainText.Text + 3);
-                        this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D4:
-                    case Key.NumPad4:
-                        result = Decimal.Parse(this.MainText.Text + 4);
-                        this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D5:
-                    case Key.NumPad5:
-                        result = Decimal.Parse(this.MainText.Text + 5);
-                        this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D6:
-                    case Key.NumPad6:
-                        result = Decimal.Parse(this.MainText.Text + 6);
-                        this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D7:
-                    case Key.NumPad7:
-                        result = Decimal.Parse(this.MainText.Text + 7);
-                        this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D8:
-                    case Key.NumPad8:
-                        result = Decimal.Parse(this.MainText.Text + 8);
-                        this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D9:
-                    case Key.NumPad9:
-                        result = Decimal.Parse(this.MainText.Text + 9);
-                        this.MainText.Text = result.ToString();
-                        break;
-                    case Key.D0:
-                    case Key.NumPad0:
-                        result = Decimal.Parse(this.MainText.Text + 0);
-                        this.MainText.Text = result.ToString();
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 

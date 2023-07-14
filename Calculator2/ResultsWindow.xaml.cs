@@ -24,34 +24,33 @@ namespace Calculator2
         // DONE: readonly のものをコンストラクタで代入する場合はnewは不要です。
         private readonly List<string> _results;
 
-        // TODO: private
-        // TODO: result という名前は適正か？
-        public decimal calculated;
+        // DONE: private
+        // DONE: result という名前は適正か？
+        private decimal _calculatedNumber;
 
-        public ResultsWindow(List<string> memories, decimal result)
+
+        public ResultsWindow(List<string> results, decimal calculatedNumber)
         {
-            // TODO: this
+            // DONE: this
             this.InitializeComponent();
-            this._results = memories;
-            calculated = result;
+            this._results = results;
+            this._calculatedNumber = calculatedNumber;
 
-            this.ClearListBox();
+            this.ClearWithAddListBox();
 
         }
 
         /// <summary>
-        /// リストを初期化した後、_memories内の要素を追加し表示します。
+        /// リストをクリアした後、_results内の要素を追加し表示します。
         /// </summary>
-        public void ClearListBox()
+        public void ClearWithAddListBox()
         {
             // DONE: 適切な開業がほしいです。
             this.resultsList.Items.Clear();
-
             foreach (var item in this._results)
             {
                 this.resultsList.Items.Add(item);
             }
-
             if (this._results.Count > 0)
             {
                 this.resultsList.SelectedIndex = 0;
@@ -68,10 +67,10 @@ namespace Calculator2
                 return;
             }
 
-            // TODO: null になる可能性があります。回避およびtry-catch。
+            // DONE: null になる可能性があります。回避およびtry-catch。
             try
             {
-                string selected = this.resultsList.SelectedItem.ToString();
+                string selected = this.resultsList.SelectedItem.ToString() ?? "";
                 this._results.Remove(selected);
                 this.resultsList.Items.Remove(selected);
                 this.resultsList.SelectedIndex = 0;
@@ -93,13 +92,13 @@ namespace Calculator2
                 {
                     return;
                 }
-                string? selectedItem = this.resultsList.SelectedItem.ToString();
+                string selectedItem = this.resultsList.SelectedItem.ToString() ?? "";
                 int index = this.resultsList.SelectedIndex;
                 // DONE: selected というのは形容なので、実態を表す単語の方がわかりやすいです。
                 // selected だけだと、選ばれた何の？ってなります。宣言の箇所まで戻って確認しなければならなくなります。
-                Decimal plusResult = Decimal.Parse(selectedItem) + calculated;
+                Decimal plusResult = Decimal.Parse(selectedItem) + _calculatedNumber;
                 this._results[index] = plusResult.ToString();
-                this.ClearListBox();
+                this.ClearWithAddListBox();
                 this.resultsList.SelectedIndex = index;
             }
             catch (Exception ex)
@@ -120,11 +119,11 @@ namespace Calculator2
                 {
                     return;
                 }
-                string? selected = this.resultsList.SelectedItem.ToString();
+                string selectedItem = this.resultsList.SelectedItem.ToString() ?? "";
                 int index = this.resultsList.SelectedIndex;
-                Decimal minusResult = Decimal.Parse(selected) - calculated;
+                Decimal minusResult = Decimal.Parse(selectedItem) - _calculatedNumber;
                 this._results[index] = minusResult.ToString();
-                this.ClearListBox();
+                this.ClearWithAddListBox();
                 this.resultsList.SelectedIndex = index;
             }
             catch (Exception ex)
@@ -134,7 +133,7 @@ namespace Calculator2
 
         }
 
-        private void ClickMemoryClearButton(object sender, RoutedEventArgs e)
+        private void MemoryClearButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.ClearResult();
         }
@@ -142,7 +141,7 @@ namespace Calculator2
         /// <summary>
         /// M+ボタンを押したとき、リストボックスで選択している値に、メインウィンドウのメインテキストに表示されている値を足します。
         /// </summary>
-        private void ClickMemoryPlusButton(object sender, RoutedEventArgs e)
+        private void MemoryPlusButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.AddResult();
         }
@@ -150,7 +149,7 @@ namespace Calculator2
         /// <summary>
         /// M-ボタンを押したとき、リストボックスで選択している値から、メインウィンドウのメインテキストに表示されている値を引きます。
         /// </summary>
-        private void ClickMemoryMinusButton(object sender, RoutedEventArgs e)
+        private void MemoryMinusButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.SubtractResult();
         }
@@ -160,29 +159,28 @@ namespace Calculator2
         /// </summary>
         private void ShowErrorMessage(Exception ex)
         {
-            try
+            switch (ex)
             {
-                ExceptionDispatchInfo.Capture(ex).Throw();
+                case DivideByZeroException:
+                    MessageBox.Show(this,"0で除算することはできません。");
+                    break;
+                case OverflowException:
+                    MessageBox.Show(this,"オーバーフローが発生しました。この計算は行えません。");
+                    break;
+                case ArithmeticException:
+                    MessageBox.Show(this,"計算中にエラーが発生しました。実行を中止します。");
+                    break;
+                case NullReferenceException:
+                    MessageBox.Show(this,"参照がNullです。実行できません。");
+                    break;
+                default:
+                    MessageBox.Show(this,"予期せぬエラーが発生しました。実行を中止します。");
+                    break;
             }
-            catch (OverflowException)
-            {
-                MessageBox.Show("オーバーフローが発生しました。この計算は行えません。");
-            }
-            catch (ArithmeticException)
-            {
-                MessageBox.Show("計算中にエラーが発生しました。実行を中止します。");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("予期せぬエラーが発生しました。実行を中止します。");
-            }
-            finally
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Console.WriteLine(ex.Message);
         }
 
-        private void ClickOKButton(object sender, RoutedEventArgs e)
+        private void OKButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

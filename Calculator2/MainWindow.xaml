@@ -5,10 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="電卓" Height="700" Width="600" MinHeight="400" MinWidth="300"
+        Title="電卓" Height="600" Width="600" MinHeight="550" MinWidth="400"
         FontSize="18" KeyDown="Window_KeyDown">
-
-    <Grid>
+    <Window.Resources>
+        <SolidColorBrush x:Key="Number" Color="WhiteSmoke"/>
+        <SolidColorBrush x:Key="Memory" Color="GhostWhite"/>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -28,35 +35,35 @@
         </Grid.RowDefinitions>
 
         <!--
-        TODO: ClickメソッドにButtonとつけるのであれば、NameにもButtonとつけたほうが丁寧でしょう。
+        DONE: ClickメソッドにButtonとつけるのであれば、NameにもButtonとつけたほうが丁寧でしょう。
         賛否ありますが、コントロール名だけハンガリアン記法を許可し、BtnOne, BtnTwo, BtnAdd などとするパターンもあります。
         -->
-        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOne" Content="1" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwo" Content="2" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThree" Content="3" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFour" Content="4" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFive" Content="5" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSix" Content="6" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSeven" Content="7" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEight" Content="8" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNine" Content="9" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZero" Content="0" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="0" x:Name="SignReverse" Content="+/-" Click="SignReverseButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPoint" Content="." Click="DecimalPointButton_OnClick"/>
-        <Button Grid.Row="7" Grid.Column="3" x:Name="Add" Content="+" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="3" x:Name="Subtract" Content="-" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="3" x:Name="Multiply" Content="×" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="3" x:Name="Divide" Content="÷" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="3" x:Name="Equal" Content="=" Click="EqualButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideBy" Content="1/x" Click="DivideByButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="1" x:Name="Square" Content="x^2" Click="SquareButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRoot" Content="√x" Click="SquareRootButton_OnClick"/>
-        <Button Grid.Row="3" Grid.Column="0" x:Name="Percent" Content="%" Click="PercentButton__OnClick"/>
-        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntry" Content="CE" Click="ClearEntryButton_OnClick"/>
-        <Button Grid.Row="3" Grid.Column="2" x:Name="Clear" Content="C" Click="ClearButton_OnClick"/>
-        <Button Grid.Row="3" Grid.Column="3" x:Name="Back" Content="Back" Click="BackSpaceButton_OnClick"/>
-        <Button Grid.Row="2" Grid.Column="0" x:Name="Output" Content="Output" Click="OutputButton_OnClick"/>
-        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Text="0" FontSize="20"/>
+        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOneButton" Content="1" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwoButton" Content="2" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThreeButton" Content="3" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFourButton" Content="4" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFiveButton" Content="5" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSixButton" Content="6" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSevenButton" Content="7" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEightButton" Content="8" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNineButton" Content="9" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZeroButton" Content="0" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="0" x:Name="SignReverseButton" Content="+/-" Click="SignReverseButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPointButton" Content="." Click="DecimalPointButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="3" x:Name="AddButton" Content="+" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="3" x:Name="SubtractButton" Content="-" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="3" x:Name="MultiplyButton" Content="×" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="3" x:Name="DivideButton" Content="÷" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="3" x:Name="EqualButton" Content="=" Click="EqualButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideByButton" Content="1/x" Click="DivideByButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="1" x:Name="SquareButton" Content="x^2" Click="SquareButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRootButton" Content="√x" Click="SquareRootButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="0" x:Name="PercentButton" Content="%" Click="PercentButton__OnClick"/>
+        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntryButton" Content="CE" Click="ClearEntryButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="2" x:Name="ClearButton" Content="C" Click="ClearButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="3" x:Name="BackSpaceButton" Content="Back" Click="BackSpaceButton_OnClick"/>
+        <Button Grid.Row="2" Grid.Column="0" x:Name="OutputButton" Content="Output" Background="{StaticResource Memory}" Click="OutputButton_OnClick"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Text="0" FontSize="24"/>
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" IsReadOnly="True"/>
 
         <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
@@ -69,12 +76,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="5" x:Name="Memory" Content="M" Click="MemoryButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySave" Content="MS" Click="MemorySaveButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinus" Content="M-" Click="MemoryMinusButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlus" Content="M+" Click="MemoryPlusButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecall" Content="MR" Click="MemoryRecallButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClear" Content="MC" Click="MemoryClearButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="5" x:Name="MemoryButton" Content="M" Background="{StaticResource Memory}" Click="MemoryButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySaveButton" Content="MS" Background="{StaticResource Memory}" Click="MemorySaveButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinusButton" Content="M-" Background="{StaticResource Memory}" Click="MemoryMinusButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlusButton" Content="M+" Background="{StaticResource Memory}" Click="MemoryPlusButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecallButton" Content="MR" Background="{StaticResource Memory}" Click="MemoryRecallButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" Background="{StaticResource Memory}" Click="MemoryClearButton_OnClick"/>
         </Grid>
     </Grid>
 </Window>
