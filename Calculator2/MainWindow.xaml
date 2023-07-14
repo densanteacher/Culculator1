@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator2"
         mc:Ignorable="d"
-        Title="電卓" Height="600" Width="600" MinHeight="550" MinWidth="400"
-        FontSize="18" KeyDown="Window_KeyDown">
+        Title="電卓"
+        Height="600" Width="600"
+        MinHeight="550" MinWidth="400"
+        FontSize="18"
+        KeyDown="Window_KeyDown">
     <Window.Resources>
         <SolidColorBrush x:Key="Number" Color="WhiteSmoke"/>
         <SolidColorBrush x:Key="Memory" Color="GhostWhite"/>
@@ -34,10 +37,6 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <!--
-        DONE: ClickメソッドにButtonとつけるのであれば、NameにもButtonとつけたほうが丁寧でしょう。
-        賛否ありますが、コントロール名だけハンガリアン記法を許可し、BtnOne, BtnTwo, BtnAdd などとするパターンもあります。
-        -->
         <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOneButton" Content="1" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
         <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwoButton" Content="2" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
         <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThreeButton" Content="3" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>

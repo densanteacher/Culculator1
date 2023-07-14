@@ -32,6 +32,7 @@ namespace Calculator2
             this.InitializeComponent();
             this.ClearText(true);
 
+            // TODO: ???
             using (var fs = File.Create(Constants.path)) { };
         }
 
@@ -55,15 +56,21 @@ namespace Calculator2
         {
             try
             {
+                // TODO: var が使える箇所に適用してみましょう。他の箇所もできるだけ使ってみましょう。
                 string txt = this.MainText.Text;
+                // TODO: isSuccessをなくしてみましょう。
                 bool isSuccess = Decimal.TryParse(txt, out var parsed);
                 if (!isSuccess)
                 {
                     return;
                 }
-                // DONE: こっちは反転しているので、parsed　のままだとまずいでしょう。
+
                 decimal result = -parsed;
-                // DONE: 使われていません。他にもあり。
+
+                // TODO: 数値を入れるために毎回 ToString() するのはめんどくさいと思います。
+                // MainText.Text に値を設定するためのメソッドを作成しましょう。
+                // そうすることで、例えば、ToString() にカルチャを追加する場合も一度で済みます。
+                // また文字列を設定していることもあるので、オーバーロードについても調べてみましょう。
                 this.MainText.Text = result.ToString();
             }
             catch (Exception ex)
@@ -72,6 +79,7 @@ namespace Calculator2
             }
         }
 
+        // TODO: BackSpaceよりはBackspaceの方が一般的です。
         /// <summary>
         /// メインテキストの末尾一文字を消去します。
         /// </summary>
@@ -131,6 +139,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 double result = Math.Sqrt(parsed);
                 this.MainText.Text = result.ToString();
             }
@@ -153,6 +162,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 decimal result = 1 / parsed;
                 this.MainText.Text = result.ToString();
             }
@@ -162,10 +172,8 @@ namespace Calculator2
             }
         }
 
-        // DONE?: Gain？
-        // メソッド名はコメントの日本語見比べるとよいです。
-        // 命名のループバックチェックという手法があります。
-        // たしかプリンシプル オブ プログラミングに記述があったと思います。
+        // TODO: Askは相手に返事を"求める"ニュアンスだと思います。
+        // 間違ってもよいです。いろいろ調べて自分で納得できるものを探してみましょう。
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
@@ -179,6 +187,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 decimal result = parsed / 100;
                 this.MainText.Text = result.ToString();
             }
@@ -188,6 +197,13 @@ namespace Calculator2
             }
         }
 
+        // TODO: メソッドの命名について見直してみましょう。
+        // プログラミングでtheという冠詞はあまり使いません。
+        // 今回は電卓ということで、ボタンがたくさんあります。
+        // ボタンを押すと、何かが入力されるという動作は共通です。
+        // 入力というのは、Inputです。
+        // 小数点の記号のことはDecimalMarkとかDecimalCommaです。
+        // つまり・・・？
         /// <summary>
         /// メインテキストの数値に小数点を追加します。
         /// </summary>
@@ -199,6 +215,7 @@ namespace Calculator2
             }
         }
 
+        // TODO: Memoryが残っています。
         /// <summary>
         /// MemoryWindowを表示します。
         /// MemoryWindowには、現在のmemoryリストの一覧が表示されます。
@@ -212,6 +229,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 var mw = new ResultsWindow(this._results, result);
                 mw.Owner = this;
                 mw.ShowDialog();
@@ -258,7 +276,6 @@ namespace Calculator2
             }
         }
 
-        // DONE: Addはここでは加算の意味で使用していますが、this._memoriesがリストなので、Addという用語はリストに追加するような印象をうけます。別のメソッド名を検討しましょう。
         /// <summary>
         /// memoryリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
@@ -321,20 +338,11 @@ namespace Calculator2
         {
             try
             {
-                // DONE: パスをstatic readonlyでMainWindowにもたせてみましょう。
-                // Constants.cs を作ってもよいです。
-
-                // DONE?: fs のファイルスコープを考えてみましょう。
-
-                // DONE: SJISではなく、UTF-8を使用してみましょう。
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 var enc = Encoding.GetEncoding("UTF-8");
 
-                // DONE: Using Declarationについて調べてみましょう。
-
-                // 調べた結果、下記のように変数の宣言前にusingを宣言し、using文を中括弧の中に入れる記法をUsing Declarationといいます。
-                // usingを複数使うことによってネストが深くなることを防ぐことができるものであると理解しました。
                 {
+                    // TODO: StreamWriterのデフォルトのエンコーディングを調べてみましょう。
                     using var writer = new StreamWriter(Constants.path, false, enc);
                     foreach (string item in this._results)
                     {
@@ -342,7 +350,7 @@ namespace Calculator2
                     }
                 }
 
-                // DONE: 不要の場合もありますが、基本的にはShow()メソッドにMainWindowのインスタンスを渡しておきましょう。
+                // TODO: ドキュメントのフォーマット(Ctrl + K, D)を活用しましょう。
                 MessageBox.Show(this,"記録した数値をテキストファイルに出力しました。", "出力完了", MessageBoxButton.OK);
             }
             catch (Exception ex)
@@ -356,19 +364,16 @@ namespace Calculator2
         /// </summary>
         private void NumberButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // DONE: 他に var が使える箇所に適用してみましょう。
-            //var btn = sender as Button;
+            // TODO: 新しい書き方になりますが、is not を調べてみましょう。
             if (!(sender is Button btn))
             {
                 return;
             }
-            // DONE: 単純なParseが好まれる場合もありますが、基本的にTryParseの方が安全です。
+
             if (Decimal.TryParse(this.MainText.Text + btn.Content.ToString(), out var result))
             {
                 this.MainText.Text = result.ToString();
-
             }
-
         }
 
         /// <summary>
@@ -393,9 +398,10 @@ namespace Calculator2
         /// </summary>
         private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // DONE: as だと btn が null になる可能性があります。検証方法がいくつかあるので調べて適用してみましょう。
             var btn = sender as Button;
             this.Calculate();
+
+            // TODO: this
             this.SubText.Text = MainText.Text + btn?.Content;
             this.ClearText(false);
         }
@@ -530,12 +536,15 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 sub = sub.Remove(sub.Length - 1);
                 isSuccess = Decimal.TryParse(sub, out var valueSub);
                 if(!isSuccess)
                 {
                     return;
                 }
+
+                // TODO: result は外で使わないので、使うスコープだけで宣言しましょう。
                 decimal result = 0;
                 if (sub.Contains("÷"))
                 {
@@ -546,21 +555,19 @@ namespace Calculator2
                 {
                     result = valueSub * valueMain;
                     this.MainText.Text = result.ToString();
-
                 }
                 else if (sub.Contains("+"))
                 {
 
                     result = valueSub + valueMain;
                     this.MainText.Text = result.ToString();
-
                 }
                 else if (sub.Contains("-"))
                 {
                     result = valueSub - valueMain;
                     this.MainText.Text = result.ToString();
-
                 }
+
                 this.SubText.Text = null;
             }
             catch (Exception ex)
@@ -588,12 +595,12 @@ namespace Calculator2
                 case NullReferenceException:
                     MessageBox.Show(this,"参照がNullです。実行できません。");
                     break;
-
-                // DONE: このメソッドの引数がExceptionなので、この条件は変えた方がよいでしょう。
                 default:
                     MessageBox.Show(this,"予期せぬエラーが発生しました。実行を中止します。");
                     break;
             }
+
+            // TODO: メッセージボックスよりも先に出たほうがデバッグしやすいでしょう。
             Console.WriteLine(ex.Message);
         }
 
@@ -646,7 +653,6 @@ namespace Calculator2
                     break;
                 default:
                     break;
-                    // DONE: switch文の場合は使わなくてもdefaultを置いた方がよいでしょう。
             }
         }
 
@@ -656,11 +662,10 @@ namespace Calculator2
         /// <param name="key">Keyはキーボードで押されたキー情報です。</param>
         private void PressNumberKey(Key key)
         {
-
-            // DONE: switchでひとつずつ変換しない方法を考えてみてください。Keyのenum値は数値に変換できます。
             decimal result;
             switch ((int)key)
             {
+                // TODO: switch だと when と && はパターンマッチングが使えます。たぶんもっと短くできます。
                 case int i when i >= 34 && i <= 43:
                     if (Decimal.TryParse(this.MainText.Text + ((int)key - 34), out result))
                     {

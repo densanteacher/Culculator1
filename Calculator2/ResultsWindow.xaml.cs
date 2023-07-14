@@ -21,17 +21,14 @@ namespace Calculator2
     /// </summary>
     public partial class ResultsWindow : Window
     {
-        // DONE: readonly のものをコンストラクタで代入する場合はnewは不要です。
         private readonly List<string> _results;
 
-        // DONE: private
-        // DONE: result という名前は適正か？
+        // TODO: readonlyをつけてもよい条件を調べてみましょう。
         private decimal _calculatedNumber;
 
 
         public ResultsWindow(List<string> results, decimal calculatedNumber)
         {
-            // DONE: this
             this.InitializeComponent();
             this._results = results;
             this._calculatedNumber = calculatedNumber;
@@ -40,17 +37,19 @@ namespace Calculator2
 
         }
 
+        // TODO: ドキュメンテーションコメントのseeを調べてみましょう。
         /// <summary>
         /// リストをクリアした後、_results内の要素を追加し表示します。
         /// </summary>
         public void ClearWithAddListBox()
         {
-            // DONE: 適切な開業がほしいです。
             this.resultsList.Items.Clear();
+
             foreach (var item in this._results)
             {
                 this.resultsList.Items.Add(item);
             }
+
             if (this._results.Count > 0)
             {
                 this.resultsList.SelectedIndex = 0;
@@ -67,7 +66,6 @@ namespace Calculator2
                 return;
             }
 
-            // DONE: null になる可能性があります。回避およびtry-catch。
             try
             {
                 string selected = this.resultsList.SelectedItem.ToString() ?? "";
@@ -96,6 +94,7 @@ namespace Calculator2
                 int index = this.resultsList.SelectedIndex;
                 // DONE: selected というのは形容なので、実態を表す単語の方がわかりやすいです。
                 // selected だけだと、選ばれた何の？ってなります。宣言の箇所まで戻って確認しなければならなくなります。
+                // TODO: 他の部分にも適用してみましょう。
                 Decimal plusResult = Decimal.Parse(selectedItem) + _calculatedNumber;
                 this._results[index] = plusResult.ToString();
                 this.ClearWithAddListBox();
@@ -119,6 +118,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 string selectedItem = this.resultsList.SelectedItem.ToString() ?? "";
                 int index = this.resultsList.SelectedIndex;
                 Decimal minusResult = Decimal.Parse(selectedItem) - _calculatedNumber;
