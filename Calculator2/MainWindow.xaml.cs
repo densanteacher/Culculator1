@@ -32,8 +32,6 @@ namespace Calculator2
             this.InitializeComponent();
             this.ClearText(true);
 
-            // TODO: ???
-            using (var fs = File.Create(Constants.path)) { };
         }
 
         /// <summary>
@@ -56,22 +54,23 @@ namespace Calculator2
         {
             try
             {
-                // TODO: var が使える箇所に適用してみましょう。他の箇所もできるだけ使ってみましょう。
-                string txt = this.MainText.Text;
-                // TODO: isSuccessをなくしてみましょう。
-                bool isSuccess = Decimal.TryParse(txt, out var parsed);
-                if (!isSuccess)
+                // DONE: var が使える箇所に適用してみましょう。他の箇所もできるだけ使ってみましょう。
+                var txt = this.MainText.Text;
+                // DONE?: isSuccessをなくしてみましょう。
+                
+                // 二回TryParseを行う処理のところは、流石にif文の()内が見づらくなると思ったのでisSuccessを残しました。
+                if (!(Decimal.TryParse(txt, out var parsed)))
                 {
                     return;
                 }
 
-                decimal result = -parsed;
+                var result = -parsed;
 
-                // TODO: 数値を入れるために毎回 ToString() するのはめんどくさいと思います。
+                // DONE: 数値を入れるために毎回 ToString() するのはめんどくさいと思います。
                 // MainText.Text に値を設定するためのメソッドを作成しましょう。
                 // そうすることで、例えば、ToString() にカルチャを追加する場合も一度で済みます。
                 // また文字列を設定していることもあるので、オーバーロードについても調べてみましょう。
-                this.MainText.Text = result.ToString();
+                this.InputMainText(result);
             }
             catch (Exception ex)
             {
@@ -79,11 +78,11 @@ namespace Calculator2
             }
         }
 
-        // TODO: BackSpaceよりはBackspaceの方が一般的です。
+        // DONE: BackSpaceよりはBackspaceの方が一般的です。
         /// <summary>
         /// メインテキストの末尾一文字を消去します。
         /// </summary>
-        private void BackSpace()
+        private void Backspace()
         {
             try
             {
@@ -107,18 +106,17 @@ namespace Calculator2
         /// <summary>
         /// メインテキストの数値の2乗を求めます。
         /// </summary>
-        private void SquareOfX()
+        private void InputSquareOfX()
         {
             try
             {
                 string txt = this.MainText.Text;
-                bool isSuccess = Decimal.TryParse(txt, out var parsed);
-                if (!isSuccess)
+                if (!(Decimal.TryParse(txt, out var parsed)))
                 {
                     return;
                 }
                 decimal result = parsed * parsed;
-                this.MainText.Text = result.ToString();
+                this.InputMainText(result);
             }
             catch (Exception ex)
             {
@@ -129,19 +127,18 @@ namespace Calculator2
         /// <summary>
         /// メインテキストの数値の平方根を求めます。
         /// </summary>
-        private void SquareRootOfX()
+        private void InputSquareRootOfX()
         {
             try
             {
                 string txt = this.MainText.Text;
-                bool isSuccess = Double.TryParse(txt, out var parsed);
-                if (!isSuccess)
+                if (!(Double.TryParse(txt, out var parsed)))
                 {
                     return;
                 }
 
                 double result = Math.Sqrt(parsed);
-                this.MainText.Text = result.ToString();
+                this.InputMainText((decimal)result);
             }
             catch (Exception ex)
             {
@@ -152,19 +149,18 @@ namespace Calculator2
         /// <summary>
         /// メインテキストの数値をxとし、1/xを求めます。
         /// </summary>
-        private void DivideByX()
+        private void InputDivideByX()
         {
             try
             {
                 string txt = this.MainText.Text;
-                bool isSuccess = Decimal.TryParse(txt, out var parsed);
-                if (!isSuccess)
+                if (!(Decimal.TryParse(txt, out var parsed)))
                 {
                     return;
                 }
 
                 decimal result = 1 / parsed;
-                this.MainText.Text = result.ToString();
+                this.InputMainText(result);
             }
             catch (Exception ex)
             {
@@ -172,24 +168,23 @@ namespace Calculator2
             }
         }
 
-        // TODO: Askは相手に返事を"求める"ニュアンスだと思います。
+        // DONE: Askは相手に返事を"求める"ニュアンスだと思います。
         // 間違ってもよいです。いろいろ調べて自分で納得できるものを探してみましょう。
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
-        private void AskForPercentage()
+        private void InputPacentage()
         {
             try
             {
                 string txt = this.MainText.Text;
-                bool isSuccess = Decimal.TryParse(txt, out var parsed);
-                if (!isSuccess)
+                if (!(Decimal.TryParse(txt, out var parsed)))
                 {
                     return;
                 }
 
                 decimal result = parsed / 100;
-                this.MainText.Text = result.ToString();
+                this.InputMainText(result);
             }
             catch (Exception ex)
             {
@@ -197,7 +192,7 @@ namespace Calculator2
             }
         }
 
-        // TODO: メソッドの命名について見直してみましょう。
+        // DONE: メソッドの命名について見直してみましょう。
         // プログラミングでtheという冠詞はあまり使いません。
         // 今回は電卓ということで、ボタンがたくさんあります。
         // ボタンを押すと、何かが入力されるという動作は共通です。
@@ -207,7 +202,7 @@ namespace Calculator2
         /// <summary>
         /// メインテキストの数値に小数点を追加します。
         /// </summary>
-        private void HitTheDecimalPoint()
+        private void InputDecimalMark()
         {
             if (!this.MainText.Text.Contains("."))
             {
@@ -215,17 +210,16 @@ namespace Calculator2
             }
         }
 
-        // TODO: Memoryが残っています。
+        // DONE: Memoryが残っています。
         /// <summary>
-        /// MemoryWindowを表示します。
-        /// MemoryWindowには、現在のmemoryリストの一覧が表示されます。
+        /// ResultsWindowを表示します。
+        /// ResultsWindowには、現在の_resultsリストの一覧が表示されます。
         /// </summary>
         private void OpenResultsWindow()
         {
             try
             {
-                bool isSuccess = Decimal.TryParse(this.MainText.Text, out var result);
-                if (!isSuccess)
+                if (!(Decimal.TryParse(this.MainText.Text, out var result)))
                 {
                     return;
                 }
@@ -241,7 +235,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// memoryリストにメインテキストの数値を記録します。
+        /// _resultsリストにメインテキストの数値を記録します。
         /// </summary>
         private void SaveResult()
         {
@@ -249,7 +243,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// memoryリストに最初に追加された数値から、現在のメインテキストの数値を引きます。
+        /// _resultsリストに最初に追加された数値から、現在のメインテキストの数値を引きます。
         /// </summary>
         private void SubtractResult()
         {
@@ -261,12 +255,14 @@ namespace Calculator2
                 }
 
                 string txt = this.MainText.Text;
+
                 bool isSuccess = Decimal.TryParse(txt, out var parsed);
-                if (!isSuccess)
+                bool isSuccess2 = Decimal.TryParse(this._results[0], out var result);
+                if (!isSuccess || !isSuccess2)
                 {
                     return;
                 }
-                var result = Decimal.Parse(this._results[0]);
+
                 result -= parsed;
                 this._results[0] = result.ToString();
             }
@@ -277,7 +273,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// memoryリストに最初に追加された数値に、現在のメインテキストの数値を足します。
+        /// _resultsリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
         private void AddResult()
         {
@@ -287,6 +283,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 string txt = this.MainText.Text;
                 bool isSuccess = Decimal.TryParse(txt, out var parsed);
                 bool isSuccess2 = Decimal.TryParse(this._results[0], out var result);
@@ -294,6 +291,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 result += parsed;
                 this._results[0] = result.ToString();
             }
@@ -304,7 +302,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// メモリリストに最初に追加された数値を、メインテキストに再表示します。
+        /// _resultsリストに最初に追加された数値を、メインテキストに再表示します。
         /// </summary>
         private void RecallResult()
         {
@@ -324,7 +322,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// メモリをクリアします。
+        /// _resultsリストをクリアします。
         /// </summary>
         private void ClearResults()
         {
@@ -332,18 +330,18 @@ namespace Calculator2
         }
 
         /// <summary>
-        ///　_memoriesに格納されている値をresult.txtに書き込みます。
+        ///　_resultsリストに格納されている値をresult.txtに書き込みます。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
             try
             {
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                var enc = Encoding.GetEncoding("UTF-8");
-
                 {
-                    // TODO: StreamWriterのデフォルトのエンコーディングを調べてみましょう。
-                    using var writer = new StreamWriter(Constants.path, false, enc);
+                    // DONE: StreamWriterのデフォルトのエンコーディングを調べてみましょう。
+
+                    // デフォルトでUTF8なので必要ないということですね。
+                    // それと、改めて見るとファイルの作成もStreamWriter()でやってくれるのでCreateFileも不要でした。
+                    using var writer = new StreamWriter(Constants.path, false);
                     foreach (string item in this._results)
                     {
                         writer.WriteLine(item);
@@ -351,7 +349,7 @@ namespace Calculator2
                 }
 
                 // TODO: ドキュメントのフォーマット(Ctrl + K, D)を活用しましょう。
-                MessageBox.Show(this,"記録した数値をテキストファイルに出力しました。", "出力完了", MessageBoxButton.OK);
+                MessageBox.Show(this, "記録した数値をテキストファイルに出力しました。", "出力完了");
             }
             catch (Exception ex)
             {
@@ -364,15 +362,15 @@ namespace Calculator2
         /// </summary>
         private void NumberButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // TODO: 新しい書き方になりますが、is not を調べてみましょう。
-            if (!(sender is Button btn))
+            // DONE: 新しい書き方になりますが、is not を調べてみましょう。
+            if (sender is not Button btn)
             {
                 return;
             }
 
             if (Decimal.TryParse(this.MainText.Text + btn.Content.ToString(), out var result))
             {
-                this.MainText.Text = result.ToString();
+                this.InputMainText(result);
             }
         }
 
@@ -389,7 +387,7 @@ namespace Calculator2
         /// </summary>
         private void DecimalPointButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.HitTheDecimalPoint();
+            this.InputDecimalMark();
         }
 
         /// <summary>
@@ -401,8 +399,8 @@ namespace Calculator2
             var btn = sender as Button;
             this.Calculate();
 
-            // TODO: this
-            this.SubText.Text = MainText.Text + btn?.Content;
+            // DONE: this
+            this.SubText.Text = this.MainText.Text + btn?.Content;
             this.ClearText(false);
         }
 
@@ -411,7 +409,7 @@ namespace Calculator2
         /// </summary>
         private void DivideByButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.DivideByX();
+            this.InputDivideByX();
         }
 
         /// <summary>
@@ -419,7 +417,7 @@ namespace Calculator2
         /// </summary>
         private void SquareButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SquareOfX();
+            this.InputSquareOfX();
         }
 
         /// <summary>
@@ -427,7 +425,7 @@ namespace Calculator2
         /// </summary>
         private void SquareRootButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SquareRootOfX();
+            this.InputSquareRootOfX();
         }
 
         /// <summary>
@@ -435,7 +433,7 @@ namespace Calculator2
         /// </summary>
         private void PercentButton__OnClick(object sender, RoutedEventArgs e)
         {
-            this.AskForPercentage();
+            this.InputPacentage();
         }
 
         /// <summary>
@@ -459,7 +457,7 @@ namespace Calculator2
         /// </summary>
         private void BackSpaceButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.BackSpace();
+            this.Backspace();
         }
 
         /// <summary>
@@ -471,7 +469,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// Mボタンを押したとき、MemoryWindowを開きます。
+        /// Mボタンを押したとき、resultsWindowを開きます。
         /// </summary>
         private void MemoryButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -479,7 +477,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// MSボタンを押したとき、メモリリストにメインテキストの計算結果を記録します。
+        /// MSボタンを押したとき、_resultsリストにメインテキストの計算結果を記録します。
         /// </summary>
         private void MemorySaveButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -487,7 +485,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// M-ボタンを押したとき、メモリに保存された計算結果から現在のメインテキストの数値を引きます。
+        /// M-ボタンを押したとき、_resultsリストに保存された計算結果から現在のメインテキストの数値を引きます。
         /// </summary>
         private void MemoryMinusButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -495,7 +493,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// M+ボタンを押したとき、メモリに保存された計算結果に現在のメインテキストの数値を足します。
+        /// M+ボタンを押したとき、_resultsリストに保存された計算結果に現在のメインテキストの数値を足します。
         /// </summary>
         private void MemoryPlusButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -503,7 +501,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// MRボタンを押したとき、メモリに保存された計算結果をメインテキストに表示します。
+        /// MRボタンを押したとき、_resultsリストに保存された計算結果をメインテキストに表示します。
         /// </summary>
         private void MemoryRecallButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -511,7 +509,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// MCボタンを押したとき、メモリを全て消去します。
+        /// MCボタンを押したとき、_resultsリストを全て消去します。
         /// </summary>
         private void MemoryClearButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -523,8 +521,7 @@ namespace Calculator2
         /// </summary>
         private void Calculate()
         {
-            bool isSuccess = Decimal.TryParse(this.MainText.Text, out var valueMain);
-            if (!isSuccess)
+            if (!(Decimal.TryParse(this.MainText.Text, out var valueMain)))
             {
                 return;
             }
@@ -538,8 +535,7 @@ namespace Calculator2
                 }
 
                 sub = sub.Remove(sub.Length - 1);
-                isSuccess = Decimal.TryParse(sub, out var valueSub);
-                if(!isSuccess)
+                if (!(Decimal.TryParse(sub, out var valueSub)))
                 {
                     return;
                 }
@@ -549,23 +545,22 @@ namespace Calculator2
                 if (sub.Contains("÷"))
                 {
                     result = valueSub / valueMain;
-                    this.MainText.Text = result.ToString();
+                    this.InputMainText(result);
                 }
                 else if (sub.Contains("×"))
                 {
                     result = valueSub * valueMain;
-                    this.MainText.Text = result.ToString();
+                    this.InputMainText(result);
                 }
                 else if (sub.Contains("+"))
                 {
-
                     result = valueSub + valueMain;
-                    this.MainText.Text = result.ToString();
+                    this.InputMainText(result);
                 }
                 else if (sub.Contains("-"))
                 {
                     result = valueSub - valueMain;
-                    this.MainText.Text = result.ToString();
+                    this.InputMainText(result);
                 }
 
                 this.SubText.Text = null;
@@ -581,27 +576,31 @@ namespace Calculator2
         /// </summary>
         private void ShowErrorMessage(Exception ex)
         {
+            // DONE: メッセージボックスよりも先に出たほうがデバッグしやすいでしょう。
+            Console.WriteLine(ex.Message);
+
             switch (ex)
             {
                 case DivideByZeroException:
-                    MessageBox.Show(this,"0で除算することはできません。");
+                    MessageBox.Show(this, "0で除算することはできません。");
                     break;
+
                 case OverflowException:
-                    MessageBox.Show(this,"オーバーフローが発生しました。この計算は行えません。");
+                    MessageBox.Show(this, "オーバーフローが発生しました。実行できません。");
                     break;
+
                 case ArithmeticException:
-                    MessageBox.Show(this,"計算中にエラーが発生しました。実行を中止します。");
+                    MessageBox.Show(this, "計算中にエラーが発生しました。実行できません。");
                     break;
+
                 case NullReferenceException:
-                    MessageBox.Show(this,"参照がNullです。実行できません。");
+                    MessageBox.Show(this, "参照がNullです。実行できません。");
                     break;
+
                 default:
-                    MessageBox.Show(this,"予期せぬエラーが発生しました。実行を中止します。");
+                    MessageBox.Show(this, "予期せぬエラーが発生しました。実行できません。");
                     break;
             }
-
-            // TODO: メッセージボックスよりも先に出たほうがデバッグしやすいでしょう。
-            Console.WriteLine(ex.Message);
         }
 
         /// <summary>
@@ -616,19 +615,23 @@ namespace Calculator2
                 case Key.Enter:
                     this.Calculate();
                     break;
+
                 case Key.Back:
                     // DONE: this
-                    this.BackSpace();
+                    this.Backspace();
                     break;
+
                 case Key.Decimal:
-                    this.HitTheDecimalPoint();
+                    this.InputDecimalMark();
                     break;
+
                 case Key.Divide:
                 case Key.Multiply:
                 case Key.Subtract:
                 case Key.Add:
                     this.PressOperatorKey(e.Key);
                     break;
+
                 case Key.D1:
                 case Key.NumPad1:
                 case Key.D2:
@@ -651,6 +654,7 @@ namespace Calculator2
                 case Key.NumPad0:
                     this.PressNumberKey(e.Key);
                     break;
+
                 default:
                     break;
             }
@@ -665,19 +669,21 @@ namespace Calculator2
             decimal result;
             switch ((int)key)
             {
-                // TODO: switch だと when と && はパターンマッチングが使えます。たぶんもっと短くできます。
-                case int i when i >= 34 && i <= 43:
+                // DONE？: switch だと when と && はパターンマッチングが使えます。たぶんもっと短くできます。
+                case >= 34 and <= 43:
                     if (Decimal.TryParse(this.MainText.Text + ((int)key - 34), out result))
                     {
-                        this.MainText.Text = result.ToString();
+                        this.InputMainText(result);
                     }
                     break;
-                case int i when i >= 74 && i <= 83:
+
+                case >= 74 and <= 83:
                     if (Decimal.TryParse(this.MainText.Text + ((int)key - 74), out result))
                     {
-                        this.MainText.Text = result.ToString();
+                        this.InputMainText(result);
                     }
                     break;
+
                 default:
                     break;
             }
@@ -690,6 +696,7 @@ namespace Calculator2
         private void PressOperatorKey(Key key)
         {
             this.Calculate();
+
             string result = this.MainText.Text;
             switch (key)
             {
@@ -707,7 +714,17 @@ namespace Calculator2
                     break;
             }
             this.SubText.Text = result;
+
             this.ClearText(false);
+        }
+
+        /// <summary>
+        /// 渡された計算結果を、メインテキストに表示します。
+        /// </summary>
+        /// <param name="result">計算結果です。</param>
+        private void InputMainText(decimal result)
+        {
+            this.MainText.Text = result.ToString();
         }
     }
 }

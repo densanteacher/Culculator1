@@ -24,7 +24,7 @@ namespace Calculator2
         private readonly List<string> _results;
 
         // TODO: readonlyをつけてもよい条件を調べてみましょう。
-        private decimal _calculatedNumber;
+        private readonly decimal _calculatedNumber;
 
 
         public ResultsWindow(List<string> results, decimal calculatedNumber)
@@ -37,22 +37,22 @@ namespace Calculator2
 
         }
 
-        // TODO: ドキュメンテーションコメントのseeを調べてみましょう。
+        // DONE: ドキュメンテーションコメントのseeを調べてみましょう。
         /// <summary>
         /// リストをクリアした後、_results内の要素を追加し表示します。
         /// </summary>
         public void ClearWithAddListBox()
         {
-            this.resultsList.Items.Clear();
+            this.ResultsList.Items.Clear();
 
             foreach (var item in this._results)
             {
-                this.resultsList.Items.Add(item);
+                this.ResultsList.Items.Add(item);
             }
 
             if (this._results.Count > 0)
             {
-                this.resultsList.SelectedIndex = 0;
+                this.ResultsList.SelectedIndex = 0;
             }
         }
 
@@ -68,10 +68,10 @@ namespace Calculator2
 
             try
             {
-                string selected = this.resultsList.SelectedItem.ToString() ?? "";
-                this._results.Remove(selected);
-                this.resultsList.Items.Remove(selected);
-                this.resultsList.SelectedIndex = 0;
+                string selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
+                this._results.Remove(selectedItem);
+                this.ResultsList.Items.Remove(selectedItem);
+                this.ResultsList.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -90,15 +90,15 @@ namespace Calculator2
                 {
                     return;
                 }
-                string selectedItem = this.resultsList.SelectedItem.ToString() ?? "";
-                int index = this.resultsList.SelectedIndex;
+                string selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
+                int index = this.ResultsList.SelectedIndex;
                 // DONE: selected というのは形容なので、実態を表す単語の方がわかりやすいです。
                 // selected だけだと、選ばれた何の？ってなります。宣言の箇所まで戻って確認しなければならなくなります。
-                // TODO: 他の部分にも適用してみましょう。
+                // DONE: 他の部分にも適用してみましょう。
                 Decimal plusResult = Decimal.Parse(selectedItem) + _calculatedNumber;
                 this._results[index] = plusResult.ToString();
                 this.ClearWithAddListBox();
-                this.resultsList.SelectedIndex = index;
+                this.ResultsList.SelectedIndex = index;
             }
             catch (Exception ex)
             {
@@ -119,12 +119,12 @@ namespace Calculator2
                     return;
                 }
 
-                string selectedItem = this.resultsList.SelectedItem.ToString() ?? "";
-                int index = this.resultsList.SelectedIndex;
+                string selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
+                int index = this.ResultsList.SelectedIndex;
                 Decimal minusResult = Decimal.Parse(selectedItem) - _calculatedNumber;
                 this._results[index] = minusResult.ToString();
                 this.ClearWithAddListBox();
-                this.resultsList.SelectedIndex = index;
+                this.ResultsList.SelectedIndex = index;
             }
             catch (Exception ex)
             {
@@ -133,12 +133,19 @@ namespace Calculator2
 
         }
 
+        /// <summary>
+        /// <see cref="ResultsWindow.ClearResult"/>
+        /// MCボタンを押したとき、リストボックスで選択している値を削除します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MemoryClearButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.ClearResult();
         }
 
         /// <summary>
+        /// <see cref="ResultsWindow.AddResult"/>
         /// M+ボタンを押したとき、リストボックスで選択している値に、メインウィンドウのメインテキストに表示されている値を足します。
         /// </summary>
         private void MemoryPlusButton_OnClick(object sender, RoutedEventArgs e)
@@ -147,6 +154,7 @@ namespace Calculator2
         }
 
         /// <summary>
+        /// <see cref="ResultsWindow.SubtractResult"/>
         /// M-ボタンを押したとき、リストボックスで選択している値から、メインウィンドウのメインテキストに表示されている値を引きます。
         /// </summary>
         private void MemoryMinusButton_OnClick(object sender, RoutedEventArgs e)
@@ -180,7 +188,7 @@ namespace Calculator2
             Console.WriteLine(ex.Message);
         }
 
-        private void OKButton_OnClick(object sender, RoutedEventArgs e)
+        private void OkButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

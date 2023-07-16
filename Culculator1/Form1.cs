@@ -288,7 +288,7 @@ namespace Calclator1
                 path,
                 false,
                 System.Text.Encoding.GetEncoding("shift_jis"));*/
-            using (FileStream fs = File.Create(path)) ;
+            using (FileStream fs = File.Create(path)) { };
             Encoding enc = Encoding.GetEncoding("Shift_JIS");
             using (StreamWriter writer = new StreamWriter(path, false, enc))
             {

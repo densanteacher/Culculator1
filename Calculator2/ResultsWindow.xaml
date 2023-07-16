@@ -32,17 +32,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- TODO: キャメルケース -->
-        <ListBox Grid.Row="0" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}" Name="resultsList" Grid.ColumnSpan="6" SelectionMode="Single"/>
+        <!-- DONE: キャメルケース -->
+        <ListBox Grid.Row="0" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}" Name="ResultsList" Grid.ColumnSpan="6" SelectionMode="Single"/>
         <!-- DONE?: このGridの使い方だとWindowを大きくしたときに問題となりそうです。 -->
-        <Button Grid.Row="1" Grid.Column="0" x:Name="MemoryClearButton" VerticalAlignment="Center" Click="MemoryClearButton_OnClick">
-            <Viewbox Stretch="Uniform">
-                <Label Content="MC"/>
-            </Viewbox>
-        </Button>
-        <Button Grid.Row="1" Grid.Column="1" x:Name="MemoryPlusButton" Content="M+" VerticalAlignment="Center" Click="MemoryPlusButton_OnClick"/>
-        <Button Grid.Row="1" Grid.Column="2" x:Name="MemoryMinusButton" Content="M-" VerticalAlignment="Center" Click="MemoryMinusButton_OnClick"/>
-        <!-- TODO: キャメルケース -->
-        <Button Grid.Row="1" Grid.Column="5" x:Name="OKButton" Content="OK" Width="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="OKButton_OnClick"/>
+        <Button Grid.Row="1" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" VerticalAlignment="Center" Click="MemoryClearButton_OnClick" Background="{StaticResource Memory}"/>
+        <Button Grid.Row="1" Grid.Column="1" x:Name="MemoryPlusButton" Content="M+" VerticalAlignment="Center" Click="MemoryPlusButton_OnClick" Background="{StaticResource Memory}"/>
+        <Button Grid.Row="1" Grid.Column="2" x:Name="MemoryMinusButton" Content="M-" VerticalAlignment="Center" Click="MemoryMinusButton_OnClick" Background="{StaticResource Memory}"/>
+        <!-- DONE: キャメルケース -->
+        <Button Grid.Row="1" Grid.Column="5" x:Name="OkButton" Content="OK" Width="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="OkButton_OnClick"/>
     </Grid>
 </Window>
