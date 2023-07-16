@@ -54,23 +54,15 @@ namespace Calculator2
         {
             try
             {
-                // DONE: var が使える箇所に適用してみましょう。他の箇所もできるだけ使ってみましょう。
                 var txt = this.MainText.Text;
-                // DONE?: isSuccessをなくしてみましょう。
-                
-                // 二回TryParseを行う処理のところは、流石にif文の()内が見づらくなると思ったのでisSuccessを残しました。
-                if (!(Decimal.TryParse(txt, out var parsed)))
+
+                // DONE: 加減が難しいのですが、整理して短くなってきたので、このくらいなら早期リターンしない方がよいかもしれません。
+                // TODO: parsed → mainValue くらいにしておきましょうか。
+                if (Decimal.TryParse(txt, out var parsed))
                 {
-                    return;
+                    var result = -parsed;
+                    this.InputMainText(result);
                 }
-
-                var result = -parsed;
-
-                // DONE: 数値を入れるために毎回 ToString() するのはめんどくさいと思います。
-                // MainText.Text に値を設定するためのメソッドを作成しましょう。
-                // そうすることで、例えば、ToString() にカルチャを追加する場合も一度で済みます。
-                // また文字列を設定していることもあるので、オーバーロードについても調べてみましょう。
-                this.InputMainText(result);
             }
             catch (Exception ex)
             {
@@ -78,7 +70,7 @@ namespace Calculator2
             }
         }
 
-        // DONE: BackSpaceよりはBackspaceの方が一般的です。
+        // TODO: ほかも InputXxx の形に揃えてしまいましょう。
         /// <summary>
         /// メインテキストの末尾一文字を消去します。
         /// </summary>
@@ -86,6 +78,7 @@ namespace Calculator2
         {
             try
             {
+                // TODO: var はプロジェクト全体にできるだけ適用してみてください。
                 string txt = this.MainText.Text;
                 string bs = txt.Remove(txt.Length - 1);
                 if (bs.Length == 0 || bs == "-")
@@ -110,6 +103,7 @@ namespace Calculator2
         {
             try
             {
+                // TODO: MainTextを参照するプロパティを宣言して使ってみましょう。
                 string txt = this.MainText.Text;
                 if (!(Decimal.TryParse(txt, out var parsed)))
                 {
@@ -168,8 +162,7 @@ namespace Calculator2
             }
         }
 
-        // DONE: Askは相手に返事を"求める"ニュアンスだと思います。
-        // 間違ってもよいです。いろいろ調べて自分で納得できるものを探してみましょう。
+        // TODO: Pacentageタイポ
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
@@ -192,13 +185,6 @@ namespace Calculator2
             }
         }
 
-        // DONE: メソッドの命名について見直してみましょう。
-        // プログラミングでtheという冠詞はあまり使いません。
-        // 今回は電卓ということで、ボタンがたくさんあります。
-        // ボタンを押すと、何かが入力されるという動作は共通です。
-        // 入力というのは、Inputです。
-        // 小数点の記号のことはDecimalMarkとかDecimalCommaです。
-        // つまり・・・？
         /// <summary>
         /// メインテキストの数値に小数点を追加します。
         /// </summary>
@@ -210,7 +196,6 @@ namespace Calculator2
             }
         }
 
-        // DONE: Memoryが残っています。
         /// <summary>
         /// ResultsWindowを表示します。
         /// ResultsWindowには、現在の_resultsリストの一覧が表示されます。
@@ -272,6 +257,7 @@ namespace Calculator2
             }
         }
 
+        // TODO: InputMemoryPlus がいいのでは？
         /// <summary>
         /// _resultsリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
@@ -313,6 +299,7 @@ namespace Calculator2
 
             try
             {
+                // TODO: InputMainTextのオーバーロードを定義して使ってみましょう。
                 this.MainText.Text = this._results[0];
             }
             catch (Exception ex)
@@ -329,6 +316,8 @@ namespace Calculator2
             this._results.Clear();
         }
 
+        // TODO: regionディレクティブを使ってイベントメソッドを区切ってみましょう。
+
         /// <summary>
         ///　_resultsリストに格納されている値をresult.txtに書き込みます。
         /// </summary>
@@ -337,10 +326,6 @@ namespace Calculator2
             try
             {
                 {
-                    // DONE: StreamWriterのデフォルトのエンコーディングを調べてみましょう。
-
-                    // デフォルトでUTF8なので必要ないということですね。
-                    // それと、改めて見るとファイルの作成もStreamWriter()でやってくれるのでCreateFileも不要でした。
                     using var writer = new StreamWriter(Constants.path, false);
                     foreach (string item in this._results)
                     {
@@ -348,7 +333,6 @@ namespace Calculator2
                     }
                 }
 
-                // TODO: ドキュメントのフォーマット(Ctrl + K, D)を活用しましょう。
                 MessageBox.Show(this, "記録した数値をテキストファイルに出力しました。", "出力完了");
             }
             catch (Exception ex)
@@ -362,7 +346,6 @@ namespace Calculator2
         /// </summary>
         private void NumberButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // DONE: 新しい書き方になりますが、is not を調べてみましょう。
             if (sender is not Button btn)
             {
                 return;
@@ -399,7 +382,6 @@ namespace Calculator2
             var btn = sender as Button;
             this.Calculate();
 
-            // DONE: this
             this.SubText.Text = this.MainText.Text + btn?.Content;
             this.ClearText(false);
         }
@@ -576,7 +558,6 @@ namespace Calculator2
         /// </summary>
         private void ShowErrorMessage(Exception ex)
         {
-            // DONE: メッセージボックスよりも先に出たほうがデバッグしやすいでしょう。
             Console.WriteLine(ex.Message);
 
             switch (ex)
@@ -617,7 +598,6 @@ namespace Calculator2
                     break;
 
                 case Key.Back:
-                    // DONE: this
                     this.Backspace();
                     break;
 
@@ -669,7 +649,6 @@ namespace Calculator2
             decimal result;
             switch ((int)key)
             {
-                // DONE？: switch だと when と && はパターンマッチングが使えます。たぶんもっと短くできます。
                 case >= 34 and <= 43:
                     if (Decimal.TryParse(this.MainText.Text + ((int)key - 34), out result))
                     {
@@ -718,6 +697,8 @@ namespace Calculator2
             this.ClearText(false);
         }
 
+        // TODO: ボタンの処理でinputというメソッド名を多用しましたので、他の名前にした方がよいでしょう。
+        // こういう単純な代入だけをするメソッドのことをセッターと呼んだりします。
         /// <summary>
         /// 渡された計算結果を、メインテキストに表示します。
         /// </summary>

@@ -37,9 +37,8 @@ namespace Calculator2
 
         }
 
-        // DONE: ドキュメンテーションコメントのseeを調べてみましょう。
         /// <summary>
-        /// リストをクリアした後、_results内の要素を追加し表示します。
+        /// リストをクリアした後、<see cref="ResultsWindow._results"/> 内の要素を追加し表示します。
         /// </summary>
         public void ClearWithAddListBox()
         {
@@ -92,9 +91,8 @@ namespace Calculator2
                 }
                 string selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
                 int index = this.ResultsList.SelectedIndex;
-                // DONE: selected というのは形容なので、実態を表す単語の方がわかりやすいです。
-                // selected だけだと、選ばれた何の？ってなります。宣言の箇所まで戻って確認しなければならなくなります。
-                // DONE: 他の部分にも適用してみましょう。
+                // TODO: this
+                // TODO: Parseと足し算を分けましょう。
                 Decimal plusResult = Decimal.Parse(selectedItem) + _calculatedNumber;
                 this._results[index] = plusResult.ToString();
                 this.ClearWithAddListBox();
@@ -133,6 +131,8 @@ namespace Calculator2
 
         }
 
+        // TODO: see と seealso の違いについて調べてみましょう。
+        // TODO: sender, e のコメントは不要です。
         /// <summary>
         /// <see cref="ResultsWindow.ClearResult"/>
         /// MCボタンを押したとき、リストボックスで選択している値を削除します。
