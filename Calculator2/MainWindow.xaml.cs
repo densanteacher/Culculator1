@@ -28,12 +28,12 @@ namespace Calculator2
         private readonly List<string> _results = new();
 
         // TODO: private をつけて、フィールド名に _ をつけましょう。
-        bool calculateFlag = false;
+        private bool _isCalculated = false;
 
         // TODO: プロパティもフィールドも意識して分けないので、名前は MainTextString とでもしておきましょう。
         // private なフィールドは _ をつけるなら、そうじゃないものはプロパティだとわかります。
         // TODO: getの場合はラムダ式が使えます。
-        public string PropertyMainText
+        public string MainTextString
         {
             get { return this.MainText.Text; }
         }
@@ -56,7 +56,7 @@ namespace Calculator2
             // TODO: SetMainTextが使えそうです。
             this.MainText.Text = "0";
 
-            this.calculateFlag = false;
+            this._isCalculated = false;
 
             if (isSub)
             {
@@ -89,7 +89,7 @@ namespace Calculator2
         {
             try
             {
-                var txt = PropertyMainText;
+                var txt = this.MainTextString;
 
                 // TODO: 実際に符号を反転する処理のみを、ReverseSign()メソッドとして分離してみましょう。
                 if (Decimal.TryParse(txt, out var mainValue))
@@ -112,7 +112,7 @@ namespace Calculator2
             try
             {
                 // TODO: this、Shift + F12 の出番です。
-                var txt = PropertyMainText;
+                var txt = this.MainTextString;
                 var bs = txt.Remove(txt.Length - 1);
                 if (bs.Length == 0 || bs == "-")
                 {
@@ -136,7 +136,7 @@ namespace Calculator2
         {
             try
             {
-                var txt = this.PropertyMainText;
+                var txt = this.MainTextString;
                 if (!(Decimal.TryParse(txt, out var mainValue)))
                 {
                     return;
@@ -144,7 +144,7 @@ namespace Calculator2
                 var result = mainValue * mainValue;
                 this.SetMainText(result);
 
-                this.calculateFlag = true;
+                this._isCalculated = true;
             }
             catch (Exception ex)
             {
@@ -159,7 +159,7 @@ namespace Calculator2
         {
             try
             {
-                var txt = PropertyMainText;
+                var txt = this.MainTextString;
                 if (!(Double.TryParse(txt, out var mainValue)))
                 {
                     return;
@@ -167,7 +167,7 @@ namespace Calculator2
 
                 var result = Math.Sqrt(mainValue);
                 this.SetMainText((decimal)result);
-                this.calculateFlag = true;
+                this._isCalculated = true;
             }
             catch (Exception ex)
             {
@@ -182,7 +182,7 @@ namespace Calculator2
         {
             try
             {
-                var txt = PropertyMainText;
+                var txt = this.MainTextString;
                 if (!(Decimal.TryParse(txt, out var mainValue)))
                 {
                     return;
@@ -190,7 +190,7 @@ namespace Calculator2
                 var result = 1 / mainValue;
                 this.SetMainText(result);
 
-                this.calculateFlag = true;
+                this._isCalculated = true;
             }
             catch (Exception ex)
             {
@@ -206,7 +206,7 @@ namespace Calculator2
         {
             try
             {
-                var txt = PropertyMainText;
+                var txt = this.MainTextString;
                 if (!(Decimal.TryParse(txt, out var mainValue)))
                 {
                     return;
@@ -215,7 +215,7 @@ namespace Calculator2
                 var result = mainValue / 100;
                 this.SetMainText(result);
 
-                this.calculateFlag = true;
+                this._isCalculated = true;
             }
             catch (Exception ex)
             {
@@ -228,7 +228,7 @@ namespace Calculator2
         /// </summary>
         private void InputDecimalMark()
         {
-            if (!this.PropertyMainText.Contains("."))
+            if (!this.MainTextString.Contains("."))
             {
                 this.MainText.Text += ".";
             }
@@ -240,13 +240,14 @@ namespace Calculator2
         private void Calculate()
         {
             // TODO: try の中に入れたほうが揃います。
-            if (!(Decimal.TryParse(this.PropertyMainText, out var valueMain)))
-            {
-                return;
-            }
 
             try
             {
+                if (!(Decimal.TryParse(this.MainTextString, out var valueMain)))
+                {
+                    return;
+                }
+
                 var sub = this.SubText.Text;
                 if ((sub == "") && (sub.Trim().Length == 0))
                 {
@@ -282,7 +283,7 @@ namespace Calculator2
 
                 this.SubText.Text = "";
                 // TODO: this
-                calculateFlag = true;
+                _isCalculated = true;
             }
             catch (Exception ex)
             {
@@ -302,7 +303,7 @@ namespace Calculator2
         {
             try
             {
-                if (!(Decimal.TryParse(this.PropertyMainText, out var result)))
+                if (!(Decimal.TryParse(this.MainTextString, out var result)))
                 {
                     return;
                 }
@@ -321,7 +322,7 @@ namespace Calculator2
         /// </summary>
         private void SaveMemory()
         {
-            this._results.Add(this.PropertyMainText);
+            this._results.Add(this.MainTextString);
         }
 
         /// <summary>
@@ -336,7 +337,7 @@ namespace Calculator2
                     return;
                 }
 
-                var txt = this.PropertyMainText;
+                var txt = this.MainTextString;
 
                 var isSuccess = Decimal.TryParse(txt, out var mainValue);
                 var isSuccess2 = Decimal.TryParse(this._results[0], out var result);
@@ -368,10 +369,10 @@ namespace Calculator2
                     return;
                 }
 
-                var txt = this.PropertyMainText;
-                // TODO: var
-                bool isSuccess = Decimal.TryParse(txt, out var mainValue);
-                bool isSuccess2 = Decimal.TryParse(this._results[0], out var result);
+                var txt = this.MainTextString;
+                // DONE: var
+                var isSuccess = Decimal.TryParse(txt, out var mainValue);
+                var isSuccess2 = Decimal.TryParse(this._results[0], out var result);
                 if (!isSuccess || !isSuccess2)
                 {
                     return;
@@ -453,12 +454,13 @@ namespace Calculator2
                 return;
             }
 
-            // TODO: Ctrl + K, D
-            if (this.calculateFlag) {
+            // DONE: Ctrl + K, D
+            if (this._isCalculated)
+            {
                 this.ClearText(false);
             }
 
-            if (Decimal.TryParse(this.PropertyMainText + btn.Content.ToString(), out var result))
+            if (Decimal.TryParse(this.MainTextString + btn.Content.ToString(), out var result))
             {
                 this.SetMainText(result);
             }
@@ -488,7 +490,7 @@ namespace Calculator2
             var btn = sender as Button;
             this.Calculate();
 
-            this.SubText.Text = this.PropertyMainText + btn?.Content;
+            this.SubText.Text = this.MainTextString + btn?.Content;
             this.ClearText(false);
         }
 
@@ -679,7 +681,7 @@ namespace Calculator2
             // そういうときは bool を表すにはいくつかパターンがあります。
             // 変数名だと isCalculated が鉄板です。
             // プロパティだと Calculated と過去形にするだけがよく使われます。
-            if(this.calculateFlag)
+            if (this._isCalculated)
             {
                 this.ClearText(false);
             }
@@ -691,14 +693,14 @@ namespace Calculator2
             switch ((int)key)
             {
                 case >= 34 and <= 43:
-                    if (Decimal.TryParse(this.PropertyMainText + ((int)key - 34), out result))
+                    if (Decimal.TryParse(this.MainTextString + ((int)key - 34), out result))
                     {
                         this.SetMainText(result);
                     }
                     break;
 
                 case >= 74 and <= 83:
-                    if (Decimal.TryParse(this.PropertyMainText + ((int)key - 74), out result))
+                    if (Decimal.TryParse(this.MainTextString + ((int)key - 74), out result))
                     {
                         this.SetMainText(result);
                     }
@@ -717,7 +719,7 @@ namespace Calculator2
         {
             this.Calculate();
 
-            var result = this.PropertyMainText;
+            var result = this.MainTextString;
             switch (key)
             {
                 case Key.Divide:
