@@ -25,7 +25,15 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
         private readonly List<string> _results = new();
+        bool calculateFlag = false;
+
+        public string PropertyMainText
+        {
+            get { return this.MainText.Text; }
+        }
 
         public MainWindow()
         {
@@ -34,12 +42,15 @@ namespace Calculator2
 
         }
 
+        #region メインテキスト処理関連メソッド
+
         /// <summary>
         /// テキストボックス初期化メソッドです。
         /// </summary>
         /// <param name="isSub">trueの時はSubTextも初期化し、falseの時はMainTextのみ初期化します。</param>
         private void ClearText(bool isSub)
         {
+
             this.MainText.Text = "0";
             if (isSub)
             {
@@ -47,21 +58,42 @@ namespace Calculator2
             }
         }
 
+        // DONE: ボタンの処理でinputというメソッド名を多用しましたので、他の名前にした方がよいでしょう。
+        // こういう単純な代入だけをするメソッドのことをセッターと呼んだりします。
+        /// <summary>
+        /// 数値として渡された計算結果を、メインテキストに表示します。
+        /// </summary>
+        /// <param name="result">計算結果です。</param>
+        private void SetMainText(decimal result)
+        {
+            this.MainText.Text = result.ToString();
+        }
+
+        /// <summary>
+        /// 文字列として渡された計算結果を、メインテキストに表示します。
+        /// </summary>
+        /// <param name="resultString">計算結果の文字列です。</param>
+        private void SetMainText(string resultString)
+        {
+            this.MainText.Text = resultString;
+        }
+
+
         /// <summary>
         /// メインテキストの数値の正負反転を反転します。
         /// </summary>
-        private void ReverseSign()
+        private void InputReverseSign()
         {
             try
             {
-                var txt = this.MainText.Text;
+                var txt = PropertyMainText;
 
                 // DONE: 加減が難しいのですが、整理して短くなってきたので、このくらいなら早期リターンしない方がよいかもしれません。
-                // TODO: parsed → mainValue くらいにしておきましょうか。
-                if (Decimal.TryParse(txt, out var parsed))
+                // DONE: parsed → mainValue くらいにしておきましょうか。
+                if (Decimal.TryParse(txt, out var mainValue))
                 {
-                    var result = -parsed;
-                    this.InputMainText(result);
+                    var result = -mainValue;
+                    this.SetMainText(result);
                 }
             }
             catch (Exception ex)
@@ -70,24 +102,26 @@ namespace Calculator2
             }
         }
 
-        // TODO: ほかも InputXxx の形に揃えてしまいましょう。
+        // DONE?: ほかも InputXxx の形に揃えてしまいましょう。
+
+        // BackspaceもInputとしてよいのでしょうか？どちらかといえば削除というニュアンスが強いような気がするのですが…
         /// <summary>
         /// メインテキストの末尾一文字を消去します。
         /// </summary>
-        private void Backspace()
+        private void InputBackspace()
         {
             try
             {
-                // TODO: var はプロジェクト全体にできるだけ適用してみてください。
-                string txt = this.MainText.Text;
-                string bs = txt.Remove(txt.Length - 1);
+                // DONE: var はプロジェクト全体にできるだけ適用してみてください。
+                var txt = PropertyMainText;
+                var bs = txt.Remove(txt.Length - 1);
                 if (bs.Length == 0 || bs == "-")
                 {
                     this.ClearText(false);
                 }
                 else
                 {
-                    this.MainText.Text = bs;
+                    this.SetMainText(bs);
                 }
             }
             catch (Exception ex)
@@ -103,14 +137,16 @@ namespace Calculator2
         {
             try
             {
-                // TODO: MainTextを参照するプロパティを宣言して使ってみましょう。
-                string txt = this.MainText.Text;
-                if (!(Decimal.TryParse(txt, out var parsed)))
+                // DONE: MainTextを参照するプロパティを宣言して使ってみましょう。
+                var txt = this.PropertyMainText;
+                if (!(Decimal.TryParse(txt, out var mainValue)))
                 {
                     return;
                 }
-                decimal result = parsed * parsed;
-                this.InputMainText(result);
+                var result = mainValue * mainValue;
+                this.SetMainText(result);
+
+                this.calculateFlag = true;
             }
             catch (Exception ex)
             {
@@ -125,14 +161,15 @@ namespace Calculator2
         {
             try
             {
-                string txt = this.MainText.Text;
-                if (!(Double.TryParse(txt, out var parsed)))
+                var txt = PropertyMainText;
+                if (!(Double.TryParse(txt, out var mainValue)))
                 {
                     return;
                 }
 
-                double result = Math.Sqrt(parsed);
-                this.InputMainText((decimal)result);
+                var result = Math.Sqrt(mainValue);
+                this.SetMainText((decimal)result);
+                this.calculateFlag = true;
             }
             catch (Exception ex)
             {
@@ -147,37 +184,40 @@ namespace Calculator2
         {
             try
             {
-                string txt = this.MainText.Text;
-                if (!(Decimal.TryParse(txt, out var parsed)))
+                var txt = PropertyMainText;
+                if (!(Decimal.TryParse(txt, out var mainValue)))
                 {
                     return;
                 }
+                var result = 1 / mainValue;
+                this.SetMainText(result);
 
-                decimal result = 1 / parsed;
-                this.InputMainText(result);
+                this.calculateFlag = true;
             }
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
+                Console.WriteLine(ex.Message);
             }
         }
 
-        // TODO: Pacentageタイポ
         /// <summary>
         /// メインテキストの数値の百分率パーセンテージを求めます。
         /// </summary>
-        private void InputPacentage()
+        private void InputPercentage()
         {
             try
             {
-                string txt = this.MainText.Text;
-                if (!(Decimal.TryParse(txt, out var parsed)))
+                var txt = PropertyMainText;
+                if (!(Decimal.TryParse(txt, out var mainValue)))
                 {
                     return;
                 }
 
-                decimal result = parsed / 100;
-                this.InputMainText(result);
+                var result = mainValue / 100;
+                this.SetMainText(result);
+
+                this.calculateFlag = true;
             }
             catch (Exception ex)
             {
@@ -190,11 +230,70 @@ namespace Calculator2
         /// </summary>
         private void InputDecimalMark()
         {
-            if (!this.MainText.Text.Contains("."))
+            if (!this.PropertyMainText.Contains("."))
             {
                 this.MainText.Text += ".";
             }
         }
+
+        /// <summary>
+        /// SubTextに数値と演算記号が格納されている場合、計算を行います。
+        /// </summary>
+        private void Calculate()
+        {
+            if (!(Decimal.TryParse(this.PropertyMainText, out var valueMain)))
+            {
+                return;
+            }
+
+            try
+            {
+                var sub = this.SubText.Text;
+                if ((sub == "") && (sub.Trim().Length == 0))
+                {
+                    return;
+                }
+
+                var sub2 = sub.Remove(sub.Length - 1);
+                if (!(Decimal.TryParse(sub2, out var valueSub)))
+                {
+                    return;
+                }
+
+                // DONE: result は外で使わないので、使うスコープだけで宣言しましょう。
+                if (sub.Contains("÷"))
+                {
+                    var result = valueSub / valueMain;
+                    this.SetMainText(result);
+                }
+                else if (sub.Contains("×"))
+                {
+                    var result = valueSub * valueMain;
+                    this.SetMainText(result);
+                }
+                else if (sub.Contains("+"))
+                {
+                    var result = valueSub + valueMain;
+                    this.SetMainText(result);
+                }
+                else if (sub.Contains("-"))
+                {
+                    var result = valueSub - valueMain;
+                    this.SetMainText(result);
+                }
+
+                this.SubText.Text = "";
+                calculateFlag = true;
+            }
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+            }
+        }
+        #endregion
+
+
+        #region Memory関連メソッド
 
         /// <summary>
         /// ResultsWindowを表示します。
@@ -204,11 +303,10 @@ namespace Calculator2
         {
             try
             {
-                if (!(Decimal.TryParse(this.MainText.Text, out var result)))
+                if (!(Decimal.TryParse(this.PropertyMainText, out var result)))
                 {
                     return;
                 }
-
                 var mw = new ResultsWindow(this._results, result);
                 mw.Owner = this;
                 mw.ShowDialog();
@@ -222,15 +320,15 @@ namespace Calculator2
         /// <summary>
         /// _resultsリストにメインテキストの数値を記録します。
         /// </summary>
-        private void SaveResult()
+        private void SaveMemory()
         {
-            this._results.Add(this.MainText.Text);
+            this._results.Add(this.PropertyMainText);
         }
 
         /// <summary>
         /// _resultsリストに最初に追加された数値から、現在のメインテキストの数値を引きます。
         /// </summary>
-        private void SubtractResult()
+        private void InputMemoryMinus()
         {
             try
             {
@@ -239,17 +337,18 @@ namespace Calculator2
                     return;
                 }
 
-                string txt = this.MainText.Text;
+                var txt = this.PropertyMainText;
 
-                bool isSuccess = Decimal.TryParse(txt, out var parsed);
-                bool isSuccess2 = Decimal.TryParse(this._results[0], out var result);
+                var isSuccess = Decimal.TryParse(txt, out var mainValue);
+                var isSuccess2 = Decimal.TryParse(this._results[0], out var result);
                 if (!isSuccess || !isSuccess2)
                 {
                     return;
                 }
 
-                result -= parsed;
+                result -= mainValue;
                 this._results[0] = result.ToString();
+
             }
             catch (Exception ex)
             {
@@ -257,11 +356,11 @@ namespace Calculator2
             }
         }
 
-        // TODO: InputMemoryPlus がいいのでは？
+        // DONE: InputMemoryPlus がいいのでは？
         /// <summary>
         /// _resultsリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
-        private void AddResult()
+        private void InputMemoryPlus()
         {
             try
             {
@@ -270,15 +369,15 @@ namespace Calculator2
                     return;
                 }
 
-                string txt = this.MainText.Text;
-                bool isSuccess = Decimal.TryParse(txt, out var parsed);
+                var txt = this.PropertyMainText;
+                bool isSuccess = Decimal.TryParse(txt, out var mainValue);
                 bool isSuccess2 = Decimal.TryParse(this._results[0], out var result);
                 if (!isSuccess || !isSuccess2)
                 {
                     return;
                 }
 
-                result += parsed;
+                result += mainValue;
                 this._results[0] = result.ToString();
             }
             catch (Exception ex)
@@ -290,7 +389,7 @@ namespace Calculator2
         /// <summary>
         /// _resultsリストに最初に追加された数値を、メインテキストに再表示します。
         /// </summary>
-        private void RecallResult()
+        private void RecallMemory()
         {
             if (this._results.Count == 0)
             {
@@ -299,8 +398,8 @@ namespace Calculator2
 
             try
             {
-                // TODO: InputMainTextのオーバーロードを定義して使ってみましょう。
-                this.MainText.Text = this._results[0];
+                // DONE: SetMainTextのオーバーロードを定義して使ってみましょう。
+                this.SetMainText(this._results[0]);
             }
             catch (Exception ex)
             {
@@ -311,12 +410,16 @@ namespace Calculator2
         /// <summary>
         /// _resultsリストをクリアします。
         /// </summary>
-        private void ClearResults()
+        private void ClearMemory()
         {
             this._results.Clear();
         }
+        #endregion
 
-        // TODO: regionディレクティブを使ってイベントメソッドを区切ってみましょう。
+
+        #region OnClickイベント
+
+        // DONE: regionディレクティブを使ってイベントメソッドを区切ってみましょう。
 
         /// <summary>
         ///　_resultsリストに格納されている値をresult.txtに書き込みます。
@@ -327,7 +430,7 @@ namespace Calculator2
             {
                 {
                     using var writer = new StreamWriter(Constants.path, false);
-                    foreach (string item in this._results)
+                    foreach (var item in this._results)
                     {
                         writer.WriteLine(item);
                     }
@@ -351,9 +454,14 @@ namespace Calculator2
                 return;
             }
 
-            if (Decimal.TryParse(this.MainText.Text + btn.Content.ToString(), out var result))
+            if (this.calculateFlag) {
+                this.ClearText(false);
+                this.calculateFlag = false;
+            }
+
+            if (Decimal.TryParse(this.PropertyMainText + btn.Content.ToString(), out var result))
             {
-                this.InputMainText(result);
+                this.SetMainText(result);
             }
         }
 
@@ -362,7 +470,7 @@ namespace Calculator2
         /// </summary>
         private void SignReverseButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.ReverseSign();
+            this.InputReverseSign();
         }
 
         /// <summary>
@@ -374,15 +482,14 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// 現在のメインテキストと四則演算の記号をサブテキストに格納します。
-        /// 既に格納されている場合は、計算を行ってからサブテキストに格納します。
+        /// 四則演算のボタンを押したとき、計算を行い、現在のメインテキストと四則演算の記号をサブテキストに格納します。
         /// </summary>
         private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             this.Calculate();
 
-            this.SubText.Text = this.MainText.Text + btn?.Content;
+            this.SubText.Text = this.PropertyMainText + btn?.Content;
             this.ClearText(false);
         }
 
@@ -415,7 +522,7 @@ namespace Calculator2
         /// </summary>
         private void PercentButton__OnClick(object sender, RoutedEventArgs e)
         {
-            this.InputPacentage();
+            this.InputPercentage();
         }
 
         /// <summary>
@@ -439,7 +546,7 @@ namespace Calculator2
         /// </summary>
         private void BackSpaceButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Backspace();
+            this.InputBackspace();
         }
 
         /// <summary>
@@ -463,7 +570,7 @@ namespace Calculator2
         /// </summary>
         private void MemorySaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SaveResult();
+            this.SaveMemory();
         }
 
         /// <summary>
@@ -471,7 +578,7 @@ namespace Calculator2
         /// </summary>
         private void MemoryMinusButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SubtractResult();
+            this.InputMemoryMinus();
         }
 
         /// <summary>
@@ -479,7 +586,7 @@ namespace Calculator2
         /// </summary>
         private void MemoryPlusButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.AddResult();
+            this.InputMemoryPlus();
         }
 
         /// <summary>
@@ -487,7 +594,7 @@ namespace Calculator2
         /// </summary>
         private void MemoryRecallButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.RecallResult();
+            this.RecallMemory();
         }
 
         /// <summary>
@@ -495,94 +602,12 @@ namespace Calculator2
         /// </summary>
         private void MemoryClearButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.ClearResults();
+            this.ClearMemory();
         }
+        #endregion
 
-        /// <summary>
-        /// SubTextに数値と演算記号が格納されている場合、計算を行います。
-        /// </summary>
-        private void Calculate()
-        {
-            if (!(Decimal.TryParse(this.MainText.Text, out var valueMain)))
-            {
-                return;
-            }
 
-            try
-            {
-                string sub = this.SubText.Text;
-                if ((sub == "") || (sub.Trim().Length == 0))
-                {
-                    return;
-                }
-
-                sub = sub.Remove(sub.Length - 1);
-                if (!(Decimal.TryParse(sub, out var valueSub)))
-                {
-                    return;
-                }
-
-                // TODO: result は外で使わないので、使うスコープだけで宣言しましょう。
-                decimal result = 0;
-                if (sub.Contains("÷"))
-                {
-                    result = valueSub / valueMain;
-                    this.InputMainText(result);
-                }
-                else if (sub.Contains("×"))
-                {
-                    result = valueSub * valueMain;
-                    this.InputMainText(result);
-                }
-                else if (sub.Contains("+"))
-                {
-                    result = valueSub + valueMain;
-                    this.InputMainText(result);
-                }
-                else if (sub.Contains("-"))
-                {
-                    result = valueSub - valueMain;
-                    this.InputMainText(result);
-                }
-
-                this.SubText.Text = null;
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
-        }
-
-        /// <summary>
-        /// エラーメッセージを表示します。
-        /// </summary>
-        private void ShowErrorMessage(Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-
-            switch (ex)
-            {
-                case DivideByZeroException:
-                    MessageBox.Show(this, "0で除算することはできません。");
-                    break;
-
-                case OverflowException:
-                    MessageBox.Show(this, "オーバーフローが発生しました。実行できません。");
-                    break;
-
-                case ArithmeticException:
-                    MessageBox.Show(this, "計算中にエラーが発生しました。実行できません。");
-                    break;
-
-                case NullReferenceException:
-                    MessageBox.Show(this, "参照がNullです。実行できません。");
-                    break;
-
-                default:
-                    MessageBox.Show(this, "予期せぬエラーが発生しました。実行できません。");
-                    break;
-            }
-        }
+        #region Keydownイベント関連メソッド
 
         /// <summary>
         /// キー押下時、対応した数値の入力や四則演算を行います。
@@ -598,7 +623,7 @@ namespace Calculator2
                     break;
 
                 case Key.Back:
-                    this.Backspace();
+                    this.InputBackspace();
                     break;
 
                 case Key.Decimal:
@@ -647,19 +672,24 @@ namespace Calculator2
         private void PressNumberKey(Key key)
         {
             decimal result;
+            if(this.calculateFlag)
+            {
+                this.ClearText(false);
+                this.calculateFlag = false;
+            }
             switch ((int)key)
             {
                 case >= 34 and <= 43:
-                    if (Decimal.TryParse(this.MainText.Text + ((int)key - 34), out result))
+                    if (Decimal.TryParse(this.PropertyMainText + ((int)key - 34), out result))
                     {
-                        this.InputMainText(result);
+                        this.SetMainText(result);
                     }
                     break;
 
                 case >= 74 and <= 83:
-                    if (Decimal.TryParse(this.MainText.Text + ((int)key - 74), out result))
+                    if (Decimal.TryParse(this.PropertyMainText + ((int)key - 74), out result))
                     {
-                        this.InputMainText(result);
+                        this.SetMainText(result);
                     }
                     break;
 
@@ -676,7 +706,7 @@ namespace Calculator2
         {
             this.Calculate();
 
-            string result = this.MainText.Text;
+            var result = this.PropertyMainText;
             switch (key)
             {
                 case Key.Divide:
@@ -696,16 +726,38 @@ namespace Calculator2
 
             this.ClearText(false);
         }
+        #endregion
 
-        // TODO: ボタンの処理でinputというメソッド名を多用しましたので、他の名前にした方がよいでしょう。
-        // こういう単純な代入だけをするメソッドのことをセッターと呼んだりします。
+
         /// <summary>
-        /// 渡された計算結果を、メインテキストに表示します。
+        /// エラーメッセージを表示します。
         /// </summary>
-        /// <param name="result">計算結果です。</param>
-        private void InputMainText(decimal result)
+        private void ShowErrorMessage(Exception ex)
         {
-            this.MainText.Text = result.ToString();
+            Console.WriteLine(ex.Message);
+
+            switch (ex)
+            {
+                case DivideByZeroException:
+                    MessageBox.Show(this, "0で除算することはできません。");
+                    break;
+
+                case OverflowException:
+                    MessageBox.Show(this, "オーバーフローが発生しました。実行できません。");
+                    break;
+
+                case ArithmeticException:
+                    MessageBox.Show(this, "計算中にエラーが発生しました。実行できません。");
+                    break;
+
+                case NullReferenceException:
+                    MessageBox.Show(this, "参照がNullです。実行できません。");
+                    break;
+
+                default:
+                    MessageBox.Show(this, "予期せぬエラーが発生しました。実行できません。");
+                    break;
+            }
         }
     }
 }
