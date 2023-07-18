@@ -52,6 +52,7 @@ namespace Calculator2
         {
 
             this.MainText.Text = "0";
+            this.calculateFlag = false;
             if (isSub)
             {
                 this.SubText.Clear();
@@ -456,7 +457,6 @@ namespace Calculator2
 
             if (this.calculateFlag) {
                 this.ClearText(false);
-                this.calculateFlag = false;
             }
 
             if (Decimal.TryParse(this.PropertyMainText + btn.Content.ToString(), out var result))
@@ -663,6 +663,7 @@ namespace Calculator2
                 default:
                     break;
             }
+            this.EqualButton.Focus();
         }
 
         /// <summary>
@@ -675,7 +676,6 @@ namespace Calculator2
             if(this.calculateFlag)
             {
                 this.ClearText(false);
-                this.calculateFlag = false;
             }
             switch ((int)key)
             {
