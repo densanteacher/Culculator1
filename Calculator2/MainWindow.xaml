@@ -10,7 +10,9 @@
         MinHeight="550" MinWidth="400"
         FontSize="18"
         KeyDown="Window_KeyDown">
+
     <Window.Resources>
+        <!-- TODO: 色だとわかるような名前をつけましょう。  -->
         <SolidColorBrush x:Key="Number" Color="WhiteSmoke"/>
         <SolidColorBrush x:Key="Memory" Color="GhostWhite"/>
         <Style TargetType="Button">
@@ -18,6 +20,7 @@
             <Setter Property="FontSize" Value="24"/>
         </Style>
     </Window.Resources>
+
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -37,6 +40,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
+        <!-- TODO: Focusableはスタイルに入れたほうがよいでしょう。 -->
         <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOneButton" Content="1" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
         <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwoButton" Content="2" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
         <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThreeButton" Content="3" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>

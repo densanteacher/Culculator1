@@ -10,6 +10,7 @@
         MinHeight="200" MinWidth="300"
         MaxWidth="600"
         FontSize="16">
+
     <Window.Resources>
         <SolidColorBrush x:Key="Memory" Color="GhostWhite"/>
         <Style TargetType="Button">
@@ -17,7 +18,8 @@
             <Setter Property="FontSize" Value="24"/>
         </Style>
     </Window.Resources>
-    <!-- DONE: RenderTransformOriginは意図しないものと思いますが、役割を調べてみましょう。 -->
+
+    <!-- TODO: Marginの設定を調べてみましょう。左上右下の順番です。全部同じ値のときは・・・？ -->
     <Grid Margin="10,10,10,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -32,13 +34,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- DONE: キャメルケース -->
+        <!-- TODO: Grid.ColumnSpanの位置、x:Name になっていない -->
         <ListBox Grid.Row="0" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}" Name="ResultsList" Grid.ColumnSpan="6" SelectionMode="Single"/>
-        <!-- DONE?: このGridの使い方だとWindowを大きくしたときに問題となりそうです。 -->
+        <!-- TODO: このGridの使い方だとWindowを大きくしたときに MC, M+, M- の 周りの隙間が大きくなっておかしくなります。 -->
         <Button Grid.Row="1" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" VerticalAlignment="Center" Click="MemoryClearButton_OnClick" Background="{StaticResource Memory}"/>
         <Button Grid.Row="1" Grid.Column="1" x:Name="MemoryPlusButton" Content="M+" VerticalAlignment="Center" Click="MemoryPlusButton_OnClick" Background="{StaticResource Memory}"/>
         <Button Grid.Row="1" Grid.Column="2" x:Name="MemoryMinusButton" Content="M-" VerticalAlignment="Center" Click="MemoryMinusButton_OnClick" Background="{StaticResource Memory}"/>
-        <!-- DONE: キャメルケース -->
         <Button Grid.Row="1" Grid.Column="5" x:Name="OkButton" Content="OK" Width="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="OkButton_OnClick"/>
     </Grid>
 </Window>

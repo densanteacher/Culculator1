@@ -25,11 +25,14 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
         private readonly List<string> _results = new();
+
+        // TODO: private をつけて、フィールド名に _ をつけましょう。
         bool calculateFlag = false;
 
+        // TODO: プロパティもフィールドも意識して分けないので、名前は MainTextString とでもしておきましょう。
+        // private なフィールドは _ をつけるなら、そうじゃないものはプロパティだとわかります。
+        // TODO: getの場合はラムダ式が使えます。
         public string PropertyMainText
         {
             get { return this.MainText.Text; }
@@ -50,17 +53,17 @@ namespace Calculator2
         /// <param name="isSub">trueの時はSubTextも初期化し、falseの時はMainTextのみ初期化します。</param>
         private void ClearText(bool isSub)
         {
-
+            // TODO: SetMainTextが使えそうです。
             this.MainText.Text = "0";
+
             this.calculateFlag = false;
+
             if (isSub)
             {
                 this.SubText.Clear();
             }
         }
 
-        // DONE: ボタンの処理でinputというメソッド名を多用しましたので、他の名前にした方がよいでしょう。
-        // こういう単純な代入だけをするメソッドのことをセッターと呼んだりします。
         /// <summary>
         /// 数値として渡された計算結果を、メインテキストに表示します。
         /// </summary>
@@ -79,7 +82,6 @@ namespace Calculator2
             this.MainText.Text = resultString;
         }
 
-
         /// <summary>
         /// メインテキストの数値の正負反転を反転します。
         /// </summary>
@@ -89,8 +91,7 @@ namespace Calculator2
             {
                 var txt = PropertyMainText;
 
-                // DONE: 加減が難しいのですが、整理して短くなってきたので、このくらいなら早期リターンしない方がよいかもしれません。
-                // DONE: parsed → mainValue くらいにしておきましょうか。
+                // TODO: 実際に符号を反転する処理のみを、ReverseSign()メソッドとして分離してみましょう。
                 if (Decimal.TryParse(txt, out var mainValue))
                 {
                     var result = -mainValue;
@@ -103,9 +104,6 @@ namespace Calculator2
             }
         }
 
-        // DONE?: ほかも InputXxx の形に揃えてしまいましょう。
-
-        // BackspaceもInputとしてよいのでしょうか？どちらかといえば削除というニュアンスが強いような気がするのですが…
         /// <summary>
         /// メインテキストの末尾一文字を消去します。
         /// </summary>
@@ -113,7 +111,7 @@ namespace Calculator2
         {
             try
             {
-                // DONE: var はプロジェクト全体にできるだけ適用してみてください。
+                // TODO: this、Shift + F12 の出番です。
                 var txt = PropertyMainText;
                 var bs = txt.Remove(txt.Length - 1);
                 if (bs.Length == 0 || bs == "-")
@@ -138,7 +136,6 @@ namespace Calculator2
         {
             try
             {
-                // DONE: MainTextを参照するプロパティを宣言して使ってみましょう。
                 var txt = this.PropertyMainText;
                 if (!(Decimal.TryParse(txt, out var mainValue)))
                 {
@@ -242,6 +239,7 @@ namespace Calculator2
         /// </summary>
         private void Calculate()
         {
+            // TODO: try の中に入れたほうが揃います。
             if (!(Decimal.TryParse(this.PropertyMainText, out var valueMain)))
             {
                 return;
@@ -261,7 +259,6 @@ namespace Calculator2
                     return;
                 }
 
-                // DONE: result は外で使わないので、使うスコープだけで宣言しましょう。
                 if (sub.Contains("÷"))
                 {
                     var result = valueSub / valueMain;
@@ -284,6 +281,7 @@ namespace Calculator2
                 }
 
                 this.SubText.Text = "";
+                // TODO: this
                 calculateFlag = true;
             }
             catch (Exception ex)
@@ -371,6 +369,7 @@ namespace Calculator2
                 }
 
                 var txt = this.PropertyMainText;
+                // TODO: var
                 bool isSuccess = Decimal.TryParse(txt, out var mainValue);
                 bool isSuccess2 = Decimal.TryParse(this._results[0], out var result);
                 if (!isSuccess || !isSuccess2)
@@ -415,12 +414,11 @@ namespace Calculator2
         {
             this._results.Clear();
         }
+
         #endregion
 
 
         #region OnClickイベント
-
-        // DONE: regionディレクティブを使ってイベントメソッドを区切ってみましょう。
 
         /// <summary>
         ///　_resultsリストに格納されている値をresult.txtに書き込みます。
@@ -455,6 +453,7 @@ namespace Calculator2
                 return;
             }
 
+            // TODO: Ctrl + K, D
             if (this.calculateFlag) {
                 this.ClearText(false);
             }
@@ -604,8 +603,10 @@ namespace Calculator2
         {
             this.ClearMemory();
         }
-        #endregion
 
+        // DONE: endregionにもテキストを入れておくと対になっているものを探す必要がなくなります。
+        // TODO: region, endregion の前後は改行をいれましょう。
+        #endregion OnClickイベント
 
         #region Keydownイベント関連メソッド
 
@@ -673,10 +674,20 @@ namespace Calculator2
         private void PressNumberKey(Key key)
         {
             decimal result;
+
+            // TODO: こういう名前をつけると true と false のどちらが計算済みなのか迷います。
+            // そういうときは bool を表すにはいくつかパターンがあります。
+            // 変数名だと isCalculated が鉄板です。
+            // プロパティだと Calculated と過去形にするだけがよく使われます。
             if(this.calculateFlag)
             {
                 this.ClearText(false);
             }
+
+            // TODO: switch よりも if の方が好みです。
+            // その理由としては、switch の場合は、スコープが広くなるので、TryParseでout var宣言ができなくなります。
+            // また、switchの方がインデントが深くなってしまいます。
+            // ただ、最近はパターンマッチにより短く記述できるようになったので、ケースバイケースになってきました。
             switch ((int)key)
             {
                 case >= 34 and <= 43:

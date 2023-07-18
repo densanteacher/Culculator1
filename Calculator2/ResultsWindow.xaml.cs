@@ -21,16 +21,14 @@ namespace Calculator2
     /// </summary>
     public partial class ResultsWindow : Window
     {
+        // TODO: _results と ResultsList で二重にデータを管理する状況に見えます。
+        // 二重管理はバグの元です。どちらかだけで管理できないか考えてみましょう。
         private readonly List<string> _results;
 
-        // DONE: readonlyをつけてもよい条件を調べてみましょう。
-
-        // 宣言時、あるいはコンストラクタの中でだけ値を設定できるのがreadonlyでの定義であるとわかりました。
-        // また、参照型の場合はreadonlyとなるのはオブジェクトへの参照情報のみであり、オブジェクトのメンバーなどは変更できます。
-        // つまり、_resultsのようなリストの場合、新たに違うリストへの参照は設定できませんが、リスト内の要素は変更することができます。
-        // この様な理解でよろしいでしょうか？
+        // TODO: 計算された数字と読めますが、この値を plus/minus しているので、計算前の値では？
+        // 何を主とするかで、受け取り方が変わるので、迷いそうなときはコメントを残します。
+        // private はドキュメンテーションコメントは必須ではないと言われていますが、できるだけコメントしておいた方がよいでしょう。
         private readonly decimal _calculatedNumber;
-
 
         public ResultsWindow(List<string> results, decimal calculatedNumber)
         {
@@ -42,6 +40,9 @@ namespace Calculator2
 
         }
 
+        // TODO: With でつながず、メソッドを分割した方がよいでしょう。
+        // この場合は、ひとつのメソッドでなんとかしたいと思われますので、メソッド名を工夫した方がよいでしょう。
+        // WithやAndで複数の動作をつなげることは、よくありません。
         /// <summary>
         /// リストをクリアした後、<see cref="ResultsWindow._results"/> 内の要素を追加し表示します。
         /// </summary>
@@ -96,8 +97,7 @@ namespace Calculator2
                 }
                 var selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
                 var index = this.ResultsList.SelectedIndex;
-                // DONE: this
-                // DONE: Parseと足し算を分けましょう。
+                // TODO: ParseよりTryParseを使いましょう。
                 var mainValue = Decimal.Parse(selectedItem);
                 var plusResult = mainValue + this._calculatedNumber;
                 this._results[index] = plusResult.ToString();
@@ -125,6 +125,7 @@ namespace Calculator2
 
                 var selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
                 var index = this.ResultsList.SelectedIndex;
+                // TODO: this
                 var minusResult = Decimal.Parse(selectedItem) - _calculatedNumber;
                 this._results[index] = minusResult.ToString();
                 this.ClearWithAddListBox();
@@ -137,11 +138,8 @@ namespace Calculator2
 
         }
 
-        // DONE: see と seealso の違いについて調べてみましょう。
-
-        // seeはリンク、seealsoは参照を記述するものです。
-
-        // DONE: sender, e のコメントは不要です。
+        // TODO: see の使い方は ClearWithAddListBox のコメントを参照してみてください。
+        // TODO: 下記のようにClearMemory"も" 見てほしい場合は、seealso を使います。
         /// <summary>
         /// <see cref="ResultsWindow.ClearMemory"/>
         /// MCボタンを押したとき、リストボックスで選択している値を削除します。
@@ -201,9 +199,9 @@ namespace Calculator2
                     MessageBox.Show(this,"予期せぬエラーが発生しました。実行を中止します。");
                     break;
             }
+
+            // TODO: 上へ
             Console.WriteLine(ex.Message);
         }
-
-
     }
 }
