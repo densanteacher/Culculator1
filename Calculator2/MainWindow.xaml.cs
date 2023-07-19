@@ -27,12 +27,9 @@ namespace Calculator2
     {
         private readonly List<string> _results = new();
 
-        // DONE: private をつけて、フィールド名に _ をつけましょう。
         private bool _isCalculated = false;
 
-        // DONE: プロパティもフィールドも意識して分けないので、名前は MainTextString とでもしておきましょう。
-        // private なフィールドは _ をつけるなら、そうじゃないものはプロパティだとわかります。
-        // DONE getの場合はラムダ式が使えます。
+        // TODO: 更にgetの記述も省略できます。
         public string MainTextString
         {
             get => this.MainText.Text;
@@ -53,7 +50,6 @@ namespace Calculator2
         /// <param name="isSub">trueの時はSubTextも初期化し、falseの時はMainTextのみ初期化します。</param>
         private void ClearText(bool isSub)
         {
-            // DONE: SetMainTextが使えそうです。
             this.SetMainText(0);
 
             this._isCalculated = false;
@@ -90,10 +86,11 @@ namespace Calculator2
             try
             {
                 var txt = this.MainTextString;
-
-                // DONE: 実際に符号を反転する処理のみを、ReverseSign()メソッドとして分離してみましょう。
+                // TODO: ソースコードがだいぶスッキリしてきました。out var x と宣言してしまいましょう。
+                // x を使うなら var result も y にした方がわかりやすいでしょうか。
                 if (Decimal.TryParse(txt, out var mainValue))
                 {
+                    // TODO: this
                     var result = ReverseSign(mainValue);
                     this.SetMainText(result);
                 }
@@ -104,6 +101,10 @@ namespace Calculator2
             }
         }
 
+        // INFO: メソッド化することで、処理に名前がつくので、何をしているかを読み解く必要がなくなり、ソースコードが読みやすくなる効果があります。
+        // ただ、あまり細かくしすぎると書く方も、追う方も大変なのでバランスが大事です。
+        // TODO: decimal の拡張メソッドとして別ファイルに定義してみましょう。
+        // TODO: メソッドが単純で、メソッド名だけで何をするかが明確な場合は、paramやreturnsは書かなくてもよいでしょう。
         /// <summary>
         /// 入力された値の正負を反転します。
         /// </summary>
@@ -121,7 +122,6 @@ namespace Calculator2
         {
             try
             {
-                // DONE: this、Shift + F12 の出番です。
                 var txt = this.MainTextString;
                 var bs = txt.Remove(txt.Length - 1);
                 if (bs.Length == 0 || bs == "-")
@@ -250,8 +250,6 @@ namespace Calculator2
         /// </summary>
         private void Calculate()
         {
-            // DONE: try の中に入れたほうが揃います。
-
             try
             {
                 if (!(Decimal.TryParse(this.MainTextString, out var valueMain)))
@@ -368,7 +366,6 @@ namespace Calculator2
             }
         }
 
-        // DONE: InputMemoryPlus がいいのでは？
         /// <summary>
         /// _resultsリストに最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
@@ -382,7 +379,6 @@ namespace Calculator2
                 }
 
                 var txt = this.MainTextString;
-                // DONE: var
                 var isSuccess = Decimal.TryParse(txt, out var mainValue);
                 var isSuccess2 = Decimal.TryParse(this._results[0], out var result);
                 if (!isSuccess || !isSuccess2)
@@ -411,7 +407,6 @@ namespace Calculator2
                     return;
                 }
 
-                // DONE: SetMainTextのオーバーロードを定義して使ってみましょう。
                 this.SetMainText(this._results[0]);
             }
             catch (Exception ex)
@@ -466,7 +461,6 @@ namespace Calculator2
                 return;
             }
 
-            // DONE: Ctrl + K, D
             if (this._isCalculated)
             {
                 this.ClearText(false);
@@ -618,8 +612,6 @@ namespace Calculator2
             this.ClearMemory();
         }
 
-        // DONE: endregionにもテキストを入れておくと対になっているものを探す必要がなくなります。
-        // DONE: region, endregion の前後は改行をいれましょう。
         #endregion OnClickイベント
 
         #region Keydownイベント関連メソッド
@@ -686,20 +678,12 @@ namespace Calculator2
         /// <param name="key">Keyはキーボードで押されたキー情報です。</param>
         private void PressNumberKey(Key key)
         {
-
-            // DONE: こういう名前をつけると true と false のどちらが計算済みなのか迷います。
-            // そういうときは bool を表すにはいくつかパターンがあります。
-            // 変数名だと isCalculated が鉄板です。
-            // プロパティだと Calculated と過去形にするだけがよく使われます。
             if (this._isCalculated)
             {
                 this.ClearText(false);
             }
 
-            // DONE: switch よりも if の方が好みです。
-            // その理由としては、switch の場合は、スコープが広くなるので、TryParseでout var宣言ができなくなります。
-            // また、switchの方がインデントが深くなってしまいます。
-            // ただ、最近はパターンマッチにより短く記述できるようになったので、ケースバイケースになってきました。
+            // TODO: (int)key は一度他の変数に入れたほうが見やすくなるでしょう。var n とかに入れてみてください。
             if ((int)key >= 34 && (int)key <= 43)
             {
                 if (Decimal.TryParse(this.MainTextString + ((int)key - 34), out var result))
@@ -714,7 +698,6 @@ namespace Calculator2
                     this.SetMainText(result);
                 }
             }
-
         }
 
         /// <summary>

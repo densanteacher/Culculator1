@@ -18,7 +18,6 @@
         </Style>
     </Window.Resources>
 
-    <!-- DONE: Marginの設定を調べてみましょう。左上右下の順番です。全部同じ値のときは・・・？ -->
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -29,12 +28,11 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <!-- TODO: 固定値はなるべく書かない方がよいです。フォントサイズを変更する機能を入れた時に困ります。GridのHeightに設定できる値を調べてみましょう。 -->
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <!-- DONE: Grid.ColumnSpanの位置、x:Name になっていない -->
         <ListBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" x:Name="ResultsList" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionMode="Single"/>
-        <!-- DONE: このGridの使い方だとWindowを大きくしたときに MC, M+, M- の 周りの隙間が大きくなっておかしくなります。 -->
         <Button Grid.Row="1" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" VerticalAlignment="Top" Click="MemoryClearButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>
         <Button Grid.Row="1" Grid.Column="1" x:Name="MemoryPlusButton" Content="M+" VerticalAlignment="Top" Click="MemoryPlusButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>
         <Button Grid.Row="1" Grid.Column="2" x:Name="MemoryMinusButton" Content="M-" VerticalAlignment="Top" Click="MemoryMinusButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>

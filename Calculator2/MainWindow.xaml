@@ -12,7 +12,6 @@
         KeyDown="Window_KeyDown">
 
     <Window.Resources>
-        <!-- DONE: 色だとわかるような名前をつけましょう。  -->
         <SolidColorBrush x:Key="NumberButtonColor" Color="WhiteSmoke"/>
         <SolidColorBrush x:Key="MemoryButtonColor" Color="GhostWhite"/>
         <Style TargetType="Button">
@@ -41,7 +40,6 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <!-- DONE: Focusableはスタイルに入れたほうがよいでしょう。 -->
         <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOneButton" Content="1" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
         <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwoButton" Content="2" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
         <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThreeButton" Content="3" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
