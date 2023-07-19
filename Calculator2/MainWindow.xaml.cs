@@ -79,6 +79,9 @@ namespace Calculator2
         /// </summary>
         private void InputReverseSign()
         {
+            // TODO: -x のかわりに、Extensions.ReverseSign() を使ってください。
+            // その他の処理も Extensions に定義して使ってみましょう。
+            // Extensions にまとめておくことで、ライブラリ化や使い回しがしやすくなります。
             this.Calculate((x) => -x);
         }
 
