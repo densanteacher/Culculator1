@@ -29,11 +29,8 @@ namespace Calculator2
 
         private bool _isCalculated = false;
 
-        // TODO: 更にgetの記述も省略できます。
-        public string MainTextString
-        {
-            get => this.MainText.Text;
-        }
+        // DONE: 更にgetの記述も省略できます。
+        public string MainTextString => this.MainText.Text;
 
         public MainWindow()
         {
@@ -86,13 +83,13 @@ namespace Calculator2
             try
             {
                 var txt = this.MainTextString;
-                // TODO: ソースコードがだいぶスッキリしてきました。out var x と宣言してしまいましょう。
+                // DONE: ソースコードがだいぶスッキリしてきました。out var x と宣言してしまいましょう。
                 // x を使うなら var result も y にした方がわかりやすいでしょうか。
-                if (Decimal.TryParse(txt, out var mainValue))
+                if (Decimal.TryParse(txt, out var x))
                 {
-                    // TODO: this
-                    var result = ReverseSign(mainValue);
-                    this.SetMainText(result);
+                    // DONE: this
+                    var y = x.ReverseSign();
+                    this.SetMainText(y);
                 }
             }
             catch (Exception ex)
@@ -103,17 +100,8 @@ namespace Calculator2
 
         // INFO: メソッド化することで、処理に名前がつくので、何をしているかを読み解く必要がなくなり、ソースコードが読みやすくなる効果があります。
         // ただ、あまり細かくしすぎると書く方も、追う方も大変なのでバランスが大事です。
-        // TODO: decimal の拡張メソッドとして別ファイルに定義してみましょう。
-        // TODO: メソッドが単純で、メソッド名だけで何をするかが明確な場合は、paramやreturnsは書かなくてもよいでしょう。
-        /// <summary>
-        /// 入力された値の正負を反転します。
-        /// </summary>
-        /// <param name="value">正負を反転させたい値です。</param>
-        /// <returns></returns>
-        private decimal ReverseSign(decimal value)
-        {
-            return -value;
-        }
+        // DONE: decimal の拡張メソッドとして別ファイルに定義してみましょう。
+        // DONE: メソッドが単純で、メソッド名だけで何をするかが明確な場合は、paramやreturnsは書かなくてもよいでしょう。
 
         /// <summary>
         /// メインテキストの末尾一文字を消去します。
@@ -147,13 +135,13 @@ namespace Calculator2
             try
             {
                 var txt = this.MainTextString;
-                if (!(Decimal.TryParse(txt, out var mainValue)))
+                if (!(Decimal.TryParse(txt, out var x)))
                 {
                     return;
                 }
 
-                var result = mainValue * mainValue;
-                this.SetMainText(result);
+                var y = x * x;
+                this.SetMainText(y);
 
                 this._isCalculated = true;
             }
@@ -171,13 +159,13 @@ namespace Calculator2
             try
             {
                 var txt = this.MainTextString;
-                if (!(Double.TryParse(txt, out var mainValue)))
+                if (!(Double.TryParse(txt, out var x)))
                 {
                     return;
                 }
 
-                var result = Math.Sqrt(mainValue);
-                this.SetMainText((decimal)result);
+                var y = Math.Sqrt(x);
+                this.SetMainText((decimal)y);
 
                 this._isCalculated = true;
             }
@@ -195,12 +183,12 @@ namespace Calculator2
             try
             {
                 var txt = this.MainTextString;
-                if (!(Decimal.TryParse(txt, out var mainValue)))
+                if (!(Decimal.TryParse(txt, out var x)))
                 {
                     return;
                 }
-                var result = 1 / mainValue;
-                this.SetMainText(result);
+                var y = 1 / x;
+                this.SetMainText(y);
 
                 this._isCalculated = true;
             }
@@ -218,13 +206,13 @@ namespace Calculator2
             try
             {
                 var txt = this.MainTextString;
-                if (!(Decimal.TryParse(txt, out var mainValue)))
+                if (!(Decimal.TryParse(txt, out var x)))
                 {
                     return;
                 }
 
-                var result = mainValue / 100;
-                this.SetMainText(result);
+                var y = x / 100;
+                this.SetMainText(y);
 
                 this._isCalculated = true;
             }
@@ -349,15 +337,15 @@ namespace Calculator2
 
                 var txt = this.MainTextString;
 
-                var isSuccess = Decimal.TryParse(txt, out var mainValue);
-                var isSuccess2 = Decimal.TryParse(this._results[0], out var result);
+                var isSuccess = Decimal.TryParse(txt, out var x);
+                var isSuccess2 = Decimal.TryParse(this._results[0], out var y);
                 if (!isSuccess || !isSuccess2)
                 {
                     return;
                 }
 
-                result -= mainValue;
-                this._results[0] = result.ToString();
+                y -= x;
+                this._results[0] = y.ToString();
 
             }
             catch (Exception ex)
@@ -379,15 +367,15 @@ namespace Calculator2
                 }
 
                 var txt = this.MainTextString;
-                var isSuccess = Decimal.TryParse(txt, out var mainValue);
-                var isSuccess2 = Decimal.TryParse(this._results[0], out var result);
+                var isSuccess = Decimal.TryParse(txt, out var x);
+                var isSuccess2 = Decimal.TryParse(this._results[0], out var y);
                 if (!isSuccess || !isSuccess2)
                 {
                     return;
                 }
 
-                result += mainValue;
-                this._results[0] = result.ToString();
+                y += x;
+                this._results[0] = y.ToString();
             }
             catch (Exception ex)
             {
@@ -423,33 +411,50 @@ namespace Calculator2
             this._results.Clear();
         }
 
+        /// <summary>
+        /// _resultsリストに格納されている値をresult.txtに書き込みます。
+        /// </summary>
+        /// <returns>成功したらtrue,失敗したらFalseを返します。</returns>
+        private bool WriteResultFile()
+        {
+            try
+            {
+                using var writer = new StreamWriter(Constants.Path, false);
+                foreach (var item in this._results)
+                {
+                    writer.WriteLine(item);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+                return false;
+            }
+        }
+
         #endregion　Memory関連イベント
 
 
         #region OnClickイベント
 
         /// <summary>
-        ///　_resultsリストに格納されている値をresult.txtに書き込みます。
+        ///　Outputボタンを押したとき、resultsリストに格納されている値をresult.txtに出力します。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
-            try
+            var isSusscess = this.WriteResultFile();
+            if (isSusscess)
             {
-                using var writer = new StreamWriter(Constants.Path, false);
-                {
-                    foreach (var item in this._results)
-                    {
-                        writer.WriteLine(item);
-                    }
-                }
-
                 MessageBox.Show(this, "記録した数値をテキストファイルに出力しました。", "出力完了");
             }
-            catch (Exception ex)
+            else
             {
-                this.ShowErrorMessage(ex);
+                MessageBox.Show(this, "出力に失敗しました。", "出力失敗");
             }
         }
+
+
 
         /// <summary>
         /// 押したボタンの数値をメインテキストに追加します。
@@ -683,17 +688,18 @@ namespace Calculator2
                 this.ClearText(false);
             }
 
-            // TODO: (int)key は一度他の変数に入れたほうが見やすくなるでしょう。var n とかに入れてみてください。
-            if ((int)key >= 34 && (int)key <= 43)
+            // DONE: (int)key は一度他の変数に入れたほうが見やすくなるでしょう。var n とかに入れてみてください。
+            var n = (int)key;
+            if (n >= 34 && n <= 43)
             {
-                if (Decimal.TryParse(this.MainTextString + ((int)key - 34), out var result))
+                if (Decimal.TryParse(this.MainTextString + (n - 34), out var result))
                 {
                     this.SetMainText(result);
                 }
             }
-            else if ((int)key >= 74 && (int)key <= 83)
+            else if (n >= 74 && n <= 83)
             {
-                if (Decimal.TryParse(this.MainTextString + ((int)key - 74), out var result))
+                if (Decimal.TryParse(this.MainTextString + (n - 74), out var result))
                 {
                     this.SetMainText(result);
                 }
