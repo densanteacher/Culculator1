@@ -40,9 +40,6 @@ namespace Calculator2
             this.RefreshResultList();
         }
 
-        // DONE: この場合はListBoxの表示を更新したいというのが本意だと思いますので、ResetよりRefreshという単語の方がよいでしょう。
-        // 更新という意味の英語でUpdateというのもありますが、こちらはもっと意味が広く、DBでも使われるため、画面を更新する系はRefreshを使う事が多いです。
-        // あと ListBox がひとつしかないので迷いませんが、RefreshResultList としておいたほうが具体的で、ListBox を探しに行く手間が減ります。
         /// <summary>
         /// リストをクリアした後、<see cref="ResultsWindow._results"/> 内の要素を追加し表示します。
         /// </summary>
@@ -99,7 +96,6 @@ namespace Calculator2
 
                 var selectedItem = this.ResultList.SelectedItem.ToString() ?? "";
 
-                // DONE: index は TryParse の下へ持っていったほうがよいでしょう。
                 if (!(Decimal.TryParse(selectedItem, out var resultListValue)))
                 {
                     return;
@@ -150,13 +146,10 @@ namespace Calculator2
 
         }
 
-        // DONE: seealso は summary に入れ子にしないほうがよいです。
-        // https://stackoverflow.com/questions/3328486/what-is-the-meaning-of-xml-tags-see-and-seealso-in-c-sharp-in-visual-studio
         /// <summary>
         /// MCボタンを押したとき、リストボックスで選択している値を削除します。
         /// </summary>
         /// <seealso cref="ResultsWindow.ClearMemory"/>
-        /// 
         private void MemoryClearButton_OnClick(object sender, RoutedEventArgs e)
         {
             this.ClearMemory();

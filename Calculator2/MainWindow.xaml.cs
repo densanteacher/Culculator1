@@ -29,7 +29,6 @@ namespace Calculator2
 
         private bool _isCalculated = false;
 
-        // DONE: 更にgetの記述も省略できます。
         public string MainTextString => this.MainText.Text;
 
         public MainWindow()
@@ -80,15 +79,31 @@ namespace Calculator2
         /// </summary>
         private void InputReverseSign()
         {
+            this.Calculate((x) => -x);
+        }
+
+        // TODO: ちょっと高度なテクニックになりますが、delegate で関数(ラムダ式)を引数に取るメソッドを作成できます。
+        // これを利用すると、記述量を圧倒的に減らすことが可能です。
+        // delegate やラムダ式の動きを把握してみましょう。
+        /// <summary>
+        /// 計算した結果を <see cref="MainText"/> に設定します。
+        /// 使用する計算式は引数で渡します。
+        /// </summary>
+        /// <param name="func">計算で使用するメソッドを渡せます。<br/>メソッドのシグネチャは <c>decimal Method(decimal x) { ... }</c> となります。</param>
+        /// <example>
+        /// Usage:
+        /// <code>
+        /// Calculate((x) => x * x);
+        /// </code>
+        /// </example>
+        private void Calculate(Func<decimal, decimal> func)
+        {
             try
             {
                 var txt = this.MainTextString;
-                // DONE: ソースコードがだいぶスッキリしてきました。out var x と宣言してしまいましょう。
-                // x を使うなら var result も y にした方がわかりやすいでしょうか。
                 if (Decimal.TryParse(txt, out var x))
                 {
-                    // DONE: this
-                    var y = x.ReverseSign();
+                    var y = func(x);
                     this.SetMainText(y);
                 }
             }
@@ -97,11 +112,6 @@ namespace Calculator2
                 this.ShowErrorMessage(ex);
             }
         }
-
-        // INFO: メソッド化することで、処理に名前がつくので、何をしているかを読み解く必要がなくなり、ソースコードが読みやすくなる効果があります。
-        // ただ、あまり細かくしすぎると書く方も、追う方も大変なのでバランスが大事です。
-        // DONE: decimal の拡張メソッドとして別ファイルに定義してみましょう。
-        // DONE: メソッドが単純で、メソッド名だけで何をするかが明確な場合は、paramやreturnsは書かなくてもよいでしょう。
 
         /// <summary>
         /// メインテキストの末尾一文字を消去します。
@@ -132,23 +142,8 @@ namespace Calculator2
         /// </summary>
         private void InputSquareOfX()
         {
-            try
-            {
-                var txt = this.MainTextString;
-                if (!(Decimal.TryParse(txt, out var x)))
-                {
-                    return;
-                }
-
-                var y = x * x;
-                this.SetMainText(y);
-
-                this._isCalculated = true;
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
+            // TODO: 他に適用できる箇所で使用してみましょう。
+            this.Calculate((x) => x * x);
         }
 
         /// <summary>
@@ -279,7 +274,6 @@ namespace Calculator2
                 }
 
                 this.SubText.Text = "";
-                // DONE: this
                 this._isCalculated = true;
             }
             catch (Exception ex)
@@ -305,6 +299,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 var mw = new ResultsWindow(this._results, result);
                 mw.Owner = this;
                 mw.ShowDialog();
@@ -411,6 +406,9 @@ namespace Calculator2
             this._results.Clear();
         }
 
+        // TODO: コメントの _results は see を使いましょう。
+        // TODO: コメントの result.txt は Constants ですので、see で参照しましょう。
+        // もしくはこのメソッドの引数でファイルパスを受け取れるようにしましょう。
         /// <summary>
         /// _resultsリストに格納されている値をresult.txtに書き込みます。
         /// </summary>
@@ -443,6 +441,7 @@ namespace Calculator2
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
+            // TODO: タイポ
             var isSusscess = this.WriteResultFile();
             if (isSusscess)
             {
@@ -688,9 +687,9 @@ namespace Calculator2
                 this.ClearText(false);
             }
 
-            // DONE: (int)key は一度他の変数に入れたほうが見やすくなるでしょう。var n とかに入れてみてください。
             var n = (int)key;
-            if (n >= 34 && n <= 43)
+            // DONE: パターンマッチングは is式 で使えるので if でも使えました・・・。
+            if (n is >= 34 and <= 43)
             {
                 if (Decimal.TryParse(this.MainTextString + (n - 34), out var result))
                 {
