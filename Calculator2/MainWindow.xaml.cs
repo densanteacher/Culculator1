@@ -82,9 +82,6 @@ namespace Calculator2
             this.Calculate((x) => -x);
         }
 
-        // DONE: ちょっと高度なテクニックになりますが、delegate で関数(ラムダ式)を引数に取るメソッドを作成できます。
-        // これを利用すると、記述量を圧倒的に減らすことが可能です。
-        // delegate やラムダ式の動きを把握してみましょう。
         /// <summary>
         /// 計算した結果を <see cref="MainText"/> に設定します。
         /// 使用する計算式は引数で渡します。
@@ -106,6 +103,7 @@ namespace Calculator2
                     var y = func(x);
                     this.SetMainText(y.ToString());
                 }
+                // TODO: |= true は必ず true になります。
                 this._isCalculated |= true;
             }
             catch (Exception ex)
@@ -143,7 +141,8 @@ namespace Calculator2
         /// </summary>
         private void InputSquareOfX()
         {
-            // DONE: 他に適用できる箇所で使用してみましょう。
+            // TODO: メソッドのクラス内での位置を整理してみましょう。
+            // このメソッドを使っているメソッド同士は近くに配置した方がよいでしょう。
             this.Calculate((x) => x * x);
         }
 
@@ -284,6 +283,8 @@ namespace Calculator2
                     return;
                 }
 
+                // TODO: ここ以外 +/- で同じ内容なので、delegate を使ったメソッドに分離できそうです。
+                // もしかして、ResultsWindow側のInputMemoryMinusも似たような処理でしょうか？
                 y -= x;
                 this._results[0] = y.ToString();
 
@@ -351,17 +352,17 @@ namespace Calculator2
             this._results.Clear();
         }
 
-        // DONE: コメントの _results は see を使いましょう。
-        // DONE: コメントの result.txt は Constants ですので、see で参照しましょう。
-        // もしくはこのメソッドの引数でファイルパスを受け取れるようにしましょう。
+        // DONE: see を修正しました。基本的には <see>xxxx</see> とはせずに、<see /> で使います。
         /// <summary>
-        /// <see cref="MainWindow._results">_resultsリスト</see>に格納されている値を<see cref="Constants"/>result.txt</see>に書き込みます。
+        /// <see cref="MainWindow._results"/> に格納されている値を <see cref="Constants.Path"/> に書き込みます。
         /// </summary>
-        /// <returns>成功したらtrue,失敗したらFalseを返します。</returns>
+        /// <returns>成功したら true, 失敗したら false を返します。</returns>
         private bool WriteResultFile()
         {
             try
             {
+                // TODO: 結合度という考え方があります。なるべく疎となるように作るのがよいとされます。
+                // path と results はメソッド引数として渡せるようにしてみましょう。
                 using var writer = new StreamWriter(Constants.Path, false);
                 foreach (var item in this._results)
                 {
@@ -381,12 +382,12 @@ namespace Calculator2
 
         #region OnClickイベント
 
+        // TODO: result.txt
         /// <summary>
-        ///　Outputボタンを押したとき、<see cref="MainWindow._results">_resultsリスト</see>に格納されている値をresult.txtに出力します。
+        ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値をresult.txtに出力します。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
-            // DONE: タイポ
             var isSuccess = this.WriteResultFile();
             if (isSuccess)
             {
@@ -397,8 +398,6 @@ namespace Calculator2
                 MessageBox.Show(this, "出力に失敗しました。", "出力失敗");
             }
         }
-
-
 
         /// <summary>
         /// 押したボタンの数値をメインテキストに追加します。
@@ -633,7 +632,6 @@ namespace Calculator2
             }
 
             var n = (int)key;
-            // DONE: パターンマッチングは is式 で使えるので if でも使えました・・・。
             if (n is >= 34 and <= 43)
             {
                 if (Decimal.TryParse(this.MainTextString + (n - 34), out var result))

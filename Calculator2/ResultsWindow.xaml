@@ -32,11 +32,9 @@
         </Grid.RowDefinitions>
 
         <ListBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" x:Name="ResultList" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionMode="Single"/>
-        <!-- DONE: VerticalAlignmentは不要になった -->
         <Button Grid.Row="1" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" Click="MemoryClearButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>
         <Button Grid.Row="1" Grid.Column="1" x:Name="MemoryPlusButton" Content="M+" Click="MemoryPlusButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>
         <Button Grid.Row="1" Grid.Column="2" x:Name="MemoryMinusButton" Content="M-" Click="MemoryMinusButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>
-        <!-- DONE: Columnの値 -->
         <Button Grid.Row="1" Grid.Column="4" x:Name="OkButton" Content="OK" VerticalAlignment="Bottom" Click="OkButton_OnClick"/>
     </Grid>
 </Window>

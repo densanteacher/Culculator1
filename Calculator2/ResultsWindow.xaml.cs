@@ -45,7 +45,6 @@ namespace Calculator2
         /// </summary>
         public void RefreshResultList()
         {
-            // DONE: Result"s"List だと配列が複数あるように受け取れます。単数表現にしましょう。
             this.ResultList.Items.Clear();
 
             foreach (var item in this._results)
