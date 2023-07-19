@@ -74,16 +74,6 @@ namespace Calculator2
             this.MainText.Text = resultString;
         }
 
-        /// <summary>
-        /// メインテキストの数値の正負を反転します。
-        /// </summary>
-        private void InputReverseSign()
-        {
-            // TODO: -x のかわりに、Extensions.ReverseSign() を使ってください。
-            // その他の処理も Extensions に定義して使ってみましょう。
-            // Extensions にまとめておくことで、ライブラリ化や使い回しがしやすくなります。
-            this.Calculate((x) => -x);
-        }
 
         /// <summary>
         /// 計算した結果を <see cref="MainText"/> に設定します。
@@ -112,75 +102,6 @@ namespace Calculator2
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
-            }
-        }
-
-        /// <summary>
-        /// メインテキストの末尾一文字を消去します。
-        /// </summary>
-        private void InputBackspace()
-        {
-            try
-            {
-                var txt = this.MainTextString;
-                var bs = txt.Remove(txt.Length - 1);
-                if (bs.Length == 0 || bs == "-")
-                {
-                    this.ClearText(false);
-                }
-                else
-                {
-                    this.SetMainText(bs);
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
-        }
-
-        /// <summary>
-        /// メインテキストの数値の2乗を求めます。
-        /// </summary>
-        private void InputSquareOfX()
-        {
-            // TODO: メソッドのクラス内での位置を整理してみましょう。
-            // このメソッドを使っているメソッド同士は近くに配置した方がよいでしょう。
-            this.Calculate((x) => x * x);
-        }
-
-        /// <summary>
-        /// メインテキストの数値の平方根を求めます。
-        /// </summary>
-        private void InputSquareRootOfX()
-        {
-             this.Calculate((x) => Math.Sqrt((double)x));
-        }
-
-        /// <summary>
-        /// メインテキストの数値をxとし、1/xを求めます。
-        /// </summary>
-        private void InputDivideByX()
-        {
-            this.Calculate((x) => 1 / x);
-        }
-
-        /// <summary>
-        /// メインテキストの数値の百分率パーセンテージを求めます。
-        /// </summary>
-        private void InputPercentage()
-        {
-            this.Calculate((x) => x / 100);
-        }
-
-        /// <summary>
-        /// メインテキストの数値に小数点を追加します。
-        /// </summary>
-        private void InputDecimalMark()
-        {
-            if (!this.MainTextString.Contains("."))
-            {
-                this.MainText.Text += ".";
             }
         }
 
@@ -229,6 +150,91 @@ namespace Calculator2
             }
         }
 
+        /// <summary>
+        /// メインテキストの数値の正負を反転します。
+        /// </summary>
+        private void InputReverseSign()
+        {
+            // TODO: -x のかわりに、Extensions.ReverseSign() を使ってください。
+            // その他の処理も Extensions に定義して使ってみましょう。
+            // Extensions にまとめておくことで、ライブラリ化や使い回しがしやすくなります。
+            this.Calculate((x) => x.ReverseSign());
+        }
+
+        /// <summary>
+        /// メインテキストの数値の2乗を求めます。
+        /// </summary>
+        private void InputSquareOfX()
+        {
+            // TODO: メソッドのクラス内での位置を整理してみましょう。
+            // このメソッドを使っているメソッド同士は近くに配置した方がよいでしょう。
+            this.Calculate((x) => x * x);
+        }
+
+        /// <summary>
+        /// メインテキストの数値の平方根を求めます。
+        /// </summary>
+        private void InputSquareRootOfX()
+        {
+            this.Calculate((x) => Math.Sqrt((double)x));
+        }
+
+        /// <summary>
+        /// メインテキストの数値をxとし、1/xを求めます。
+        /// </summary>
+        private void InputDivideByX()
+        {
+            this.Calculate((x) => 1 / x);
+        }
+
+        /// <summary>
+        /// メインテキストの数値の百分率パーセンテージを求めます。
+        /// </summary>
+        private void InputPercentage()
+        {
+            this.Calculate((x) => x / 100);
+        }
+
+        /// <summary>
+        /// メインテキストの数値に小数点を追加します。
+        /// </summary>
+        private void InputDecimalMark()
+        {
+            if (!this.MainTextString.Contains("."))
+            {
+                this.MainText.Text += ".";
+            }
+        }
+
+        /// <summary>
+        /// メインテキストの末尾一文字を消去します。
+        /// </summary>
+        private void InputBackspace()
+        {
+            try
+            {
+                var txt = this.MainTextString;
+                var bs = txt.Remove(txt.Length - 1);
+                if (bs.Length == 0 || bs == "-")
+                {
+                    this.ClearText(false);
+                }
+                else
+                {
+                    this.SetMainText(bs);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+            }
+        }
+
+
+
+        
+
+
         #endregion　メインテキスト処理関連メソッド
 
 
@@ -236,7 +242,7 @@ namespace Calculator2
 
         /// <summary>
         /// ResultsWindowを表示します。
-        /// ResultsWindowには、現在の<see cref="MainWindow._results">_resultsリスト</see>リストの一覧が表示されます。
+        /// ResultsWindowには、現在の<see cref="_results"/>リストの一覧が表示されます。
         /// </summary>
         private void OpenResultsWindow()
         {
@@ -258,7 +264,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="MainWindow._results">_resultsリスト</see>にメインテキストの数値を記録します。
+        /// <see cref="_results"/>にメインテキストの数値を記録します。
         /// </summary>
         private void SaveMemory()
         {
@@ -266,69 +272,60 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="MainWindow._results">_resultsリスト</see>に最初に追加された数値から、現在のメインテキストの数値を引きます。
+        /// 計算した結果を<see cref="_results"/>に格納します。
+        /// /// 使用する計算式は引数で渡します。
+        /// </summary>
+        /// <param name="func">計算で使用するメソッドを渡せます。<br/>メソッドのシグネチャは <c>decimal Method(decimal x, decimal y) { ... }</c> となります。</param>
+        /// <example>
+        /// Usage:
+        /// <code>
+        /// Calculate((x, y) => y - x);
+        /// </code>
+        /// </example>
+        private void CalculateMemory(Func<decimal, decimal, decimal> func)
+        {
+            try
+            {
+                if (this._results.Count == 0)
+                {
+                    return;
+                }
+
+                var txt = this.MainTextString;
+
+                var isSuccess = Decimal.TryParse(txt, out var x);
+                var isSuccess2 = Decimal.TryParse(this._results[0], out var y);
+                if (!isSuccess || !isSuccess2)
+                {
+                    return;
+                }
+                this._results[0] = func(x, y).ToString();
+            }
+            catch (Exception ex)
+            {
+                this.ShowErrorMessage(ex);
+            }
+        }
+
+        /// <summary>
+        /// <see cref="_results"/>に最初に追加された数値から、現在のメインテキストの数値を引きます。
         /// </summary>
         private void InputMemoryMinus()
         {
-            try
-            {
-                if (this._results.Count == 0)
-                {
-                    return;
-                }
-
-                var txt = this.MainTextString;
-
-                var isSuccess = Decimal.TryParse(txt, out var x);
-                var isSuccess2 = Decimal.TryParse(this._results[0], out var y);
-                if (!isSuccess || !isSuccess2)
-                {
-                    return;
-                }
-
-                // TODO: ここ以外 +/- で同じ内容なので、delegate を使ったメソッドに分離できそうです。
-                // もしかして、ResultsWindow側のInputMemoryMinusも似たような処理でしょうか？
-                y -= x;
-                this._results[0] = y.ToString();
-
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
+            this.CalculateMemory((x,y) => y - x);
         }
 
         /// <summary>
-        /// <see cref="MainWindow._results">_resultsリスト</see>に最初に追加された数値に、現在のメインテキストの数値を足します。
+        /// <see cref="_results"/>に最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
         private void InputMemoryPlus()
         {
-            try
-            {
-                if (this._results.Count == 0)
-                {
-                    return;
-                }
+            this.CalculateMemory((x,y) => y + x);
 
-                var txt = this.MainTextString;
-                var isSuccess = Decimal.TryParse(txt, out var x);
-                var isSuccess2 = Decimal.TryParse(this._results[0], out var y);
-                if (!isSuccess || !isSuccess2)
-                {
-                    return;
-                }
-
-                y += x;
-                this._results[0] = y.ToString();
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
         }
 
         /// <summary>
-        /// <see cref="MainWindow._results">_resultsリスト</see>に最初に追加された数値を、メインテキストに再表示します。
+        /// <see cref="_results"/>に最初に追加された数値を、メインテキストに再表示します。
         /// </summary>
         private void RecallMemory()
         {
@@ -348,7 +345,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="MainWindow._results">_resultsリスト</see>をクリアします。
+        /// <see cref="_results"/>をクリアします。
         /// </summary>
         private void ClearMemory()
         {
@@ -357,17 +354,17 @@ namespace Calculator2
 
         // DONE: see を修正しました。基本的には <see>xxxx</see> とはせずに、<see /> で使います。
         /// <summary>
-        /// <see cref="MainWindow._results"/> に格納されている値を <see cref="Constants.Path"/> に書き込みます。
+        /// <see cref="_results"/> に格納されている値を <see cref="Constants.Path"/> に書き込みます。
         /// </summary>
         /// <returns>成功したら true, 失敗したら false を返します。</returns>
-        private bool WriteResultFile()
+        private bool WriteResultFile(string path, List<string> items)
         {
             try
             {
-                // TODO: 結合度という考え方があります。なるべく疎となるように作るのがよいとされます。
+                // DONE: 結合度という考え方があります。なるべく疎となるように作るのがよいとされます。
                 // path と results はメソッド引数として渡せるようにしてみましょう。
-                using var writer = new StreamWriter(Constants.Path, false);
-                foreach (var item in this._results)
+                using var writer = new StreamWriter(path, false);
+                foreach (var item in items)
                 {
                     writer.WriteLine(item);
                 }
@@ -391,7 +388,7 @@ namespace Calculator2
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
-            var isSuccess = this.WriteResultFile();
+            var isSuccess = this.WriteResultFile(Constants.Path, _results);
             if (isSuccess)
             {
                 MessageBox.Show(this, "記録した数値をテキストファイルに出力しました。", "出力完了");

@@ -81,10 +81,7 @@ namespace Calculator2
             }
         }
 
-        /// <summary>
-        /// リストボックスで選択されている値に、メインウィンドウのメインテキストに表示されている値を足します。
-        /// </summary>
-        private void InputMemoryPlus()
+        private void CalculateMemory(Func<decimal, decimal> func)
         {
             try
             {
@@ -101,8 +98,8 @@ namespace Calculator2
                 }
 
                 var index = this.ResultList.SelectedIndex;
-                var plusResult = resultListValue + this._mainTextValue;
-                this._results[index] = plusResult.ToString();
+                var result = func(resultListValue);
+                this._results[index] = result.ToString();
 
                 this.RefreshResultList();
                 this.ResultList.SelectedIndex = index;
@@ -114,34 +111,19 @@ namespace Calculator2
         }
 
         /// <summary>
+        /// リストボックスで選択されている値に、メインウィンドウのメインテキストに表示されている値を足します。
+        /// </summary>
+        private void InputMemoryPlus()
+        {
+            this.CalculateMemory(x => x + this._mainTextValue);
+        }
+
+        /// <summary>
         /// リストボックスで選択されている値から、メインウィンドウのメインテキストに表示されている値を引きます。
         /// </summary>
         private void InputMemoryMinus()
         {
-            try
-            {
-                if (this._results.Count == 0)
-                {
-                    return;
-                }
-
-                var selectedItem = this.ResultList.SelectedItem.ToString() ?? "";
-                if(!(Decimal.TryParse(selectedItem, out var resultsListValue)))
-                {
-                    return;
-                }
-
-                var index = this.ResultList.SelectedIndex;
-                var minusResult = resultsListValue - this._mainTextValue;
-                this._results[index] = minusResult.ToString();
-
-                this.RefreshResultList();
-                this.ResultList.SelectedIndex = index;
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
+            this.CalculateMemory(x => x - this._mainTextValue);
 
         }
 
@@ -191,19 +173,19 @@ namespace Calculator2
             switch (ex)
             {
                 case DivideByZeroException:
-                    MessageBox.Show(this,"0で除算することはできません。実行を中止します。");
+                    MessageBox.Show(this, "0で除算することはできません。実行を中止します。");
                     break;
                 case OverflowException:
-                    MessageBox.Show(this,"オーバーフローが発生しました。実行を中止します。");
+                    MessageBox.Show(this, "オーバーフローが発生しました。実行を中止します。");
                     break;
                 case ArithmeticException:
-                    MessageBox.Show(this,"計算中にエラーが発生しました。実行を中止します。");
+                    MessageBox.Show(this, "計算中にエラーが発生しました。実行を中止します。");
                     break;
                 case NullReferenceException:
-                    MessageBox.Show(this,"参照がNullです。実行を中止します。");
+                    MessageBox.Show(this, "参照がNullです。実行を中止します。");
                     break;
                 default:
-                    MessageBox.Show(this,"予期せぬエラーが発生しました。実行を中止します。");
+                    MessageBox.Show(this, "予期せぬエラーが発生しました。実行を中止します。");
                     break;
             }
         }

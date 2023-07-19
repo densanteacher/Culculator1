@@ -16,5 +16,10 @@ namespace Calculator2
         {
             return -a;
         }
+
+        public static decimal Square(this decimal a) 
+        { 
+            return a * a; 
+        }
     }
 }
