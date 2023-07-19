@@ -96,7 +96,10 @@ namespace Calculator2
                     var y = func(x);
                     this.SetMainText(y.ToString());
                 }
-                // TODO: |= true は必ず true になります。
+                // DONE: |= true は必ず true になります。
+
+                // 調べてみたところ、論理 OR 演算子といって a | b ならaかbどちらかがtrueならばtrueを返す演算子です。
+                // この場合、右辺をtrueとしているのでisCalculatedの値に関わらずtrueになる、ということですね。
                 this._isCalculated |= true;
             }
             catch (Exception ex)
@@ -166,9 +169,9 @@ namespace Calculator2
         /// </summary>
         private void InputSquareOfX()
         {
-            // TODO: メソッドのクラス内での位置を整理してみましょう。
+            // DONE: メソッドのクラス内での位置を整理してみましょう。
             // このメソッドを使っているメソッド同士は近くに配置した方がよいでしょう。
-            this.Calculate((x) => x * x);
+            this.Calculate((x) => x.Square());
         }
 
         /// <summary>
@@ -184,7 +187,7 @@ namespace Calculator2
         /// </summary>
         private void InputDivideByX()
         {
-            this.Calculate((x) => 1 / x);
+            this.Calculate((x) => x.DivideBy());
         }
 
         /// <summary>
@@ -192,7 +195,7 @@ namespace Calculator2
         /// </summary>
         private void InputPercentage()
         {
-            this.Calculate((x) => x / 100);
+            this.Calculate((x) => x.CalculatePercentage());
         }
 
         /// <summary>
@@ -382,7 +385,10 @@ namespace Calculator2
 
         #region OnClickイベント
 
-        // TODO: result.txt
+        // DONE?: result.txt
+
+        // Constants.Pathを変更し、result.txt をドキュメントフォルダに出力するよう変更しました。
+
         /// <summary>
         ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値をresult.txtに出力します。
         /// </summary>

@@ -11,15 +11,33 @@ namespace Calculator2
         /// <summary>
         /// 正負を反転させます。
         /// </summary>
-        /// <param name="a">正負を反転させたい数値です。</param>
         public static decimal ReverseSign(this decimal a)
         {
             return -a;
         }
 
+        /// <summary>
+        /// aの二乗を求めます。
+        /// </summary>
         public static decimal Square(this decimal a) 
         { 
             return a * a; 
+        }
+
+        /// <summary>
+        /// 1/aを求めます。
+        /// </summary>
+        public static decimal DivideBy(this decimal a)
+        {
+            return 1 / a;
+        }
+
+        /// <summary>
+        /// aの百分率パーセンテージを求めます。
+        /// </summary>
+        public static decimal CalculatePercentage(this decimal a)
+        {
+            return a / 100;
         }
     }
 }
