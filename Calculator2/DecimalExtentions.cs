@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Calculator2
 {
-    // TODO: public
+    // DONE: public
     // internal とかありますが、基本的には public か private でよいです。
     // internal とか protected とかしっかり書くと、最適化が聞きやすくなったりするメリットがあります。
-    // TODO: なんのExtensionsか名前をつけた方が、それらしくなります。
-    // TODO: タイポ
-    public static class DecimalExtentions
+    // DONE: なんのExtensionsか名前をつけた方が、それらしくなります。
+    // DONE: タイポ
+    public static class DecimalExtensions
     {
         // DONE: コメント
         /// <summary>

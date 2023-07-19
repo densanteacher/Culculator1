@@ -82,7 +82,7 @@ namespace Calculator2
             this.Calculate((x) => -x);
         }
 
-        // TODO: ちょっと高度なテクニックになりますが、delegate で関数(ラムダ式)を引数に取るメソッドを作成できます。
+        // DONE: ちょっと高度なテクニックになりますが、delegate で関数(ラムダ式)を引数に取るメソッドを作成できます。
         // これを利用すると、記述量を圧倒的に減らすことが可能です。
         // delegate やラムダ式の動きを把握してみましょう。
         /// <summary>
@@ -96,7 +96,7 @@ namespace Calculator2
         /// Calculate((x) => x * x);
         /// </code>
         /// </example>
-        private void Calculate(Func<decimal, decimal> func)
+        private void Calculate<TResult>(Func<decimal, TResult> func)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace Calculator2
                 if (Decimal.TryParse(txt, out var x))
                 {
                     var y = func(x);
-                    this.SetMainText(y);
+                    this.SetMainText(y.ToString());
                 }
                 this._isCalculated |= true;
             }
@@ -152,22 +152,7 @@ namespace Calculator2
         /// </summary>
         private void InputSquareRootOfX()
         {
-             try
-             {
-                 var txt = this.MainTextString;
-                 if (!(Double.TryParse(txt, out var x)))
-                 {
-                     return;
-                 }
-
-                 var y = Math.Sqrt(x);
-                this.Calculate((x) => (decimal)y);
-
-             }
-             catch (Exception ex)
-             {
-                 this.ShowErrorMessage(ex);
-             }
+             this.Calculate((x) => Math.Sqrt((double)x));
         }
 
         /// <summary>
@@ -249,7 +234,7 @@ namespace Calculator2
 
         /// <summary>
         /// ResultsWindowを表示します。
-        /// ResultsWindowには、現在の_resultsリストの一覧が表示されます。
+        /// ResultsWindowには、現在の<see cref="MainWindow._results">_resultsリスト</see>リストの一覧が表示されます。
         /// </summary>
         private void OpenResultsWindow()
         {
@@ -271,7 +256,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// _resultsリストにメインテキストの数値を記録します。
+        /// <see cref="MainWindow._results">_resultsリスト</see>にメインテキストの数値を記録します。
         /// </summary>
         private void SaveMemory()
         {
@@ -279,7 +264,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// _resultsリストに最初に追加された数値から、現在のメインテキストの数値を引きます。
+        /// <see cref="MainWindow._results">_resultsリスト</see>に最初に追加された数値から、現在のメインテキストの数値を引きます。
         /// </summary>
         private void InputMemoryMinus()
         {
@@ -310,7 +295,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// _resultsリストに最初に追加された数値に、現在のメインテキストの数値を足します。
+        /// <see cref="MainWindow._results">_resultsリスト</see>に最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
         private void InputMemoryPlus()
         {
@@ -339,7 +324,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// _resultsリストに最初に追加された数値を、メインテキストに再表示します。
+        /// <see cref="MainWindow._results">_resultsリスト</see>に最初に追加された数値を、メインテキストに再表示します。
         /// </summary>
         private void RecallMemory()
         {
@@ -359,18 +344,18 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// _resultsリストをクリアします。
+        /// <see cref="MainWindow._results">_resultsリスト</see>をクリアします。
         /// </summary>
         private void ClearMemory()
         {
             this._results.Clear();
         }
 
-        // TODO: コメントの _results は see を使いましょう。
-        // TODO: コメントの result.txt は Constants ですので、see で参照しましょう。
+        // DONE: コメントの _results は see を使いましょう。
+        // DONE: コメントの result.txt は Constants ですので、see で参照しましょう。
         // もしくはこのメソッドの引数でファイルパスを受け取れるようにしましょう。
         /// <summary>
-        /// <see cref="this._results">_resultsリスト</see>に格納されている値を<see cref="Constants"/>result.txt</see>に書き込みます。
+        /// <see cref="MainWindow._results">_resultsリスト</see>に格納されている値を<see cref="Constants"/>result.txt</see>に書き込みます。
         /// </summary>
         /// <returns>成功したらtrue,失敗したらFalseを返します。</returns>
         private bool WriteResultFile()
@@ -397,7 +382,7 @@ namespace Calculator2
         #region OnClickイベント
 
         /// <summary>
-        ///　Outputボタンを押したとき、resultsリストに格納されている値をresult.txtに出力します。
+        ///　Outputボタンを押したとき、<see cref="MainWindow._results">_resultsリスト</see>に格納されている値をresult.txtに出力します。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
@@ -656,7 +641,7 @@ namespace Calculator2
                     this.SetMainText(result);
                 }
             }
-            else if (n >= 74 && n <= 83)
+            else if (n is >= 74 and <= 83)
             {
                 if (Decimal.TryParse(this.MainTextString + (n - 74), out var result))
                 {
