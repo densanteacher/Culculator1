@@ -11,9 +11,14 @@ namespace Calculator2
     // internal とか protected とかしっかり書くと、最適化が聞きやすくなったりするメリットがあります。
     // TODO: なんのExtensionsか名前をつけた方が、それらしくなります。
     // TODO: タイポ
-    static class Extentions
+    public static class DecimalExtentions
     {
-        // TODO: コメント
+        // DONE: コメント
+        /// <summary>
+        /// 正負を反転させます。
+        /// </summary>
+        /// <param name="a">正負を反転させたい数値です。</param>
+        /// <returns></returns>
         public static decimal ReverseSign(this decimal a)
         {
             return -a;

@@ -37,6 +37,6 @@
         <Button Grid.Row="1" Grid.Column="1" x:Name="MemoryPlusButton" Content="M+" VerticalAlignment="Top" Click="MemoryPlusButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>
         <Button Grid.Row="1" Grid.Column="2" x:Name="MemoryMinusButton" Content="M-" VerticalAlignment="Top" Click="MemoryMinusButton_OnClick" Background="{StaticResource MemoryButtonColor}"/>
         <!-- TODO: Columnの値 -->
-        <Button Grid.Row="1" Grid.Column="5" x:Name="OkButton" Content="OK" VerticalAlignment="Bottom" Click="OkButton_OnClick"/>
+        <Button Grid.Row="1" Grid.Column="4" x:Name="OkButton" Content="OK" VerticalAlignment="Bottom" Click="OkButton_OnClick"/>
     </Grid>
 </Window>

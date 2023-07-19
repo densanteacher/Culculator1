@@ -106,6 +106,7 @@ namespace Calculator2
                     var y = func(x);
                     this.SetMainText(y);
                 }
+                this._isCalculated |= true;
             }
             catch (Exception ex)
             {
@@ -142,7 +143,7 @@ namespace Calculator2
         /// </summary>
         private void InputSquareOfX()
         {
-            // TODO: 他に適用できる箇所で使用してみましょう。
+            // DONE: 他に適用できる箇所で使用してみましょう。
             this.Calculate((x) => x * x);
         }
 
@@ -151,23 +152,22 @@ namespace Calculator2
         /// </summary>
         private void InputSquareRootOfX()
         {
-            try
-            {
-                var txt = this.MainTextString;
-                if (!(Double.TryParse(txt, out var x)))
-                {
-                    return;
-                }
+             try
+             {
+                 var txt = this.MainTextString;
+                 if (!(Double.TryParse(txt, out var x)))
+                 {
+                     return;
+                 }
 
-                var y = Math.Sqrt(x);
-                this.SetMainText((decimal)y);
+                 var y = Math.Sqrt(x);
+                this.Calculate((x) => (decimal)y);
 
-                this._isCalculated = true;
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
+             }
+             catch (Exception ex)
+             {
+                 this.ShowErrorMessage(ex);
+             }
         }
 
         /// <summary>
@@ -175,22 +175,7 @@ namespace Calculator2
         /// </summary>
         private void InputDivideByX()
         {
-            try
-            {
-                var txt = this.MainTextString;
-                if (!(Decimal.TryParse(txt, out var x)))
-                {
-                    return;
-                }
-                var y = 1 / x;
-                this.SetMainText(y);
-
-                this._isCalculated = true;
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
+            this.Calculate((x) => 1 / x);
         }
 
         /// <summary>
@@ -198,23 +183,7 @@ namespace Calculator2
         /// </summary>
         private void InputPercentage()
         {
-            try
-            {
-                var txt = this.MainTextString;
-                if (!(Decimal.TryParse(txt, out var x)))
-                {
-                    return;
-                }
-
-                var y = x / 100;
-                this.SetMainText(y);
-
-                this._isCalculated = true;
-            }
-            catch (Exception ex)
-            {
-                this.ShowErrorMessage(ex);
-            }
+            this.Calculate((x) => x / 100);
         }
 
         /// <summary>
@@ -235,10 +204,6 @@ namespace Calculator2
         {
             try
             {
-                if (!(Decimal.TryParse(this.MainTextString, out var valueMain)))
-                {
-                    return;
-                }
 
                 var sub = this.SubText.Text;
                 if ((sub == "") || (sub.Trim().Length == 0))
@@ -254,27 +219,22 @@ namespace Calculator2
 
                 if (sub.Contains("÷"))
                 {
-                    var result = valueSub / valueMain;
-                    this.SetMainText(result);
+                    this.Calculate((x) => valueSub / x);
                 }
                 else if (sub.Contains("×"))
                 {
-                    var result = valueSub * valueMain;
-                    this.SetMainText(result);
+                    this.Calculate((x) => valueSub * x);
                 }
                 else if (sub.Contains("+"))
                 {
-                    var result = valueSub + valueMain;
-                    this.SetMainText(result);
+                    this.Calculate((x) => valueSub + x);
                 }
                 else if (sub.Contains("-"))
                 {
-                    var result = valueSub - valueMain;
-                    this.SetMainText(result);
+                    this.Calculate((x) => valueSub - x);
                 }
 
                 this.SubText.Text = "";
-                this._isCalculated = true;
             }
             catch (Exception ex)
             {
@@ -410,7 +370,7 @@ namespace Calculator2
         // TODO: コメントの result.txt は Constants ですので、see で参照しましょう。
         // もしくはこのメソッドの引数でファイルパスを受け取れるようにしましょう。
         /// <summary>
-        /// _resultsリストに格納されている値をresult.txtに書き込みます。
+        /// <see cref="this._results">_resultsリスト</see>に格納されている値を<see cref="Constants"/>result.txt</see>に書き込みます。
         /// </summary>
         /// <returns>成功したらtrue,失敗したらFalseを返します。</returns>
         private bool WriteResultFile()
@@ -441,9 +401,9 @@ namespace Calculator2
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
-            // TODO: タイポ
-            var isSusscess = this.WriteResultFile();
-            if (isSusscess)
+            // DONE: タイポ
+            var isSuccess = this.WriteResultFile();
+            if (isSuccess)
             {
                 MessageBox.Show(this, "記録した数値をテキストファイルに出力しました。", "出力完了");
             }
