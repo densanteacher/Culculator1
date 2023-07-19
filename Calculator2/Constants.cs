@@ -1,10 +1,11 @@
-﻿using System;
-namespace Calculator2
+﻿namespace Calculator2
 {
     public static class Constants
     {
-        // TODO: static readonly の場合はパスカルケースにしましょう。
-        // TODO: ビルドして出来たexeを C:\tmp とかに移動してから実行してみましょう。
-        public static readonly string path = @"..\..\..\result.txt";
+        // DONE: static readonly の場合はパスカルケースにしましょう。
+        // DONE: ビルドして出来たexeを C:\tmp とかに移動してから実行してみましょう。
+
+        // おそらく実行場所より三階層上のディレクトリがないためエラーとなりました。カレントディレクトリに作成する様に変更します。
+        public static readonly string Path = @".\result.txt";
     }
 }

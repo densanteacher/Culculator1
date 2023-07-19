@@ -12,12 +12,13 @@
         KeyDown="Window_KeyDown">
 
     <Window.Resources>
-        <!-- TODO: 色だとわかるような名前をつけましょう。  -->
-        <SolidColorBrush x:Key="Number" Color="WhiteSmoke"/>
-        <SolidColorBrush x:Key="Memory" Color="GhostWhite"/>
+        <!-- DONE: 色だとわかるような名前をつけましょう。  -->
+        <SolidColorBrush x:Key="NumberButtonColor" Color="WhiteSmoke"/>
+        <SolidColorBrush x:Key="MemoryButtonColor" Color="GhostWhite"/>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2"/>
             <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Focusable" Value="False"/>
         </Style>
     </Window.Resources>
 
@@ -31,7 +32,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MinHeight="50"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
@@ -40,34 +41,34 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <!-- TODO: Focusableはスタイルに入れたほうがよいでしょう。 -->
-        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOneButton" Content="1" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwoButton" Content="2" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThreeButton" Content="3" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFourButton" Content="4" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFiveButton" Content="5" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSixButton" Content="6" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSevenButton" Content="7" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEightButton" Content="8" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNineButton" Content="9" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZeroButton" Content="0" Focusable="False" Background="{StaticResource Number}" Click="NumberButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="0" x:Name="SignReverseButton" Content="+/-" Focusable="False" Click="SignReverseButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPointButton" Content="." Focusable="False" Click="DecimalPointButton_OnClick"/>
-        <Button Grid.Row="7" Grid.Column="3" x:Name="AddButton" Content="+" Focusable="False" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="6" Grid.Column="3" x:Name="SubtractButton" Content="-" Focusable="False" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="5" Grid.Column="3" x:Name="MultiplyButton" Content="×" Focusable="False" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="3" x:Name="DivideButton" Content="÷" Focusable="False" Click="OperatorButton_OnClick"/>
-        <Button Grid.Row="8" Grid.Column="3" x:Name="EqualButton" Content="=" Focusable="False" Click="EqualButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideByButton" Content="1/x" Focusable="False" Click="DivideByButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="1" x:Name="SquareButton" Content="x^2" Focusable="False" Click="SquareButton_OnClick"/>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRootButton" Content="√x" Focusable="False" Click="SquareRootButton_OnClick"/>
-        <Button Grid.Row="3" Grid.Column="0" x:Name="PercentButton" Content="%" Focusable="False" Click="PercentButton__OnClick"/>
-        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntryButton" Content="CE" Focusable="False" Click="ClearEntryButton_OnClick"/>
-        <Button Grid.Row="3" Grid.Column="2" x:Name="ClearButton" Content="C" Focusable="False" Click="ClearButton_OnClick"/>
-        <Button Grid.Row="3" Grid.Column="3" x:Name="BackSpaceButton" Content="Back" Focusable="False" Click="BackSpaceButton_OnClick"/>
-        <Button Grid.Row="2" Grid.Column="0" x:Name="OutputButton" Content="Output" Focusable="False" Background="{StaticResource Memory}" Click="OutputButton_OnClick"/>
-        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Focusable="False" Text="0" FontSize="24"/>
-        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" Focusable="False" IsReadOnly="True"/>
+        <!-- DONE: Focusableはスタイルに入れたほうがよいでしょう。 -->
+        <Button Grid.Row="7" Grid.Column="0" x:Name="NumberOneButton" Content="1" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="1" x:Name="NumberTwoButton" Content="2" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="2" x:Name="NumberThreeButton" Content="3" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="0" x:Name="NumberFourButton" Content="4" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="1" x:Name="NumberFiveButton" Content="5" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="2" x:Name="NumberSixButton" Content="6" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="0" x:Name="NumberSevenButton" Content="7" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="NumberEightButton" Content="8" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="NumberNineButton" Content="9" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="1" x:Name="NumberZeroButton" Content="0" Background="{StaticResource NumberButtonColor}" Click="NumberButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="0" x:Name="SignReverseButton" Content="+/-" Click="SignReverseButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="2" x:Name="DecimalPointButton" Content="." Click="DecimalPointButton_OnClick"/>
+        <Button Grid.Row="7" Grid.Column="3" x:Name="AddButton" Content="+" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="6" Grid.Column="3" x:Name="SubtractButton" Content="-" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="5" Grid.Column="3" x:Name="MultiplyButton" Content="×" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="3" x:Name="DivideButton" Content="÷" Click="OperatorButton_OnClick"/>
+        <Button Grid.Row="8" Grid.Column="3" x:Name="EqualButton" Content="=" Click="EqualButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="0" x:Name="DivideByButton" Content="1/x" Click="DivideByButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="1" x:Name="SquareButton" Content="x^2" Click="SquareButton_OnClick"/>
+        <Button Grid.Row="4" Grid.Column="2" x:Name="SquareRootButton" Content="√x" Click="SquareRootButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="0" x:Name="PercentButton" Content="%" Click="PercentButton__OnClick"/>
+        <Button Grid.Row="3" Grid.Column="1" x:Name="ClearEntryButton" Content="CE" Click="ClearEntryButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="2" x:Name="ClearButton" Content="C" Click="ClearButton_OnClick"/>
+        <Button Grid.Row="3" Grid.Column="3" x:Name="BackSpaceButton" Content="Back" Click="BackSpaceButton_OnClick"/>
+        <Button Grid.Row="2" Grid.Column="0" x:Name="OutputButton" Content="Output" Background="{StaticResource MemoryButtonColor}" Click="OutputButton_OnClick"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="MainText" Text="0" FontSize="24"/>
+        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" x:Name="SubText" IsReadOnly="True"/>
 
         <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
@@ -79,12 +80,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="5" x:Name="MemoryButton" Content="M" Focusable="False" Background="{StaticResource Memory}" Click="MemoryButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySaveButton" Content="MS" Focusable="False" Background="{StaticResource Memory}" Click="MemorySaveButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinusButton" Content="M-" Focusable="False" Background="{StaticResource Memory}" Click="MemoryMinusButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlusButton" Content="M+" Focusable="False" Background="{StaticResource Memory}" Click="MemoryPlusButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecallButton" Content="MR" Focusable="False" Background="{StaticResource Memory}" Click="MemoryRecallButton_OnClick"/>
-            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" Focusable="False" Background="{StaticResource Memory}" Click="MemoryClearButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="5" x:Name="MemoryButton" Content="M" Background="{StaticResource MemoryButtonColor}" Click="MemoryButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySaveButton" Content="MS" Background="{StaticResource MemoryButtonColor}" Click="MemorySaveButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinusButton" Content="M-" Background="{StaticResource MemoryButtonColor}" Click="MemoryMinusButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="2" x:Name="MemoryPlusButton" Content="M+" Background="{StaticResource MemoryButtonColor}" Click="MemoryPlusButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="MemoryRecallButton" Content="MR" Background="{StaticResource MemoryButtonColor}" Click="MemoryRecallButton_OnClick"/>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="MemoryClearButton" Content="MC" Background="{StaticResource MemoryButtonColor}" Click="MemoryClearButton_OnClick"/>
         </Grid>
     </Grid>
 </Window>

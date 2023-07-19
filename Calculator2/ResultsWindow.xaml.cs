@@ -21,32 +21,44 @@ namespace Calculator2
     /// </summary>
     public partial class ResultsWindow : Window
     {
-        // TODO: _results と ResultsList で二重にデータを管理する状況に見えます。
+        // DONE: _results と ResultsList で二重にデータを管理する状況に見えます。
         // 二重管理はバグの元です。どちらかだけで管理できないか考えてみましょう。
+
+        // _resultsで管理し、ResultsListでの表示はResetListBox（）メソッド（旧ClearWithAddListBox）を実行することで解決しました。
+
+        /// <summary>
+        /// メインウィンドウから渡されたresultsリストの参照を格納します。
+        /// </summary>
         private readonly List<string> _results;
 
-        // TODO: 計算された数字と読めますが、この値を plus/minus しているので、計算前の値では？
+        // DONE: 計算された数字と読めますが、この値を plus/minus しているので、計算前の値では？
         // 何を主とするかで、受け取り方が変わるので、迷いそうなときはコメントを残します。
         // private はドキュメンテーションコメントは必須ではないと言われていますが、できるだけコメントしておいた方がよいでしょう。
-        private readonly decimal _calculatedNumber;
 
-        public ResultsWindow(List<string> results, decimal calculatedNumber)
+        // 確かに紛らわしいので、フィールド名自体を変更しました。それとは別にコメントも残しておきます。
+
+        /// <summary>
+        /// メインウィンドウから渡されたメインテキストの値を格納します。
+        /// </summary>
+        private readonly decimal _mainTextValue;
+
+        public ResultsWindow(List<string> results, decimal mainTextValue)
         {
             this.InitializeComponent();
             this._results = results;
-            this._calculatedNumber = calculatedNumber;
+            this._mainTextValue = mainTextValue;
 
-            this.ClearWithAddListBox();
+            this.ResetListBox();
 
         }
 
-        // TODO: With でつながず、メソッドを分割した方がよいでしょう。
+        // DONE: With でつながず、メソッドを分割した方がよいでしょう。
         // この場合は、ひとつのメソッドでなんとかしたいと思われますので、メソッド名を工夫した方がよいでしょう。
         // WithやAndで複数の動作をつなげることは、よくありません。
         /// <summary>
         /// リストをクリアした後、<see cref="ResultsWindow._results"/> 内の要素を追加し表示します。
         /// </summary>
-        public void ClearWithAddListBox()
+        public void ResetListBox()
         {
             this.ResultsList.Items.Clear();
 
@@ -75,8 +87,8 @@ namespace Calculator2
             {
                 var selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
                 this._results.Remove(selectedItem);
-                this.ResultsList.Items.Remove(selectedItem);
-                this.ResultsList.SelectedIndex = 0;
+
+                this.ResetListBox();
             }
             catch (Exception ex)
             {
@@ -95,13 +107,19 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 var selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
                 var index = this.ResultsList.SelectedIndex;
-                // TODO: ParseよりTryParseを使いましょう。
-                var mainValue = Decimal.Parse(selectedItem);
-                var plusResult = mainValue + this._calculatedNumber;
+                // DONE: ParseよりTryParseを使いましょう。
+                if (!(Decimal.TryParse(selectedItem, out var resultsListValue)))
+                {
+                    return;
+                }
+
+                var plusResult = resultsListValue + this._mainTextValue;
                 this._results[index] = plusResult.ToString();
-                this.ClearWithAddListBox();
+
+                this.ResetListBox();
                 this.ResultsList.SelectedIndex = index;
             }
             catch (Exception ex)
@@ -125,10 +143,16 @@ namespace Calculator2
 
                 var selectedItem = this.ResultsList.SelectedItem.ToString() ?? "";
                 var index = this.ResultsList.SelectedIndex;
-                // TODO: this
-                var minusResult = Decimal.Parse(selectedItem) - _calculatedNumber;
+                // DONE: this
+                if(!(Decimal.TryParse(selectedItem, out var resultsListValue)))
+                {
+                    return;
+                }
+
+                var minusResult = resultsListValue - this._mainTextValue;
                 this._results[index] = minusResult.ToString();
-                this.ClearWithAddListBox();
+
+                this.ResetListBox();
                 this.ResultsList.SelectedIndex = index;
             }
             catch (Exception ex)
@@ -138,10 +162,10 @@ namespace Calculator2
 
         }
 
-        // TODO: see の使い方は ClearWithAddListBox のコメントを参照してみてください。
-        // TODO: 下記のようにClearMemory"も" 見てほしい場合は、seealso を使います。
+        // DONE: see の使い方は ClearWithAddListBox のコメントを参照してみてください。
+        // DONE: 下記のようにClearMemory"も" 見てほしい場合は、seealso を使います。
         /// <summary>
-        /// <see cref="ResultsWindow.ClearMemory"/>
+        /// <seealso cref="ResultsWindow.ClearMemory"/>
         /// MCボタンを押したとき、リストボックスで選択している値を削除します。
         /// </summary>
 
@@ -151,7 +175,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="ResultsWindow.InputMemoryPlus"/>
+        /// <seealso cref="ResultsWindow.InputMemoryPlus"/>
         /// M+ボタンを押したとき、リストボックスで選択している値に、メインウィンドウのメインテキストに表示されている値を足します。
         /// </summary>
         private void MemoryPlusButton_OnClick(object sender, RoutedEventArgs e)
@@ -160,7 +184,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="ResultsWindow.InputMemoryMinus"/>
+        /// <seealso cref="ResultsWindow.InputMemoryMinus"/>
         /// M-ボタンを押したとき、リストボックスで選択している値から、メインウィンドウのメインテキストに表示されている値を引きます。
         /// </summary>
         private void MemoryMinusButton_OnClick(object sender, RoutedEventArgs e)
@@ -181,27 +205,29 @@ namespace Calculator2
         /// </summary>
         private void ShowErrorMessage(Exception ex)
         {
+
+            Console.WriteLine(ex.Message);
+
             switch (ex)
             {
                 case DivideByZeroException:
-                    MessageBox.Show(this,"0で除算することはできません。");
+                    MessageBox.Show(this,"0で除算することはできません。実行を中止します。");
                     break;
                 case OverflowException:
-                    MessageBox.Show(this,"オーバーフローが発生しました。この計算は行えません。");
+                    MessageBox.Show(this,"オーバーフローが発生しました。実行を中止します。");
                     break;
                 case ArithmeticException:
                     MessageBox.Show(this,"計算中にエラーが発生しました。実行を中止します。");
                     break;
                 case NullReferenceException:
-                    MessageBox.Show(this,"参照がNullです。実行できません。");
+                    MessageBox.Show(this,"参照がNullです。実行を中止します。");
                     break;
                 default:
                     MessageBox.Show(this,"予期せぬエラーが発生しました。実行を中止します。");
                     break;
             }
 
-            // TODO: 上へ
-            Console.WriteLine(ex.Message);
+            // DONE: 上へ
         }
     }
 }

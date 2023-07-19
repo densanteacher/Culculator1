@@ -27,15 +27,15 @@ namespace Calculator2
     {
         private readonly List<string> _results = new();
 
-        // TODO: private をつけて、フィールド名に _ をつけましょう。
+        // DONE: private をつけて、フィールド名に _ をつけましょう。
         private bool _isCalculated = false;
 
-        // TODO: プロパティもフィールドも意識して分けないので、名前は MainTextString とでもしておきましょう。
+        // DONE: プロパティもフィールドも意識して分けないので、名前は MainTextString とでもしておきましょう。
         // private なフィールドは _ をつけるなら、そうじゃないものはプロパティだとわかります。
-        // TODO: getの場合はラムダ式が使えます。
+        // DONE getの場合はラムダ式が使えます。
         public string MainTextString
         {
-            get { return this.MainText.Text; }
+            get => this.MainText.Text;
         }
 
         public MainWindow()
@@ -53,8 +53,8 @@ namespace Calculator2
         /// <param name="isSub">trueの時はSubTextも初期化し、falseの時はMainTextのみ初期化します。</param>
         private void ClearText(bool isSub)
         {
-            // TODO: SetMainTextが使えそうです。
-            this.MainText.Text = "0";
+            // DONE: SetMainTextが使えそうです。
+            this.SetMainText(0);
 
             this._isCalculated = false;
 
@@ -83,7 +83,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// メインテキストの数値の正負反転を反転します。
+        /// メインテキストの数値の正負を反転します。
         /// </summary>
         private void InputReverseSign()
         {
@@ -91,10 +91,10 @@ namespace Calculator2
             {
                 var txt = this.MainTextString;
 
-                // TODO: 実際に符号を反転する処理のみを、ReverseSign()メソッドとして分離してみましょう。
+                // DONE: 実際に符号を反転する処理のみを、ReverseSign()メソッドとして分離してみましょう。
                 if (Decimal.TryParse(txt, out var mainValue))
                 {
-                    var result = -mainValue;
+                    var result = ReverseSign(mainValue);
                     this.SetMainText(result);
                 }
             }
@@ -105,13 +105,23 @@ namespace Calculator2
         }
 
         /// <summary>
+        /// 入力された値の正負を反転します。
+        /// </summary>
+        /// <param name="value">正負を反転させたい値です。</param>
+        /// <returns></returns>
+        private decimal ReverseSign(decimal value)
+        {
+            return -value;
+        }
+
+        /// <summary>
         /// メインテキストの末尾一文字を消去します。
         /// </summary>
         private void InputBackspace()
         {
             try
             {
-                // TODO: this、Shift + F12 の出番です。
+                // DONE: this、Shift + F12 の出番です。
                 var txt = this.MainTextString;
                 var bs = txt.Remove(txt.Length - 1);
                 if (bs.Length == 0 || bs == "-")
@@ -141,6 +151,7 @@ namespace Calculator2
                 {
                     return;
                 }
+
                 var result = mainValue * mainValue;
                 this.SetMainText(result);
 
@@ -167,6 +178,7 @@ namespace Calculator2
 
                 var result = Math.Sqrt(mainValue);
                 this.SetMainText((decimal)result);
+
                 this._isCalculated = true;
             }
             catch (Exception ex)
@@ -195,7 +207,6 @@ namespace Calculator2
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
-                Console.WriteLine(ex.Message);
             }
         }
 
@@ -239,7 +250,7 @@ namespace Calculator2
         /// </summary>
         private void Calculate()
         {
-            // TODO: try の中に入れたほうが揃います。
+            // DONE: try の中に入れたほうが揃います。
 
             try
             {
@@ -249,13 +260,13 @@ namespace Calculator2
                 }
 
                 var sub = this.SubText.Text;
-                if ((sub == "") && (sub.Trim().Length == 0))
+                if ((sub == "") || (sub.Trim().Length == 0))
                 {
                     return;
                 }
 
-                var sub2 = sub.Remove(sub.Length - 1);
-                if (!(Decimal.TryParse(sub2, out var valueSub)))
+                var subRemoved = sub.Remove(sub.Length - 1);
+                if (!(Decimal.TryParse(subRemoved, out var valueSub)))
                 {
                     return;
                 }
@@ -282,15 +293,16 @@ namespace Calculator2
                 }
 
                 this.SubText.Text = "";
-                // TODO: this
-                _isCalculated = true;
+                // DONE: this
+                this._isCalculated = true;
             }
             catch (Exception ex)
             {
                 this.ShowErrorMessage(ex);
             }
         }
-        #endregion
+
+        #endregion　メインテキスト処理関連メソッド
 
 
         #region Memory関連メソッド
@@ -392,13 +404,13 @@ namespace Calculator2
         /// </summary>
         private void RecallMemory()
         {
-            if (this._results.Count == 0)
-            {
-                return;
-            }
-
             try
             {
+                if (this._results.Count == 0)
+                {
+                    return;
+                }
+
                 // DONE: SetMainTextのオーバーロードを定義して使ってみましょう。
                 this.SetMainText(this._results[0]);
             }
@@ -416,7 +428,7 @@ namespace Calculator2
             this._results.Clear();
         }
 
-        #endregion
+        #endregion　Memory関連イベント
 
 
         #region OnClickイベント
@@ -428,8 +440,8 @@ namespace Calculator2
         {
             try
             {
+                using var writer = new StreamWriter(Constants.Path, false);
                 {
-                    using var writer = new StreamWriter(Constants.path, false);
                     foreach (var item in this._results)
                     {
                         writer.WriteLine(item);
@@ -607,7 +619,7 @@ namespace Calculator2
         }
 
         // DONE: endregionにもテキストを入れておくと対になっているものを探す必要がなくなります。
-        // TODO: region, endregion の前後は改行をいれましょう。
+        // DONE: region, endregion の前後は改行をいれましょう。
         #endregion OnClickイベント
 
         #region Keydownイベント関連メソッド
@@ -666,7 +678,6 @@ namespace Calculator2
                 default:
                     break;
             }
-            this.EqualButton.Focus();
         }
 
         /// <summary>
@@ -675,9 +686,8 @@ namespace Calculator2
         /// <param name="key">Keyはキーボードで押されたキー情報です。</param>
         private void PressNumberKey(Key key)
         {
-            decimal result;
 
-            // TODO: こういう名前をつけると true と false のどちらが計算済みなのか迷います。
+            // DONE: こういう名前をつけると true と false のどちらが計算済みなのか迷います。
             // そういうときは bool を表すにはいくつかパターンがあります。
             // 変数名だと isCalculated が鉄板です。
             // プロパティだと Calculated と過去形にするだけがよく使われます。
@@ -686,29 +696,25 @@ namespace Calculator2
                 this.ClearText(false);
             }
 
-            // TODO: switch よりも if の方が好みです。
+            // DONE: switch よりも if の方が好みです。
             // その理由としては、switch の場合は、スコープが広くなるので、TryParseでout var宣言ができなくなります。
             // また、switchの方がインデントが深くなってしまいます。
             // ただ、最近はパターンマッチにより短く記述できるようになったので、ケースバイケースになってきました。
-            switch ((int)key)
+            if ((int)key >= 34 && (int)key <= 43)
             {
-                case >= 34 and <= 43:
-                    if (Decimal.TryParse(this.MainTextString + ((int)key - 34), out result))
-                    {
-                        this.SetMainText(result);
-                    }
-                    break;
-
-                case >= 74 and <= 83:
-                    if (Decimal.TryParse(this.MainTextString + ((int)key - 74), out result))
-                    {
-                        this.SetMainText(result);
-                    }
-                    break;
-
-                default:
-                    break;
+                if (Decimal.TryParse(this.MainTextString + ((int)key - 34), out var result))
+                {
+                    this.SetMainText(result);
+                }
             }
+            else if ((int)key >= 74 && (int)key <= 83)
+            {
+                if (Decimal.TryParse(this.MainTextString + ((int)key - 74), out var result))
+                {
+                    this.SetMainText(result);
+                }
+            }
+
         }
 
         /// <summary>
@@ -739,7 +745,8 @@ namespace Calculator2
 
             this.ClearText(false);
         }
-        #endregion
+
+        #endregion Keydownイベント関連メソッド
 
 
         /// <summary>
