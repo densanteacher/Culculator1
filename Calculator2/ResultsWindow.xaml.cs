@@ -83,6 +83,7 @@ namespace Calculator2
             }
         }
 
+        // TODO: はじめの see が閉じてません。Usage が古いままです。
         /// <summary>
         /// リストボックスで選択された値と<see cref="MainWindow.MainText">の値を計算した結果を <see cref="_results"/> に設定します。
         /// 使用する計算式は引数で渡します。

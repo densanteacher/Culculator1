@@ -83,6 +83,12 @@ namespace Calculator2
             this.MainText.Text = resultString;
         }
 
+        // TODO: 下記のメソッドを考えて使ってみましょう。
+        private void SetMainTextIfParse(string valueText)
+        {
+            // TODO: 以下の例外について調べてみましょう。
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// 計算した結果を <see cref="MainText"/> に設定します。
@@ -105,7 +111,6 @@ namespace Calculator2
                     var y = func(x);
                     this.SetMainText(y);
                 }
-                // DONE: |= true は必ず true になります。
 
                 this._isCalculated = true;
             }
@@ -122,7 +127,6 @@ namespace Calculator2
         {
             try
             {
-
                 var sub = this.SubText.Text;
                 if ((sub == "") || (sub.Trim().Length == 0))
                 {
@@ -165,9 +169,6 @@ namespace Calculator2
         /// </summary>
         private void InputReverseSign()
         {
-            // DONE: -x のかわりに、Extensions.ReverseSign() を使ってください。
-            // その他の処理も Extensions に定義して使ってみましょう。
-            // Extensions にまとめておくことで、ライブラリ化や使い回しがしやすくなります。
             this.Calculate((x) => x.ReverseSign());
         }
 
@@ -176,8 +177,6 @@ namespace Calculator2
         /// </summary>
         private void InputSquareOfX()
         {
-            // DONE: メソッドのクラス内での位置を整理してみましょう。
-            // このメソッドを使っているメソッド同士は近くに配置した方がよいでしょう。
             this.Calculate((x) => x.Square());
         }
 
@@ -240,15 +239,15 @@ namespace Calculator2
             }
         }
 
-
         #endregion　メインテキスト処理関連メソッド
-
 
         #region Memory関連メソッド
 
+        // TODO: ResultsWindow は see を使うのがよいでしょう。
+        // see で参照することによって、Ctrl + R, R のリネームで一緒に変わります。(たぶん)
         /// <summary>
         /// ResultsWindowを表示します。
-        /// ResultsWindowには、現在の<see cref="_results"/>リストの一覧が表示されます。
+        /// ResultsWindowには、現在の <see cref="_results"/> リストの一覧が表示されます。
         /// </summary>
         private void OpenResultsWindow()
         {
@@ -270,7 +269,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="_results"/>にメインテキストの数値を記録します。
+        /// <see cref="_results"/> にメインテキストの数値を記録します。
         /// </summary>
         private void SaveMemory()
         {
@@ -278,8 +277,8 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// 計算した結果を<see cref="_results"/>に格納します。
-        /// /// 使用する計算式は引数で渡します。
+        /// 計算した結果を <see cref="_results"/> に格納します。
+        /// 使用する計算式は引数で渡します。
         /// </summary>
         /// <param name="func">計算で使用するメソッドを渡せます。<br/>メソッドのシグネチャは <c>decimal Method(decimal x, decimal y) { ... }</c> となります。</param>
         /// <example>
@@ -314,7 +313,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="_results"/>に最初に追加された数値から、現在のメインテキストの数値を引きます。
+        /// <see cref="_results"/> に最初に追加された数値から、現在のメインテキストの数値を引きます。
         /// </summary>
         private void InputMemoryMinus()
         {
@@ -322,16 +321,15 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="_results"/>に最初に追加された数値に、現在のメインテキストの数値を足します。
+        /// <see cref="_results"/> に最初に追加された数値に、現在のメインテキストの数値を足します。
         /// </summary>
         private void InputMemoryPlus()
         {
             this.CalculateMemory((x,y) => y + x);
-
         }
 
         /// <summary>
-        /// <see cref="_results"/>に最初に追加された数値を、メインテキストに再表示します。
+        /// <see cref="_results"/> に最初に追加された数値を、メインテキストに再表示します。
         /// </summary>
         private void RecallMemory()
         {
@@ -351,14 +349,13 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// <see cref="_results"/>をクリアします。
+        /// <see cref="_results"/> をクリアします。
         /// </summary>
         private void ClearMemory()
         {
             this._results.Clear();
         }
 
-        // DONE: see を修正しました。基本的には <see>xxxx</see> とはせずに、<see /> で使います。
         /// <summary>
         /// <see cref="_results"/> に格納されている値を <see cref="Constants.Path"/> に書き込みます。
         /// </summary>
@@ -367,8 +364,6 @@ namespace Calculator2
         {
             try
             {
-                // DONE: 結合度という考え方があります。なるべく疎となるように作るのがよいとされます。
-                // path と results はメソッド引数として渡せるようにしてみましょう。
                 using var writer = new StreamWriter(path, false);
                 foreach (var item in items)
                 {
@@ -388,15 +383,15 @@ namespace Calculator2
 
         #region OnClickイベント
 
-        // DONE?: result.txt
-
-        // Constants.Pathを変更し、result.txt をドキュメントフォルダに出力するよう変更しました。
-
+        // TODO: コメント内には直接的なリテラル値は書かないほうがよいです。results.txt は変更される可能性があります。
+        // 直接記述するのではなく、 Contents.Path を see で記載することで、コメントを合わせて修正する必要がなくなります。
+        // コメントが適切にメンテナンスされていないと、コメントとソースコードのズレが問題となります。
         /// <summary>
         ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値を<see cref="Constants.Path"/>にあるresult.txtに出力します。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
+            // TODO: this
             var isSuccess = this.WriteResultFile(Constants.Path, _results);
             if (isSuccess)
             {
@@ -423,6 +418,7 @@ namespace Calculator2
                 this.ClearText(false);
             }
 
+            // TODO: 少し長いですね。文字列の作成を事前に変数に入れてしまいましょう。
             if (Decimal.TryParse(this.MainTextString + btn.Content.ToString(), out var result))
             {
                 this.SetMainText(result);
@@ -437,6 +433,7 @@ namespace Calculator2
             this.InputReverseSign();
         }
 
+        // TODO: . だけだと認識しづらいです。 .(ピリオド) のように記述するのがよいでしょう。
         /// <summary>
         /// .ボタンを押したとき、メインテキストの末尾に小数点を追加します
         /// </summary>
@@ -450,6 +447,7 @@ namespace Calculator2
         /// </summary>
         private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
+            // TODO: NumberButton_OnClick と同じようにしましょう。
             var btn = sender as Button;
             this.Calculate();
 

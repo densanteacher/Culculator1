@@ -40,6 +40,7 @@ namespace Calculator2
             return a / 100;
         }
 
+        // TODO: コメント
         public static decimal SquareRoot (this decimal a)
         {
             var b = Math.Sqrt((double)a);
