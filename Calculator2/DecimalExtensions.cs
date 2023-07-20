@@ -40,7 +40,10 @@ namespace Calculator2
             return a / 100;
         }
 
-        // TODO: コメント
+        // DONE: コメント
+        /// <summary>
+        /// aの平方根を求めます。
+        /// </summary>
         public static decimal SquareRoot (this decimal a)
         {
             var b = Math.Sqrt((double)a);

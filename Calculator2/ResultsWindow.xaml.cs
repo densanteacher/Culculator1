@@ -83,16 +83,16 @@ namespace Calculator2
             }
         }
 
-        // TODO: はじめの see が閉じてません。Usage が古いままです。
+        // DONE: はじめの see が閉じてません。Usage が古いままです。
         /// <summary>
-        /// リストボックスで選択された値と<see cref="MainWindow.MainText">の値を計算した結果を <see cref="_results"/> に設定します。
+        /// リストボックスで選択された値と<see cref="MainWindow.MainText"/>の値を計算した結果を <see cref="_results"/> に設定します。
         /// 使用する計算式は引数で渡します。
         /// </summary>
         /// <param name="func">計算で使用するメソッドを渡せます。<br/>メソッドのシグネチャは <c>decimal Method(decimal x) { ... }</c> となります。</param>
         /// <example>
         /// Usage:
         /// <code>
-        /// Calculate((x) => x * x);
+        /// Calculate((x) => x + this.MainTextValue);
         /// </code>
         /// </example>
         private void CalculateMemory(Func<decimal, decimal> func)

@@ -83,11 +83,24 @@ namespace Calculator2
             this.MainText.Text = resultString;
         }
 
-        // TODO: 下記のメソッドを考えて使ってみましょう。
+        // DONE: 下記のメソッドを考えて使ってみましょう。
+
+        /// <summary>
+        /// 渡された文字列をdecimalの値にパースした後、メインテキストに表示します。
+        /// </summary>
+        /// <param name="valueText">メインテキストに表示したい値の文字列です。</param>
         private void SetMainTextIfParse(string valueText)
         {
-            // TODO: 以下の例外について調べてみましょう。
-            throw new NotImplementedException();
+            // DONE: 以下の例外について調べてみましょう。
+
+            // メソッドや操作が未実装である場合にスローされる例外であるとわかりました。
+            //throw new NotImplementedException();
+
+            if (!(Decimal.TryParse(valueText, out var value)))
+            {
+                return;
+            }
+            this.MainText.Text = value.ToString();
         }
 
         /// <summary>
@@ -243,11 +256,11 @@ namespace Calculator2
 
         #region Memory関連メソッド
 
-        // TODO: ResultsWindow は see を使うのがよいでしょう。
+        // DONE: ResultsWindow は see を使うのがよいでしょう。
         // see で参照することによって、Ctrl + R, R のリネームで一緒に変わります。(たぶん)
         /// <summary>
-        /// ResultsWindowを表示します。
-        /// ResultsWindowには、現在の <see cref="_results"/> リストの一覧が表示されます。
+        /// <see cref="ResultsWindow"/>を表示します。
+        /// <see cref="ResultsWindow"/>には、現在の <see cref="_results"/> リストの一覧が表示されます。
         /// </summary>
         private void OpenResultsWindow()
         {
@@ -317,7 +330,7 @@ namespace Calculator2
         /// </summary>
         private void InputMemoryMinus()
         {
-            this.CalculateMemory((x,y) => y - x);
+            this.CalculateMemory((x, y) => y - x);
         }
 
         /// <summary>
@@ -325,7 +338,7 @@ namespace Calculator2
         /// </summary>
         private void InputMemoryPlus()
         {
-            this.CalculateMemory((x,y) => y + x);
+            this.CalculateMemory((x, y) => y + x);
         }
 
         /// <summary>
@@ -383,16 +396,16 @@ namespace Calculator2
 
         #region OnClickイベント
 
-        // TODO: コメント内には直接的なリテラル値は書かないほうがよいです。results.txt は変更される可能性があります。
+        // DONE: コメント内には直接的なリテラル値は書かないほうがよいです。results.txt は変更される可能性があります。
         // 直接記述するのではなく、 Contents.Path を see で記載することで、コメントを合わせて修正する必要がなくなります。
         // コメントが適切にメンテナンスされていないと、コメントとソースコードのズレが問題となります。
         /// <summary>
-        ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値を<see cref="Constants.Path"/>にあるresult.txtに出力します。
+        ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値を<see cref="Constants.Path"/>にあるテキストファイルに出力します。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
-            // TODO: this
-            var isSuccess = this.WriteResultFile(Constants.Path, _results);
+            // DONE: this
+            var isSuccess = this.WriteResultFile(Constants.Path, this._results);
             if (isSuccess)
             {
                 MessageBox.Show(this, "記録した数値をテキストファイルに出力しました。", "出力完了");
@@ -418,11 +431,9 @@ namespace Calculator2
                 this.ClearText(false);
             }
 
-            // TODO: 少し長いですね。文字列の作成を事前に変数に入れてしまいましょう。
-            if (Decimal.TryParse(this.MainTextString + btn.Content.ToString(), out var result))
-            {
-                this.SetMainText(result);
-            }
+            // DONE: 少し長いですね。文字列の作成を事前に変数に入れてしまいましょう。
+            var str = this.MainTextString + btn.Content.ToString();
+            this.SetMainTextIfParse(str);
         }
 
         /// <summary>
@@ -433,9 +444,9 @@ namespace Calculator2
             this.InputReverseSign();
         }
 
-        // TODO: . だけだと認識しづらいです。 .(ピリオド) のように記述するのがよいでしょう。
+        // DONE: . だけだと認識しづらいです。 .(ピリオド) のように記述するのがよいでしょう。
         /// <summary>
-        /// .ボタンを押したとき、メインテキストの末尾に小数点を追加します
+        /// .(ピリオド)ボタンを押したとき、メインテキストの末尾に小数点を追加します
         /// </summary>
         private void DecimalPointButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -447,8 +458,12 @@ namespace Calculator2
         /// </summary>
         private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // TODO: NumberButton_OnClick と同じようにしましょう。
-            var btn = sender as Button;
+            // DONE: NumberButton_OnClick と同じようにしましょう。
+            if (sender is not Button btn)
+            {
+                return;
+            }
+
             this.Calculate();
 
             this.SubText.Text = this.MainTextString + btn?.Content;
@@ -641,17 +656,11 @@ namespace Calculator2
             var n = (int)key;
             if (n is >= 34 and <= 43)
             {
-                if (Decimal.TryParse(this.MainTextString + (n - 34), out var result))
-                {
-                    this.SetMainText(result);
-                }
+                this.SetMainTextIfParse(this.MainTextString + (n - 34));
             }
             else if (n is >= 74 and <= 83)
             {
-                if (Decimal.TryParse(this.MainTextString + (n - 74), out var result))
-                {
-                    this.SetMainText(result);
-                }
+                this.SetMainTextIfParse(this.MainTextString + (n - 74));
             }
         }
 
