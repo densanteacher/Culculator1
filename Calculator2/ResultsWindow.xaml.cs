@@ -58,6 +58,8 @@ namespace Calculator2
             }
         }
 
+        #region _resultsリスト関連処理
+
         /// <summary>
         /// リストボックスで選択されている値を削除します。
         /// </summary>
@@ -81,6 +83,17 @@ namespace Calculator2
             }
         }
 
+        /// <summary>
+        /// リストボックスで選択された値と<see cref="MainWindow.MainText">の値を計算した結果を <see cref="_results"/> に設定します。
+        /// 使用する計算式は引数で渡します。
+        /// </summary>
+        /// <param name="func">計算で使用するメソッドを渡せます。<br/>メソッドのシグネチャは <c>decimal Method(decimal x) { ... }</c> となります。</param>
+        /// <example>
+        /// Usage:
+        /// <code>
+        /// Calculate((x) => x * x);
+        /// </code>
+        /// </example>
         private void CalculateMemory(Func<decimal, decimal> func)
         {
             try
@@ -127,6 +140,10 @@ namespace Calculator2
 
         }
 
+        #endregion _resultsリスト関連処理
+
+        #region OnClick系イベント
+
         /// <summary>
         /// MCボタンを押したとき、リストボックスで選択している値を削除します。
         /// </summary>
@@ -161,6 +178,8 @@ namespace Calculator2
         {
             this.Close();
         }
+
+        #endregion OnClick系イベント
 
         /// <summary>
         /// エラーメッセージを表示します。

@@ -19,9 +19,9 @@ namespace Calculator2
         /// <summary>
         /// aの二乗を求めます。
         /// </summary>
-        public static decimal Square(this decimal a) 
-        { 
-            return a * a; 
+        public static decimal Square(this decimal a)
+        {
+            return a * a;
         }
 
         /// <summary>
@@ -38,6 +38,12 @@ namespace Calculator2
         public static decimal CalculatePercentage(this decimal a)
         {
             return a / 100;
+        }
+
+        public static decimal SquareRoot (this decimal a)
+        {
+            var b = Math.Sqrt((double)a);
+            return (decimal)b;
         }
     }
 }

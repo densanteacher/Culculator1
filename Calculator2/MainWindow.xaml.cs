@@ -25,10 +25,19 @@ namespace Calculator2
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 計算結果を格納しておくリストです。
+        /// </summary>
         private readonly List<string> _results = new();
 
+        /// <summary>
+        /// 計算を行ったかどうかを確認します。
+        /// </summary>
         private bool _isCalculated = false;
 
+        /// <summary>
+        /// メインテキストの値を格納します。
+        /// </summary>
         public string MainTextString => this.MainText.Text;
 
         public MainWindow()
@@ -86,7 +95,7 @@ namespace Calculator2
         /// Calculate((x) => x * x);
         /// </code>
         /// </example>
-        private void Calculate<TResult>(Func<decimal, TResult> func)
+        private void Calculate(Func<decimal, decimal> func)
         {
             try
             {
@@ -94,13 +103,11 @@ namespace Calculator2
                 if (Decimal.TryParse(txt, out var x))
                 {
                     var y = func(x);
-                    this.SetMainText(y.ToString());
+                    this.SetMainText(y);
                 }
                 // DONE: |= true は必ず true になります。
 
-                // 調べてみたところ、論理 OR 演算子といって a | b ならaかbどちらかがtrueならばtrueを返す演算子です。
-                // この場合、右辺をtrueとしているのでisCalculatedの値に関わらずtrueになる、ということですね。
-                this._isCalculated |= true;
+                this._isCalculated = true;
             }
             catch (Exception ex)
             {
@@ -158,7 +165,7 @@ namespace Calculator2
         /// </summary>
         private void InputReverseSign()
         {
-            // TODO: -x のかわりに、Extensions.ReverseSign() を使ってください。
+            // DONE: -x のかわりに、Extensions.ReverseSign() を使ってください。
             // その他の処理も Extensions に定義して使ってみましょう。
             // Extensions にまとめておくことで、ライブラリ化や使い回しがしやすくなります。
             this.Calculate((x) => x.ReverseSign());
@@ -179,7 +186,7 @@ namespace Calculator2
         /// </summary>
         private void InputSquareRootOfX()
         {
-            this.Calculate((x) => Math.Sqrt((double)x));
+            this.Calculate((x) => x.SquareRoot());
         }
 
         /// <summary>
@@ -232,10 +239,6 @@ namespace Calculator2
                 this.ShowErrorMessage(ex);
             }
         }
-
-
-
-        
 
 
         #endregion　メインテキスト処理関連メソッド
@@ -390,7 +393,7 @@ namespace Calculator2
         // Constants.Pathを変更し、result.txt をドキュメントフォルダに出力するよう変更しました。
 
         /// <summary>
-        ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値をresult.txtに出力します。
+        ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値を<see cref="Constants.Path"/>にあるresult.txtに出力します。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
@@ -519,7 +522,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// Mボタンを押したとき、resultsWindowを開きます。
+        /// Mボタンを押したとき、<see cref="ResultsWindow"/>を開きます。
         /// </summary>
         private void MemoryButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -527,7 +530,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// MSボタンを押したとき、_resultsリストにメインテキストの計算結果を記録します。
+        /// MSボタンを押したとき、<see cref="_results"/>リストにメインテキストの計算結果を記録します。
         /// </summary>
         private void MemorySaveButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -535,7 +538,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// M-ボタンを押したとき、_resultsリストに保存された計算結果から現在のメインテキストの数値を引きます。
+        /// M-ボタンを押したとき、<see cref="_results"/>リストに保存された計算結果から現在のメインテキストの数値を引きます。
         /// </summary>
         private void MemoryMinusButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -543,7 +546,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// M+ボタンを押したとき、_resultsリストに保存された計算結果に現在のメインテキストの数値を足します。
+        /// M+ボタンを押したとき、<see cref="_results"/>リストに保存された計算結果に現在のメインテキストの数値を足します。
         /// </summary>
         private void MemoryPlusButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -551,7 +554,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// MRボタンを押したとき、_resultsリストに保存された計算結果をメインテキストに表示します。
+        /// MRボタンを押したとき、<see cref="_results"/>リストに保存された計算結果をメインテキストに表示します。
         /// </summary>
         private void MemoryRecallButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -559,7 +562,7 @@ namespace Calculator2
         }
 
         /// <summary>
-        /// MCボタンを押したとき、_resultsリストを全て消去します。
+        /// MCボタンを押したとき、<see cref="_results"/>リストを全て消去します。
         /// </summary>
         private void MemoryClearButton_OnClick(object sender, RoutedEventArgs e)
         {

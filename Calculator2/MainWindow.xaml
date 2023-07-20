@@ -77,7 +77,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
             <Button Grid.Row="0" Grid.Column="5" x:Name="MemoryButton" Content="M" Background="{StaticResource MemoryButtonColor}" Click="MemoryButton_OnClick"/>
             <Button Grid.Row="0" Grid.Column="4" x:Name="MemorySaveButton" Content="MS" Background="{StaticResource MemoryButtonColor}" Click="MemorySaveButton_OnClick"/>
             <Button Grid.Row="0" Grid.Column="3" x:Name="MemoryMinusButton" Content="M-" Background="{StaticResource MemoryButtonColor}" Click="MemoryMinusButton_OnClick"/>
