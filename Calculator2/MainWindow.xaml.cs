@@ -83,24 +83,18 @@ namespace Calculator2
             this.MainText.Text = resultString;
         }
 
-        // DONE: 下記のメソッドを考えて使ってみましょう。
-
+        // TODO: IfParseだと何にParseするかわかりませんでした。IfDecimalがよいですね。
         /// <summary>
         /// 渡された文字列をdecimalの値にパースした後、メインテキストに表示します。
         /// </summary>
         /// <param name="valueText">メインテキストに表示したい値の文字列です。</param>
         private void SetMainTextIfParse(string valueText)
         {
-            // DONE: 以下の例外について調べてみましょう。
-
-            // メソッドや操作が未実装である場合にスローされる例外であるとわかりました。
-            //throw new NotImplementedException();
-
-            if (!(Decimal.TryParse(valueText, out var value)))
+            // DONE: たぶんこっちの方が読みやすいと思います。
+            if (Decimal.TryParse(valueText, out var value))
             {
-                return;
+                this.SetMainText(value);
             }
-            this.MainText.Text = value.ToString();
         }
 
         /// <summary>
@@ -256,8 +250,7 @@ namespace Calculator2
 
         #region Memory関連メソッド
 
-        // DONE: ResultsWindow は see を使うのがよいでしょう。
-        // see で参照することによって、Ctrl + R, R のリネームで一緒に変わります。(たぶん)
+        // TODO: 2行目のコメントの内容は、ResultsWindowクラス自体のコメントに書くとよいでしょう。
         /// <summary>
         /// <see cref="ResultsWindow"/>を表示します。
         /// <see cref="ResultsWindow"/>には、現在の <see cref="_results"/> リストの一覧が表示されます。
@@ -396,15 +389,11 @@ namespace Calculator2
 
         #region OnClickイベント
 
-        // DONE: コメント内には直接的なリテラル値は書かないほうがよいです。results.txt は変更される可能性があります。
-        // 直接記述するのではなく、 Contents.Path を see で記載することで、コメントを合わせて修正する必要がなくなります。
-        // コメントが適切にメンテナンスされていないと、コメントとソースコードのズレが問題となります。
         /// <summary>
         ///　Outputボタンを押したとき、<see cref="MainWindow._results"/> に格納されている値を<see cref="Constants.Path"/>にあるテキストファイルに出力します。
         /// </summary>
         private void OutputButton_OnClick(object sender, EventArgs e)
         {
-            // DONE: this
             var isSuccess = this.WriteResultFile(Constants.Path, this._results);
             if (isSuccess)
             {
@@ -431,7 +420,6 @@ namespace Calculator2
                 this.ClearText(false);
             }
 
-            // DONE: 少し長いですね。文字列の作成を事前に変数に入れてしまいましょう。
             var str = this.MainTextString + btn.Content.ToString();
             this.SetMainTextIfParse(str);
         }
@@ -444,7 +432,6 @@ namespace Calculator2
             this.InputReverseSign();
         }
 
-        // DONE: . だけだと認識しづらいです。 .(ピリオド) のように記述するのがよいでしょう。
         /// <summary>
         /// .(ピリオド)ボタンを押したとき、メインテキストの末尾に小数点を追加します
         /// </summary>
@@ -458,7 +445,6 @@ namespace Calculator2
         /// </summary>
         private void OperatorButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // DONE: NumberButton_OnClick と同じようにしましょう。
             if (sender is not Button btn)
             {
                 return;

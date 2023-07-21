@@ -40,7 +40,6 @@ namespace Calculator2
             return a / 100;
         }
 
-        // DONE: コメント
         /// <summary>
         /// aの平方根を求めます。
         /// </summary>
