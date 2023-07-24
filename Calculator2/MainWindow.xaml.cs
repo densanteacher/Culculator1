@@ -250,7 +250,6 @@ namespace Calculator2
 
         #region Memory関連メソッド
 
-        // DONE: 2行目のコメントの内容は、ResultsWindowクラス自体のコメントに書くとよいでしょう。
         /// <summary>
         /// <see cref="ResultsWindow"/>を表示します。
         /// </summary>

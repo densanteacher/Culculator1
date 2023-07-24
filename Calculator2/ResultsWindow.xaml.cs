@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 
 namespace Calculator2
 {
+    // TODO: 相互ロジックの行のコメントは不要でしょう。
+    // TODO: ResultsWindow のコメントに ResultsWindow の see は不要でしょう。もう少し詳しく説明してみましょう。
     /// <summary>
     /// ResultsWindow.xaml の相互作用ロジック
     /// <see cref="ResultsWindow"/>には、現在の <see cref="_results"/> リストの一覧が表示されます。
@@ -84,7 +86,6 @@ namespace Calculator2
             }
         }
 
-        // DONE: example の Usage の内容がコピペ元のままです。
         /// <summary>
         /// リストボックスで選択された値と<see cref="MainWindow.MainText"/>の値を計算した結果を <see cref="_results"/> に設定します。
         /// 使用する計算式は引数で渡します。
@@ -93,6 +94,7 @@ namespace Calculator2
         /// <example>
         /// Usage:
         /// <code>
+        // TODO: example の Usage の内容がコピペ元のままです。
         /// Calculate((x) => x + this.MainTextValue);
         /// </code>
         /// </example>
