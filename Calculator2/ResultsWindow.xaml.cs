@@ -17,7 +17,8 @@ using System.Windows.Shapes;
 namespace Calculator2
 {
     /// <summary>
-    /// MemoryWindow.xaml の相互作用ロジック
+    /// ResultsWindow.xaml の相互作用ロジック
+    /// <see cref="ResultsWindow"/>には、現在の <see cref="_results"/> リストの一覧が表示されます。
     /// </summary>
     public partial class ResultsWindow : Window
     {
@@ -83,7 +84,7 @@ namespace Calculator2
             }
         }
 
-        // TODO: example の Usage の内容がコピペ元のままです。
+        // DONE: example の Usage の内容がコピペ元のままです。
         /// <summary>
         /// リストボックスで選択された値と<see cref="MainWindow.MainText"/>の値を計算した結果を <see cref="_results"/> に設定します。
         /// 使用する計算式は引数で渡します。

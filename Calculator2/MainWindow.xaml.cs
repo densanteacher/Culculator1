@@ -88,7 +88,7 @@ namespace Calculator2
         /// 渡された文字列をdecimalの値にパースした後、メインテキストに表示します。
         /// </summary>
         /// <param name="valueText">メインテキストに表示したい値の文字列です。</param>
-        private void SetMainTextIfParse(string valueText)
+        private void SetMainTextIfDecimal(string valueText)
         {
             // DONE: たぶんこっちの方が読みやすいと思います。
             if (Decimal.TryParse(valueText, out var value))
@@ -250,10 +250,9 @@ namespace Calculator2
 
         #region Memory関連メソッド
 
-        // TODO: 2行目のコメントの内容は、ResultsWindowクラス自体のコメントに書くとよいでしょう。
+        // DONE: 2行目のコメントの内容は、ResultsWindowクラス自体のコメントに書くとよいでしょう。
         /// <summary>
         /// <see cref="ResultsWindow"/>を表示します。
-        /// <see cref="ResultsWindow"/>には、現在の <see cref="_results"/> リストの一覧が表示されます。
         /// </summary>
         private void OpenResultsWindow()
         {
@@ -421,7 +420,7 @@ namespace Calculator2
             }
 
             var str = this.MainTextString + btn.Content.ToString();
-            this.SetMainTextIfParse(str);
+            this.SetMainTextIfDecimal(str);
         }
 
         /// <summary>
@@ -642,11 +641,11 @@ namespace Calculator2
             var n = (int)key;
             if (n is >= 34 and <= 43)
             {
-                this.SetMainTextIfParse(this.MainTextString + (n - 34));
+                this.SetMainTextIfDecimal(this.MainTextString + (n - 34));
             }
             else if (n is >= 74 and <= 83)
             {
-                this.SetMainTextIfParse(this.MainTextString + (n - 74));
+                this.SetMainTextIfDecimal(this.MainTextString + (n - 74));
             }
         }
 
