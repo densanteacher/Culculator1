@@ -83,14 +83,12 @@ namespace Calculator2
             this.MainText.Text = resultString;
         }
 
-        // DONE?: IfParseだと何にParseするかわかりませんでした。IfDecimalがよいですね。
         /// <summary>
         /// 渡された文字列をdecimalの値にパースした後、メインテキストに表示します。
         /// </summary>
         /// <param name="valueText">メインテキストに表示したい値の文字列です。</param>
         private void SetMainTextIfDecimal(string valueText)
         {
-            // DONE: たぶんこっちの方が読みやすいと思います。
             if (Decimal.TryParse(valueText, out var value))
             {
                 this.SetMainText(value);
@@ -383,7 +381,6 @@ namespace Calculator2
         }
 
         #endregion　Memory関連イベント
-
 
         #region OnClickイベント
 
@@ -678,7 +675,6 @@ namespace Calculator2
         }
 
         #endregion Keydownイベント関連メソッド
-
 
         /// <summary>
         /// エラーメッセージを表示します。

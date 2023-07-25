@@ -16,10 +16,8 @@ using System.Windows.Shapes;
 
 namespace Calculator2
 {
-    // DONE: 相互ロジックの行のコメントは不要でしょう。
-    // DONE: ResultsWindow のコメントに ResultsWindow の see は不要でしょう。もう少し詳しく説明してみましょう。
     /// <summary>
-    /// ResultsWindowには、現在の <see cref="_results"/> リストの一覧が表示され、選択された要素の加減算や削除を行うことができます。
+    /// 現在の <see cref="_results"/> リストの一覧が表示され、選択された要素の加減算や削除を行うことができます。
     /// </summary>
     public partial class ResultsWindow : Window
     {
@@ -93,7 +91,6 @@ namespace Calculator2
         /// <example>
         /// Usage:
         /// <code>
-        // DONE: example の Usage の内容がコピペ元のままです。
         /// CalculateMemory((x) => x + this._mainTextValue);
         /// </code>
         /// </example>
