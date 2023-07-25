@@ -83,7 +83,7 @@ namespace Calculator2
             this.MainText.Text = resultString;
         }
 
-        // TODO: IfParseだと何にParseするかわかりませんでした。IfDecimalがよいですね。
+        // DONE?: IfParseだと何にParseするかわかりませんでした。IfDecimalがよいですね。
         /// <summary>
         /// 渡された文字列をdecimalの値にパースした後、メインテキストに表示します。
         /// </summary>
@@ -288,7 +288,7 @@ namespace Calculator2
         /// <example>
         /// Usage:
         /// <code>
-        /// Calculate((x, y) => y - x);
+        /// CalculateMemory((x, y) => y - x);
         /// </code>
         /// </example>
         private void CalculateMemory(Func<decimal, decimal, decimal> func)
